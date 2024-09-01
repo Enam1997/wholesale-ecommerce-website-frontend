@@ -1,0 +1,15 @@
+@keyframes blink {
+  0% {
+    background-color: #bff14d; /* Original color */
+  }
+  50% {
+    background-color: #e74c3c; /* Blink color */
+  }
+  100% {
+    background-color: #bff14d; /* Original color */
+  }
+}
+
+.blink-button {
+  animation: blink 1s infinite;
+}

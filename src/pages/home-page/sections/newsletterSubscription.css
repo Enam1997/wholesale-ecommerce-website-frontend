@@ -1,0 +1,43 @@
+/* NewsletterSubscription.css */
+.newsletter {
+  padding: 2rem;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+
+.newsletter h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.newsletter p {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.newsletter__form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.newsletter__form input {
+  padding: 0.7rem;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.newsletter__form .btn {
+  padding: 0.7rem 1.5rem;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.newsletter__form .btn:hover {
+  background-color: #2980b9;
+}

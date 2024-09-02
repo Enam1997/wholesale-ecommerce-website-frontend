@@ -8,13 +8,12 @@ import "./bestSellingProducts.css";
 const BestSellingProducts = () => {
   const settings = {
     dots: true, // Hide dots
-    arrows: true,
+    arrows: false,
     infinite: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    nextArrow: <div className="slick-next">→</div>,
-    prevArrow: <div className="slick-prev">←</div>,
+
     responsive: [
       {
         breakpoint: 1024,

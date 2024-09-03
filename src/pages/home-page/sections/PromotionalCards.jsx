@@ -8,13 +8,16 @@ import {
   Button,
 } from "@mui/material";
 
+import promoImage1 from "../../../assets/1.gif";
+import promoImage3 from "../../../assets/Exclusive.png";
+import promoImage4 from "../../../assets/offer.gif";
+
 const PromotionalCards = () => {
   const promos = [
     {
       id: 1,
       title: "Summer Collection",
-      image:
-        "/1.gif",
+      image: promoImage1,
       link: "#",
     },
     {
@@ -27,13 +30,13 @@ const PromotionalCards = () => {
     {
       id: 3,
       title: "Exclusive Deals",
-      image: "/Exclusive.png",
+      image: promoImage3,
       link: "#",
     },
     {
       id: 4,
       title: "New Arrivals",
-      image: "/offer.gif",
+      image: promoImage4,
       link: "#",
     },
   ];

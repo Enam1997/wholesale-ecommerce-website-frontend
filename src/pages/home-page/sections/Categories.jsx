@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Typography, ButtonBase, Grid } from "@mui/material";
+import allCategoryiamge from "../../../assets/category1.jpg";
 
 const Categories = () => (
   <Box mt={6} sx={{ padding: "1rem 0" }}>
@@ -7,7 +8,7 @@ const Categories = () => (
       {[
         {
           name: "All",
-          imageUrl: "./category1.jpg",
+          imageUrl: allCategoryiamge,
         },
         {
           name: "Man",

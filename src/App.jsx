@@ -10,6 +10,7 @@ import Footer from "./layout/footer/Footer";
 import BottomNavigation from "./layout/bottom-navigation/BottomNavigation";
 import ShopPage from "./pages/shop-page/ShopPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProductDetails from "./pages/product-details-page/ProductDetails";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,9 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
-          {/* Other routes */}
+          <Route path="/productdetails" element={<ProductDetails />} />
         </Routes>
-        {/* <HomePage /> */}
 
         <Footer />
         <BottomNavigation />

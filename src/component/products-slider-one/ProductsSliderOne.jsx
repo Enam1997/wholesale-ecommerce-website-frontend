@@ -2,28 +2,8 @@ import React from "react";
 import Slider from "react-slick";
 import { Box, Typography } from "@mui/material";
 import ProductCard from "../product-card/ProductCard";
-
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
+import SampleNextArrow from "../sample-next-arrow/SampleNextArrow";
+import SamplePrevArrow from "../sample-prev-arrow/SamplePrevArrow";
 
 const ProductsSliderOne = ({ title, products }) => {
   const settings = {

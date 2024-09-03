@@ -1,14 +1,33 @@
-.slick-prev,
-.slick-next {
-  z-index: 100;
-  width: 50px;
-  height: 50px;
+.custom-slider .slick-dots.slick-thumb {
+  position: absolute;
+  bottom: -75px; /* Position the thumbnails below the slider */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow-x: auto; /* Allow horizontal scrolling */
+  padding: 10px 0; /* Space above and below the thumbnails */
+  gap: 10px; /* Gap between thumbnails */
+  list-style: none;
+  margin: 0;
 }
 
-.slick-prev {
+.custom-slider .slick-dots.slick-thumb li img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 5px; /* Adding margin to create spacing between thumbnails */
+  cursor: pointer;
 }
 
-.slick-prev:before,
-.slick-next:before {
-  font-size: 60px !important;
+/* Hide default dots (if any) */
+.custom-slider .slick-dots li button:before {
+  display: none;
 }
+
+/* Adjust the thumbnail active state */
+.custom-slider .slick-dots li.slick-active img {
+  border: 2px solid rgb(8, 250, 109); /* Highlight the active thumbnail */
+}
+
+

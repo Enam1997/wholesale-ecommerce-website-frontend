@@ -3,32 +3,9 @@ import Slider from "react-slick";
 import { Box } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "block",
-        background: "wgite",
-      }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
+import "./customSlider.css";
+import SampleNextArrow from "../../../component/sample-next-arrow/SampleNextArrow";
+import SamplePrevArrow from "../../../component/sample-prev-arrow/SamplePrevArrow";
 
 const CustomSlider = ({ images }) => {
   const settings = {
@@ -55,13 +32,20 @@ const CustomSlider = ({ images }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
 
   return (
     <Box
-      sx={{ maxWidth: "100%", maxHeight: "600px", position: "relative" }}
+      sx={{
+        maxWidth: "100%",
+        maxHeight: "600px",
+        position: "relative",
+        paddingBottom: "80px", // Space for the thumbnails
+      }}
       className="custom-slider"
     >
       <Slider {...settings}>
@@ -80,6 +64,26 @@ const CustomSlider = ({ images }) => {
           </Box>
         ))}
       </Slider>
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: "0", // Move thumbnails to the bottom of the image
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          padding: "10px 0", // Space above and below the thumbnails
+        }}
+      >
+        <ul
+          className="slick-dots slick-thumb"
+          style={{
+            margin: "0", // Remove extra margin
+            display: "flex", // Make sure thumbnails are inline
+            gap: "10px", // Gap between thumbnails
+            justifyContent: "center",
+          }}
+        />
+      </Box>
     </Box>
   );
 };

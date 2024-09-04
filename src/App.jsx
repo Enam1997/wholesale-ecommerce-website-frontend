@@ -11,6 +11,7 @@ import BottomNavigation from "./layout/bottom-navigation/BottomNavigation";
 import ShopPage from "./pages/shop-page/ShopPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetails from "./pages/product-details-page/ProductDetails";
+import CartPage from "./pages/cart-page/CartPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/productdetails" element={<ProductDetails />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
 
         <Footer />

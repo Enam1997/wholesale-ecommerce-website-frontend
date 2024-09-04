@@ -12,6 +12,7 @@ import ShopPage from "./pages/shop-page/ShopPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetails from "./pages/product-details-page/ProductDetails";
 import CartPage from "./pages/cart-page/CartPage";
+import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,6 +26,7 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/productdetails" element={<ProductDetails />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
 
         <Footer />

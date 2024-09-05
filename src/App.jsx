@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetails from "./pages/product-details-page/ProductDetails";
 import CartPage from "./pages/cart-page/CartPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
+import Marquee from "./component/marquee-top/Marquee";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,6 +22,7 @@ function App() {
     <>
       <Router>
         <Header />
+        <Marquee />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />

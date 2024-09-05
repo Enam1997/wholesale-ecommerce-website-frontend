@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import { newproduct } from "../../../demo-data/newproduct";
 import ProductCard from "../../../component/product-card/ProductCard";
 import "./bestSellingProducts.css";
+import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
 
 const BestSellingProducts = () => {
   const settings = {
@@ -11,7 +12,7 @@ const BestSellingProducts = () => {
     arrows: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4.4,
     slidesToScroll: 1,
 
     responsive: [
@@ -30,7 +31,7 @@ const BestSellingProducts = () => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.1,
         },
       },
     ],
@@ -43,10 +44,11 @@ const BestSellingProducts = () => {
       </Typography>
       <Slider {...settings}>
         {newproduct.map((product) => (
-          <Box key={product.id} sx={{ margin: "0 10px" }}>
+          <Box key={product.id} sx={{ marginRight: "20px !important" }}>
             {" "}
             {/* Add margin between slides */}
-            <ProductCard product={product} />
+            {/* <ProductCard product={product} /> */}
+            <ProductCardThree product={product} />
           </Box>
         ))}
       </Slider>

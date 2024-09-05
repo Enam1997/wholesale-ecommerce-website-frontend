@@ -9,7 +9,7 @@ export const newproduct = [
   },
   {
     id: 2,
-    name: "Vintage T9 Electric Hair Cutting Machine Hair",
+    name: "Vintage T9 Electric Hair Cutting Machine Hair Vintage T9 Electric Hair Cutting Machine Hair  Vintage T9 Electric Hair Cutting Machine Hair ",
     price: 1200,
     discountPrice: 890,
     image:
@@ -17,7 +17,7 @@ export const newproduct = [
   },
   {
     id: 3,
-    name: "Vintage T9 Electric Hair Cutting Machine Hair",
+    name: "Vintage T9 Electric Hair Cutting Machine Hair Vintage T9 Electric Hair Cutting Machine Hair Vintage T9 Electric Hair Cutting Machine Hair ",
     price: 1400,
     discountPrice: 1320,
     image:

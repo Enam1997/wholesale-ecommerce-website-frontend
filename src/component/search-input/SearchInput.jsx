@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { TextField, InputAdornment } from "@mui/material";
+import { TextField, InputAdornment, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
 
 const SearchInput = () => {
   const [placeholder, setPlaceholder] = useState("");
-  const phrases = "Search here any product which you want ...";
+  const phrases = "  Search here any product which you want ...";
   let charIndex = 0;
+
+  // Use Media Query to detect screen size
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
 
   useEffect(() => {
     const typeText = () => {
@@ -13,12 +17,12 @@ const SearchInput = () => {
       charIndex++;
 
       if (charIndex === phrases.length) {
-        clearInterval(typingInterval);  // Stop typing when the phrase is fully typed out
+        clearInterval(typingInterval);
         setTimeout(() => {
-          setPlaceholder("");  // Clear the placeholder
-          charIndex = 0;  // Reset charIndex to start typing from the beginning
-          typingInterval = setInterval(typeText, 100);  // Restart typing
-        }, 1000);  // Pause for 1 second before restarting
+          setPlaceholder("");
+          charIndex = 0;
+          typingInterval = setInterval(typeText, 100);
+        }, 1000);
       }
     };
 
@@ -33,12 +37,27 @@ const SearchInput = () => {
       fullWidth
       placeholder={placeholder}
       InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <Search />
+        endAdornment: (
+          <InputAdornment position="end">
+            {/* Show button on large screens and icon on small screens */}
+            {isSmallScreen ? (
+              <Search />
+            ) : (
+              <Button
+                variant="contained"
+                size="small"
+                sx={{
+                  backgroundColor: "#bff14d",
+                  color: "black",
+                  fontWeight: "900",
+                }}
+              >
+                Search
+              </Button>
+            )}
           </InputAdornment>
         ),
-        style: { height: 45, backgroundColor: "#fff" },
+        style: { height: 42, backgroundColor: "#fff" },
       }}
     />
   );

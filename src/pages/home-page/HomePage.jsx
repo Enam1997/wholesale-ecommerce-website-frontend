@@ -14,7 +14,10 @@ import Hero from "./sections/Hero";
 
 const HomePage = () => {
   return (
-    <div className="home-page">
+    <div
+      className="home-page"
+      style={{ paddingLeft: "10px", paddingRight: "10px" }}
+    >
       <Hero />
       <Categories />
       <NewProducts />
@@ -24,7 +27,6 @@ const HomePage = () => {
       <PromotionalCards />
       <BlogPreview />
       <NewsletterSubscription />
-     
     </div>
   );
 };

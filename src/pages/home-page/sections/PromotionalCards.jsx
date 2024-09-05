@@ -94,7 +94,7 @@ const PromotionalCards = () => {
               >
                 {promo.title}
               </Typography>
-              <Button variant="contained" color="secondary">
+              <Button variant="contained" sx={{ fontWeight: 900 }}>
                 Shop Now
               </Button>
             </CardContent>

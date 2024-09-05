@@ -149,7 +149,11 @@ const ProductDetails = () => {
 
           {/* Add to Cart and Add to Wishlist Buttons */}
           <Box display="flex" gap={2} mb={2}>
-            <Button variant="contained" color="primary">
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ fontWeight: 900 }}
+            >
               Add to Cart
             </Button>
             <Button variant="outlined" color="secondary">

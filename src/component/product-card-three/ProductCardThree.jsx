@@ -110,7 +110,6 @@ const ProductCardThree = ({ product }) => {
             )}
           </Typography>
           <Button
-            variant="outlined"
             sx={{
               display: "flex",
               alignItems: "center",
@@ -121,7 +120,7 @@ const ProductCardThree = ({ product }) => {
               },
             }}
           >
-            <ShoppingCart sx={{ fontSize: "20px" }} />
+            <ShoppingCart color="secondary" sx={{ fontSize: "20px" }} />
             <span
               style={{
                 marginLeft: "5px",

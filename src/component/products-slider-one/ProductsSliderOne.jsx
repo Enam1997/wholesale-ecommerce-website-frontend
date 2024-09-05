@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import ProductCard from "../product-card/ProductCard";
 import SampleNextArrow from "../sample-next-arrow/SampleNextArrow";
 import SamplePrevArrow from "../sample-prev-arrow/SamplePrevArrow";
+import ProductCardThree from "../product-card-three/ProductCardThree";
 
 const ProductsSliderOne = ({ title, products }) => {
   const settings = {
@@ -11,7 +12,7 @@ const ProductsSliderOne = ({ title, products }) => {
     arrows: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4.4,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -32,7 +33,7 @@ const ProductsSliderOne = ({ title, products }) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.1,
         },
       },
     ],
@@ -48,7 +49,7 @@ const ProductsSliderOne = ({ title, products }) => {
           <Box key={product.id} sx={{ margin: "0 10px" }}>
             {" "}
             {/* Add margin between slides */}
-            <ProductCard product={product} />
+            <ProductCardThree product={product} />
           </Box>
         ))}
       </Slider>

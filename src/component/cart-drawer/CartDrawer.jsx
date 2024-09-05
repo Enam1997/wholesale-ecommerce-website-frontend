@@ -88,7 +88,9 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
               </ListItemAvatar>
               <ListItemText
                 primary={
-                  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <Box
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
                     <Typography variant="body1">{item.name}</Typography>
                     <Typography variant="body2" sx={{ color: "gray" }}>
                       x{item.quantity}
@@ -156,7 +158,12 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
           <Typography variant="h6">Total</Typography>
           <Typography variant="h6">${totalPrice}</Typography>
         </Box>
-        <Button variant="contained" color="primary" fullWidth>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 900 }}
+        >
           Proceed to Checkout
         </Button>
       </Box>

@@ -14,26 +14,36 @@ import ProductDetails from "./pages/product-details-page/ProductDetails";
 import CartPage from "./pages/cart-page/CartPage";
 import CheckoutPage from "./pages/checkout-page/CheckoutPage";
 import Marquee from "./component/marquee-top/Marquee";
+import ProfilePage from "./pages/profile-page/ProfilePage";
+import { Box, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./theme";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <Router>
-        <Header />
-        <Marquee />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/productdetails" element={<ProductDetails />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-        </Routes>
+      <Box>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Header />
+            <Marquee />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/productdetails" element={<ProductDetails />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Routes>
 
-        <Footer />
-        <BottomNavigation />
-      </Router>
+            <Footer />
+            <BottomNavigation />
+          </Router>
+        </ThemeProvider>
+      </Box>
     </>
   );
 }

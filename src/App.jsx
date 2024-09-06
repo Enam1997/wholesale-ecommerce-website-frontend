@@ -18,6 +18,9 @@ import ProfilePage from "./pages/profile-page/ProfilePage";
 import { Box, CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme";
+import ShippingAndReturns from "./pages/shipping-and-returns/ShippingAndReturns";
+import TermsAndConditions from "./pages/terms-and-conditions/TermsAndConditions";
+import PrivacyPolicy from "./pages/privacy-policy/PrivacyPolicy";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,6 +40,12 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/shipingreturns" element={<ShippingAndReturns />} />
+              <Route
+                path="/termandcondition"
+                element={<TermsAndConditions />}
+              />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             </Routes>
 
             <Footer />

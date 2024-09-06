@@ -3,6 +3,7 @@ import { Grid, Typography, Box } from "@mui/material";
 
 import ProductCard from "../../../component/product-card/ProductCard";
 import { newproduct } from "../../../demo-data/newproduct";
+import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
 
 const RecommendedProducts = () => {
   return (
@@ -14,7 +15,7 @@ const RecommendedProducts = () => {
         <Grid container spacing={2}>
           {newproduct.map((product) => (
             <Grid item xs={12} sm={6} md={4} lg={2.4} key={product.id}>
-              <ProductCard product={product} />
+              <ProductCardThree product={product} />
             </Grid>
           ))}
         </Grid>

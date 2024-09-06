@@ -54,13 +54,15 @@ const Header = () => {
       name: "Product 1",
       price: 50,
       quantity: 1,
-      image: "https://via.placeholder.com/150",
+      image:
+        "https://img.freepik.com/premium-photo/tattooed-man-wearing-sunglasses-white-tshirt-walks-down-cobblestone-street_862489-39720.jpg",
     },
     {
       name: "Product 2",
       price: 30,
       quantity: 2,
-      image: "https://via.placeholder.com/150",
+      image:
+        "https://s3.ap-south-1.amazonaws.com/goshop.com.bd/uploads/all/dr4lQQ0QqS9BtB5EaCoaWnRreWnG0G1rq2OLT7RH.jpg",
     },
   ];
 
@@ -73,7 +75,16 @@ const Header = () => {
     <AppBar position="sticky" sx={{ backgroundColor: "#fff", boxShadow: 1 }}>
       <Toolbar>
         <Box
-          sx={{ flexGrow: 1, fontSize: 24, fontWeight: "bold", color: "#000" }}
+          sx={{
+            flexGrow: 1,
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#000",
+            "&:hover": {
+              cursor: "pointer",
+            },
+          }}
+          onClick={() => navigate("/")}
         >
           LOGO
         </Box>

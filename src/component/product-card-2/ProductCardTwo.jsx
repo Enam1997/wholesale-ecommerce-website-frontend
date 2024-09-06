@@ -76,7 +76,7 @@ const ProductCardTwo = ({ product }) => {
       <CardContent
         sx={{
           flex: "1 0 70%",
-       
+
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -95,7 +95,7 @@ const ProductCardTwo = ({ product }) => {
           {name}
         </Typography>
 
-        <Grid container  alignItems="center">
+        <Grid container alignItems="center">
           <Typography
             variant="body1"
             sx={{ fontWeight: "bold", fontSize: "20px" }}
@@ -106,7 +106,6 @@ const ProductCardTwo = ({ product }) => {
                 <span
                   style={{
                     textDecoration: "line-through",
-                    color: "#999",
                     marginLeft: "0.5rem",
                     color: "red",
                     fontSize: "15px",
@@ -120,7 +119,7 @@ const ProductCardTwo = ({ product }) => {
             )}
           </Typography>
           <IconButton>
-            <ShoppingCart  />
+            <ShoppingCart />
           </IconButton>
         </Grid>
       </CardContent>

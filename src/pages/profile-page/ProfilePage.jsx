@@ -58,9 +58,6 @@ const ProfilePage = () => {
                   "& .MuiTabs-indicator": {
                     backgroundColor: "#00796b", // Change the tab indicator color to green
                   },
-                  "& .MuiTabs-indicator": {
-                    backgroundColor: "#00796b", // Change the tab indicator color to green
-                  },
                 }}
               >
                 {tabItems.map((item, index) => (

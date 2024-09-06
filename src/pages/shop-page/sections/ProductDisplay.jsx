@@ -58,7 +58,7 @@ const ProductDisplay = () => {
       {/* Product Grid */}
       <Grid container alignItems="center" spacing={2}>
         {shopproduct.map((product) => (
-          <Grid item xs={12} sm={6} md={3} key={product.id}>
+          <Grid item xs={6} sm={6} md={3} key={product.id}>
             <ProductCardThree product={product} />
           </Grid>
         ))}

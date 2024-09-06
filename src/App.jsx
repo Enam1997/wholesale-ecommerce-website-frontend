@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import HomePage from "./pages/home-page/HomePage";
 import "slick-carousel/slick/slick.css";
@@ -21,39 +19,33 @@ import { theme } from "./theme";
 import ShippingAndReturns from "./pages/shipping-and-returns/ShippingAndReturns";
 import TermsAndConditions from "./pages/terms-and-conditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/privacy-policy/PrivacyPolicy";
+import ScrollToTop from "./utils/ScrollToTop";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <Box>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Router>
-            <Header />
-            <Marquee />
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/shop" element={<ShopPage />} />
-              <Route path="/productdetails" element={<ProductDetails />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/shipingreturns" element={<ShippingAndReturns />} />
-              <Route
-                path="/termandcondition"
-                element={<TermsAndConditions />}
-              />
-              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-            </Routes>
-
-            <Footer />
-            <BottomNavigation />
-          </Router>
-        </ThemeProvider>
-      </Box>
-    </>
+    <Box>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <ScrollToTop /> {/* <-- Add this component here */}
+          <Header />
+          <Marquee />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/shop" element={<ShopPage />} />
+            <Route path="/productdetails" element={<ProductDetails />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout" element={<CheckoutPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/shipping-returns" element={<ShippingAndReturns />} />
+            <Route path="/terms-conditions" element={<TermsAndConditions />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          </Routes>
+          <Footer />
+          <BottomNavigation />
+        </Router>
+      </ThemeProvider>
+    </Box>
   );
 }
 

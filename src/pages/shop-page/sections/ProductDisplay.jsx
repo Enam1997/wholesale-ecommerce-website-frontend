@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import ProductCard from "../../../component/product-card/ProductCard";
 import { shopproduct } from "../../../demo-data/shopproducts";
+import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
 
 const ProductDisplay = () => {
   const [sortValue, setSortValue] = useState("recomended");
@@ -55,10 +56,10 @@ const ProductDisplay = () => {
       </Box>
 
       {/* Product Grid */}
-      <Grid container spacing={2}>
+      <Grid container alignItems="center" spacing={2}>
         {shopproduct.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <ProductCard product={product} />
+          <Grid item xs={12} sm={6} md={3} key={product.id}>
+            <ProductCardThree product={product} />
           </Grid>
         ))}
       </Grid>

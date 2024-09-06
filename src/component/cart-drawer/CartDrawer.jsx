@@ -13,9 +13,11 @@ import {
   Avatar,
 } from "@mui/material";
 import { Close, Remove, Add } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom"; // to navigate between routes
 
 const CartDrawer = ({ open, onClose, cartItems }) => {
   const [cart, setCart] = useState(cartItems);
+  const navigate = useNavigate();
 
   const handleIncrement = (index) => {
     const updatedCart = cart.map((item, i) =>
@@ -37,6 +39,12 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+  // Handle navigation when clicked
+  const handleDrawerClose = (route) => {
+    navigate(route); // Navigate to the corresponding route
+    onClose(); // Close the menu
+  };
 
   return (
     <Drawer
@@ -163,6 +171,7 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
           color="primary"
           fullWidth
           sx={{ fontWeight: 900 }}
+          onClick={() => handleDrawerClose("/checkout")}
         >
           Proceed to Checkout
         </Button>

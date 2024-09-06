@@ -88,7 +88,6 @@ const ProductCard = ({ product }) => {
                 <span
                   style={{
                     textDecoration: "line-through",
-                    color: "#999",
                     marginLeft: "0.5rem",
                     color: "red",
                     fontSize: "15px",

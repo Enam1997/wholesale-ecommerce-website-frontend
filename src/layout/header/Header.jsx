@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./header.css";
 import {
   AppBar,
   Toolbar,
@@ -7,74 +6,50 @@ import {
   Box,
   Hidden,
   Button,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { ShoppingCart, Favorite, AccountCircle } from "@mui/icons-material";
 import SearchInput from "../../component/search-input/SearchInput";
 import CartDrawer from "../../component/cart-drawer/CartDrawer";
+import { useNavigate } from "react-router-dom"; // to navigate between routes
+import "./header.css";
 
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null); // For managing the menu open state
+  const isLoggedIn = true; // Change this value based on login state (for now it's hardcoded)
 
+  const navigate = useNavigate();
+
+  // Open the cart drawer
   const handleCartOpen = () => {
     setCartOpen(true);
   };
 
+  // Close the cart drawer
   const handleCartClose = () => {
     setCartOpen(false);
   };
 
+  // Handle menu opening
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  // Handle menu closing
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  // Handle navigation based on selected menu item
+  const handleMenuClick = (route) => {
+    navigate(route); // Navigate to the corresponding route
+    handleMenuClose(); // Close the menu
+  };
+
+  // Sample cart items
   const cartItems = [
-    {
-      name: "asdasd dasdasd asdasda dasdasdas dasdas",
-      price: 50,
-      quantity: 1,
-      image:
-        "https://5.imimg.com/data5/WD/MA/MY-5511146/men-s-cotton-pant-500x500.jpg",
-    },
-    {
-      name: "Product 2",
-      price: 30,
-      quantity: 2,
-      image:
-        "https://media.istockphoto.com/id/173239968/photo/skinny-tight-blue-jeans-on-white-background.jpg?s=612x612&w=0&k=20&c=HsI-xC12KkzjeCaFC4eQ33SZuL53EerbfLMkPuLpaVw=",
-    },
-    {
-      name: "Product 1",
-      price: 50,
-      quantity: 1,
-      image:
-        "https://img.huffingtonpost.com/asset/62701ad8260000bd118a783e.jpg?ops=scalefit_960_noupscale",
-    },
-    {
-      name: "Product 2",
-      price: 30,
-      quantity: 2,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Product 1",
-      price: 50,
-      quantity: 1,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Product 2",
-      price: 30,
-      quantity: 2,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Product 1",
-      price: 50,
-      quantity: 1,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Product 2",
-      price: 30,
-      quantity: 2,
-      image: "https://via.placeholder.com/150",
-    },
     {
       name: "Product 1",
       price: 50,
@@ -111,7 +86,8 @@ const Header = () => {
           <Hidden mdDown>
             <Button
               className="blink-button"
-              sx={{ color: "#fff", borderRadius: 4 }}
+              sx={{ color: "#000", borderRadius: 4, fontWeight: 900 }}
+              onClick={() => handleMenuClick("/shop")}
             >
               Shop
             </Button>
@@ -121,9 +97,121 @@ const Header = () => {
             <IconButton onClick={handleCartOpen}>
               <ShoppingCart />
             </IconButton>
-            <IconButton>
+
+            {/* Account Menu */}
+            <IconButton onClick={handleMenuOpen}>
               <AccountCircle />
             </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              sx={{
+                "& .MuiPaper-root": {
+                  borderRadius: 2,
+                  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+                  minWidth: 200,
+                },
+              }}
+              disableScrollLock={true} // Prevent body from shifting when the menu opens
+            >
+              {isLoggedIn ? (
+                <Box>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/profile")}
+                  >
+                    Manage Profile
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/profile")}
+                  >
+                    My Orders
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/profile")}
+                  >
+                    Delivery Addresses
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/profile")}
+                  >
+                    Support Ticket
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/profile")}
+                  >
+                    Wishlist
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                      color: "red",
+                    }}
+                    onClick={() => handleMenuClick("/")}
+                  >
+                    Logout
+                  </MenuItem>
+                </Box>
+              ) : (
+                <Box>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/login")}
+                  >
+                    Login
+                  </MenuItem>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "#F0FBD5",
+                      },
+                      fontWeight: 700,
+                    }}
+                    onClick={() => handleMenuClick("/signup")}
+                  >
+                    Sign Up
+                  </MenuItem>
+                </Box>
+              )}
+            </Menu>
           </Hidden>
         </Box>
       </Toolbar>

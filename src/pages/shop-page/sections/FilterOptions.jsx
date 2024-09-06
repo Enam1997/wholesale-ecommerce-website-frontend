@@ -132,7 +132,7 @@ const FilterOptions = () => {
 
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Category</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Category</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormGroup>
@@ -246,7 +246,7 @@ const FilterOptions = () => {
       {/* Price Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Price</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Price</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Box display="flex" gap={2}>
@@ -283,7 +283,7 @@ const FilterOptions = () => {
       {/* Discount Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Discount</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Discount</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormGroup>
@@ -324,7 +324,7 @@ const FilterOptions = () => {
       {/* New Arrival Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>New Arrival</Typography>
+          <Typography sx={{ fontWeight: 900 }}>New Arrival</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormGroup>
@@ -365,7 +365,7 @@ const FilterOptions = () => {
       {/* Occasion Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Occasion</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormGroup>
@@ -416,7 +416,7 @@ const FilterOptions = () => {
       {/* Material Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Material</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Material</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormGroup>

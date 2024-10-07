@@ -86,7 +86,7 @@ const Header = () => {
           }}
           onClick={() => navigate("/")}
         >
-          LOGO
+          Bangla Cottonae
         </Box>
 
         <Box sx={{ flexGrow: 2, mx: 2 }}>

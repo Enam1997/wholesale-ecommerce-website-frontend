@@ -1,7 +1,7 @@
 .marquee-wrapper {
   overflow: hidden;
   white-space: nowrap;
-  background-color: #bff14d; /* Background color */
+  background-color: #004526; /* Background color */
   padding: 10px 0;
   position: relative;
 }
@@ -23,5 +23,5 @@
 
 .separator {
   margin: 0 10px;
-  color: #ff9800; /* Separator color */
+  color: #c40233; /* Separator color */
 }

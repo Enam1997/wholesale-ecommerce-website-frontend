@@ -3,10 +3,10 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#BFF14D", // Still define the primary color
+      main: "#004526", // Still define the primary color
     },
     secondary: {
-      main: "#dc004e", // Still define the secondary color
+      main: "#C40233", // Still define the secondary color
     },
     customGreen: {
       main: "#00ff00", // Custom color named 'customGreen'

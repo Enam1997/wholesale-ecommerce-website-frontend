@@ -47,8 +47,8 @@ const SearchInput = () => {
                 variant="contained"
                 size="small"
                 sx={{
-                  backgroundColor: "#bff14d",
-                  color: "black",
+                  backgroundColor: "#004526",
+
                   fontWeight: "900",
                 }}
               >

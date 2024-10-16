@@ -8,6 +8,7 @@ import {
   Button,
   Menu,
   MenuItem,
+  Slide,
 } from "@mui/material";
 import {
   ShoppingCart,
@@ -21,7 +22,8 @@ import { useNavigate } from "react-router-dom"; // to navigate between routes
 import "./header.css";
 import { AuthContext } from "../../context/AuthContext";
 
-const Header = () => {
+
+const Header = (props) => {
   const [isCartOpen, setCartOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null); // For managing the menu open state
   const isLoggedIn = false; // Change this value based on login state (for now it's hardcoded)
@@ -79,6 +81,8 @@ const Header = () => {
     (total, item) => total + item.price * item.quantity,
     0
   );
+
+
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#fff", boxShadow: 1 }}>

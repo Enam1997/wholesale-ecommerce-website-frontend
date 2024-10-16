@@ -12,19 +12,19 @@ const Marquee = () => {
   ];
 
   return (
-    <Box className="marquee-wrapper">
+    <Box className="marquee-wrapper" color="white">
       <Box className="marquee-content">
         {/* Repeat the content twice to create a seamless effect */}
         {texts.map((text, index) => (
           <span key={index}>
             {text}
-            {index < texts.length - 1 && <span className="separator">•</span>}
+            {index < texts.length - 1 && <span className="separator">#</span>}
           </span>
         ))}
         {texts.map((text, index) => (
           <span key={index + texts.length}>
             {text}
-            {index < texts.length - 1 && <span className="separator">•</span>}
+            {index < texts.length - 1 && <span className="separator">#</span>}
           </span>
         ))}
       </Box>

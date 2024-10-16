@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./App.css";
 import HomePage from "./pages/home-page/HomePage";
 import "slick-carousel/slick/slick.css";
@@ -20,31 +20,46 @@ import ShippingAndReturns from "./pages/shipping-and-returns/ShippingAndReturns"
 import TermsAndConditions from "./pages/terms-and-conditions/TermsAndConditions";
 import PrivacyPolicy from "./pages/privacy-policy/PrivacyPolicy";
 import ScrollToTop from "./utils/ScrollToTop";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+import LoginDialog from "./component/login-dialoge/LoginDialog";
+import RegisterDialog from "./component/register-dialoge/RegisterDialog";
+import BackdropLoading from "./component/backdrop-loading/BackdropLoading";
 
 function App() {
   return (
     <Box>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <ScrollToTop /> {/* <-- Add this component here */}
-          <Header />
-          <Marquee />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/shop" element={<ShopPage />} />
-            <Route path="/productdetails" element={<ProductDetails />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/shipping-returns" element={<ShippingAndReturns />} />
-            <Route path="/terms-conditions" element={<TermsAndConditions />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          </Routes>
-          <Footer />
-          <BottomNavigation />
-        </Router>
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <ScrollToTop /> {/* <-- Add this component here */}
+            <Header />
+            <Marquee />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/productdetails" element={<ProductDetails />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/shipping-returns"
+                element={<ShippingAndReturns />}
+              />
+              <Route
+                path="/terms-conditions"
+                element={<TermsAndConditions />}
+              />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            </Routes>
+            <Footer />
+            <BottomNavigation />
+          </Router>
+          <LoginDialog />
+          <RegisterDialog />
+          <BackdropLoading />
+        </ThemeProvider>
+      </AuthProvider>
     </Box>
   );
 }

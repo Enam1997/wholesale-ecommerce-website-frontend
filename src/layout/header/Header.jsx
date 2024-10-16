@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,16 +9,25 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { ShoppingCart, Favorite, AccountCircle } from "@mui/icons-material";
+import {
+  ShoppingCart,
+  Favorite,
+  AccountCircle,
+  Login,
+} from "@mui/icons-material";
 import SearchInput from "../../component/search-input/SearchInput";
 import CartDrawer from "../../component/cart-drawer/CartDrawer";
 import { useNavigate } from "react-router-dom"; // to navigate between routes
 import "./header.css";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const [isCartOpen, setCartOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null); // For managing the menu open state
-  const isLoggedIn = true; // Change this value based on login state (for now it's hardcoded)
+  const isLoggedIn = false; // Change this value based on login state (for now it's hardcoded)
+
+  const { user, handleLoginOpen, handleRegisterOpen, accessToken, logout } =
+    useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -109,9 +118,9 @@ const Header = () => {
               <ShoppingCart />
             </IconButton>
 
-            {/* Account Menu */}
+            {/*Logged in user account menu Account Menu */}
             <IconButton onClick={handleMenuOpen}>
-              <AccountCircle />
+              {accessToken ? <AccountCircle /> : <Login />}
             </IconButton>
             <Menu
               anchorEl={anchorEl}
@@ -126,7 +135,7 @@ const Header = () => {
               }}
               disableScrollLock={true} // Prevent body from shifting when the menu opens
             >
-              {isLoggedIn ? (
+              {accessToken ? (
                 <Box>
                   <MenuItem
                     sx={{
@@ -191,7 +200,10 @@ const Header = () => {
                       fontWeight: 700,
                       color: "red",
                     }}
-                    onClick={() => handleMenuClick("/")}
+                    onClick={() => {
+                      handleMenuClose();
+                      logout();
+                    }}
                   >
                     Logout
                   </MenuItem>
@@ -205,7 +217,10 @@ const Header = () => {
                       },
                       fontWeight: 700,
                     }}
-                    onClick={() => handleMenuClick("/login")}
+                    onClick={() => {
+                      handleMenuClose();
+                      handleLoginOpen();
+                    }}
                   >
                     Login
                   </MenuItem>
@@ -216,7 +231,10 @@ const Header = () => {
                       },
                       fontWeight: 700,
                     }}
-                    onClick={() => handleMenuClick("/signup")}
+                    onClick={() => {
+                      handleMenuClose();
+                      handleRegisterOpen();
+                    }}
                   >
                     Sign Up
                   </MenuItem>

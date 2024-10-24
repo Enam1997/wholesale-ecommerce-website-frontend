@@ -61,8 +61,10 @@ const AuthProvider = ({ children }) => {
       const token = response.data.data.accessToken;
       const user = response.data.data.user;
 
+      console.log(JSON.stringify(user));
+
       localStorage.setItem("accessToken", token);
-      localStorage.setItem("user", user);
+      localStorage.setItem("user", JSON.stringify(user));
       setAccessToken(token);
       setUser(user);
       setLoading(false);

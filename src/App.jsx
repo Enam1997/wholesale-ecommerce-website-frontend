@@ -24,6 +24,7 @@ import { AuthContext, AuthProvider } from "./context/AuthContext";
 import LoginDialog from "./component/login-dialoge/LoginDialog";
 import RegisterDialog from "./component/register-dialoge/RegisterDialog";
 import BackdropLoading from "./component/backdrop-loading/BackdropLoading";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
@@ -41,7 +42,14 @@ function App() {
               <Route path="/productdetails" element={<ProductDetails />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
               <Route
                 path="/shipping-returns"
                 element={<ShippingAndReturns />}

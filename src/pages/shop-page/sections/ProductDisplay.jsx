@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Pagination,
@@ -12,9 +12,43 @@ import {
 import ProductCard from "../../../component/product-card/ProductCard";
 import { shopproduct } from "../../../demo-data/shopproducts";
 import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
+import axios from "axios";
+import { useFilterContext } from "../../../context/FilterContext";
 
 const ProductDisplay = () => {
   const [sortValue, setSortValue] = useState("recomended");
+  const { filters } = useFilterContext();
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const [allProdcut, setAllProduct] = useState();
+
+  useEffect(() => {
+    console.log("Fetch Start");
+
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        // Construct the query string dynamically
+        const query = `name=${filters.category}&category=${filters.category},MensWear&material=Cotton,Silk&discount=20&newArrival=30&page=${page}&limit=10`;
+
+        const response = await axios.get(
+          `http://localhost:5000/api/v1/product/get-all-with-filter?${query}`
+        );
+        setAllProduct(response);
+        console.log(allProdcut);
+      } catch (err) {
+        console.log(err.message);
+
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [page, filters]); // Depend on 'page' so it fetches again when page changes
 
   const handleSortChange = (event) => {
     setSortValue(event.target.value);

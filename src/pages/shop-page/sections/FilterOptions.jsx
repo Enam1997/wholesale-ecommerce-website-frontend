@@ -12,11 +12,15 @@ import {
   OutlinedInput,
   InputAdornment,
   Button,
+  RadioGroup,
+  Radio,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RecommendedProducts from "./RecommendedProducts";
+import { useFilterContext } from "../../../context/FilterContext";
 
 const FilterOptions = () => {
+  const { filters, setFilters, handleFilterChange } = useFilterContext();
   // State management for different filters
   const [category, setCategory] = useState([]);
   const [subcategory, setSubcategory] = useState([]);
@@ -58,6 +62,9 @@ const FilterOptions = () => {
 
   // Handler for discount selection
   const handleDiscountChange = (event) => {
+    console.log("dicount change");
+
+    handleFilterChange(event);
     const value = event.target.name;
     if (event.target.checked) {
       setDiscount([...discount, value]);
@@ -252,9 +259,9 @@ const FilterOptions = () => {
           <Box display="flex" gap={2}>
             <FormControl variant="outlined">
               <OutlinedInput
-                name="min"
-                value={price.min}
-                onChange={handlePriceChange}
+                name="minPrice"
+                value={filters.minPrice}
+                onChange={handleFilterChange}
                 endAdornment={
                   <InputAdornment position="end">AED</InputAdornment>
                 }
@@ -265,9 +272,9 @@ const FilterOptions = () => {
             </FormControl>
             <FormControl variant="outlined">
               <OutlinedInput
-                name="max"
-                value={price.max}
-                onChange={handlePriceChange}
+                name="maxPrice"
+                value={filters.maxPrice}
+                onChange={handleFilterChange}
                 endAdornment={
                   <InputAdornment position="end">AED</InputAdornment>
                 }
@@ -286,7 +293,7 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Discount</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup>
+          <FormGroup name="discount">
             <FormControlLabel
               control={
                 <Checkbox
@@ -318,6 +325,29 @@ const FilterOptions = () => {
               name="30%"
             />
           </FormGroup>
+          <FormControl component="fieldset">
+            <RadioGroup
+              name="discount"
+              value={discount}
+              onChange={handleFilterChange}
+            >
+              <FormControlLabel
+                value="10%"
+                control={<Radio checked={filters.discount === "10%"} />}
+                label="10%"
+              />
+              <FormControlLabel
+                value="20%"
+                control={<Radio checked={filters.discount === "20%"} />}
+                label="20%"
+              />
+              <FormControlLabel
+                value="30%"
+                control={<Radio checked={filters.discount === "30%"} />}
+                label="30%"
+              />
+            </RadioGroup>
+          </FormControl>
         </AccordionDetails>
       </Accordion>
 

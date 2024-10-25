@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Grid,
   Box,
@@ -16,6 +16,7 @@ import CustomSlider from "./sections/CustomSlider";
 import ProductsSliderOne from "../../component/products-slider-one/ProductsSliderOne";
 import { newproduct } from "../../demo-data/newproduct";
 import { singelProduct } from "../../demo-data/singelproduct";
+import { useCart } from "../../context/CartContext";
 
 const ProductDetails = () => {
   const { name, price, discountPrice, images, productDetails } = singelProduct;
@@ -24,15 +25,40 @@ const ProductDetails = () => {
     : null;
 
   const [quantity, setQuantity] = useState(1);
+  const { addToCart, removeFromCart, updateCartQuantity, isInCart, cartItems } =
+    useCart();
+
+  const productInCart = isInCart(singelProduct.id);
+
+  useEffect(() => {
+    if (productInCart) {
+      const item = cartItems.find((item) => item.id === singelProduct.id);
+      setQuantity(item.quantity);
+    }
+  }, [productInCart, cartItems]);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
+    productInCart
+      ? updateCartQuantity(singelProduct.id, quantity + 1)
+      : addToCart(singelProduct, quantity + 1);
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      updateCartQuantity(singelProduct.id, quantity - 1);
+    } else {
+      removeFromCart(singelProduct.id);
     }
+  };
+
+  const handleAddToCart = () => {
+    addToCart(singelProduct, quantity);
+  };
+
+  const handleRemoveFromCart = () => {
+    removeFromCart(singelProduct.id);
   };
 
   return (
@@ -125,7 +151,7 @@ const ProductDetails = () => {
             <IconButton
               color="primary"
               onClick={handleDecrement}
-              disabled={quantity === 1}
+              disabled={quantity === 1 && !productInCart}
             >
               <Remove />
             </IconButton>
@@ -149,13 +175,27 @@ const ProductDetails = () => {
 
           {/* Add to Cart and Add to Wishlist Buttons */}
           <Box display="flex" gap={2} mb={2}>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ fontWeight: 900 }}
-            >
-              Add to Cart
-            </Button>
+            <Box display="flex" gap={2} mb={2}>
+              {productInCart ? (
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleRemoveFromCart}
+                  sx={{ fontWeight: 900 }}
+                >
+                  Remove from Cart
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleAddToCart}
+                  sx={{ fontWeight: 900 }}
+                >
+                  Add to Cart
+                </Button>
+              )}
+            </Box>
             <Button variant="outlined" color="secondary">
               Add to Wishlist
             </Button>

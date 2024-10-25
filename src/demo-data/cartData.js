@@ -1,4 +1,4 @@
-export const cartItems = [
+export const demoCartItems = [
   {
     name: "Vintage T9 Electric Hair Cutting Machine Vintage T9 Electric Hair Cutting Machine dasdasd adasdas sadad sdada ",
     description: "Compact and powerful hair trimmer for all styles.",

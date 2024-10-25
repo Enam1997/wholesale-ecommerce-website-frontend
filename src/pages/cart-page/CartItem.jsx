@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Add, Remove, Delete, FavoriteBorder } from "@mui/icons-material";
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
   const { name, description, image, price, quantity } = item;
 
   return (
@@ -40,13 +40,13 @@ const CartItem = ({ item }) => {
 
         {/* Quantity Control */}
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-          <IconButton onClick={() => console.log("Decrement Quantity")}>
+          <IconButton onClick={() => onDecrease()}>
             <Remove />
           </IconButton>
           <Typography variant="body1" sx={{ mx: 2 }}>
             {quantity}
           </Typography>
-          <IconButton onClick={() => console.log("Increment Quantity")}>
+          <IconButton onClick={onIncrease}>
             <Add />
           </IconButton>
         </Box>
@@ -61,7 +61,7 @@ const CartItem = ({ item }) => {
         >
           <Typography variant="h6">${price}</Typography>
           <Box>
-            <IconButton onClick={() => console.log("Remove Item")}>
+            <IconButton onClick={() => onRemove()}>
               <Delete />
             </IconButton>
             <IconButton onClick={() => console.log("Add to Wishlist")}>

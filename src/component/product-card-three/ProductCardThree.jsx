@@ -15,7 +15,7 @@ import { FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const ProductCardThree = ({ product }) => {
-  const { name, price, discount, image } = product;
+  const { id, name, price, discount, image } = product;
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -61,7 +61,7 @@ const ProductCardThree = ({ product }) => {
             transform: "scale(1.1)",
           },
         }}
-        onClick={() => navigate("/productdetails")}
+        onClick={() => navigate(`/productdetails/${id}`)}
       >
         <Box sx={{ position: "relative", height: "70%", overflow: "hidden" }}>
           <CardMedia

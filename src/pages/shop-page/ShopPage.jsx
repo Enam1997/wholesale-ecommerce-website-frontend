@@ -9,7 +9,6 @@ import { useFilterContext } from "../../context/FilterContext";
 const ShopPage = () => {
   const { filters, setFilters } = useFilterContext();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const isFirstRender = useRef(true); // Track the first render to prevent looping
 
   // Sync URL query parameters with filters

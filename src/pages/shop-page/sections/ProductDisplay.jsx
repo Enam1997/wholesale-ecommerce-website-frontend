@@ -12,32 +12,33 @@ import {
 import ProductCard from "../../../component/product-card/ProductCard";
 import { shopproduct } from "../../../demo-data/shopproducts";
 import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
-import axios from "axios";
 import { useFilterContext } from "../../../context/FilterContext";
+import axiosInstance from "../../../api";
+import ProductCardThreeSkeleton from "../../../component/product-card-three/ProductCardThreeSkelton";
 
 const ProductDisplay = () => {
   const [sortValue, setSortValue] = useState("recomended");
   const { filters } = useFilterContext();
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [totalProduct, setTotalProduct] = useState(0);
   const [allProdcut, setAllProduct] = useState();
 
   useEffect(() => {
-    console.log("Fetch Start");
-
     const fetchProducts = async () => {
       setLoading(true);
       try {
         // Construct the query string dynamically
-        const query = `name=${filters.category}&category=${filters.category},MensWear&material=Cotton,Silk&discount=20&newArrival=30&page=${page}&limit=10`;
+        const query = `name=${filters.category}&category=${filters.category}&material=&discount=&newArrival=&page=${currentPage}&limit=12`;
 
-        const response = await axios.get(
-          `http://localhost:5000/api/v1/product/get-all-with-filter?${query}`
+        const response = await axiosInstance.get(
+          `/product/get-all-with-filter?${query}`
         );
-        setAllProduct(response);
-        console.log(allProdcut);
+        setAllProduct(response.data.products);
+        setTotalPage(response.data.totalPages);
+        setTotalProduct(response.data.totalProducts);
       } catch (err) {
         console.log(err.message);
 
@@ -48,11 +49,15 @@ const ProductDisplay = () => {
     };
 
     fetchProducts();
-  }, [page, filters]); // Depend on 'page' so it fetches again when page changes
+  }, [currentPage, filters]); // Depend on 'page' so it fetches again when page changes
 
   const handleSortChange = (event) => {
     setSortValue(event.target.value);
     // Implement sorting logic based on selected value
+  };
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   return (
@@ -65,7 +70,7 @@ const ProductDisplay = () => {
         mb={3}
       >
         {/* Showing Total Results */}
-        <Typography variant="body1">Showing 995 Results</Typography>
+        <Typography variant="body1">Showing {totalProduct} Results</Typography>
         {/* Sort By Selector */}
         <Box display="flex" alignItems="center">
           <Typography variant="body2" mr={1}>
@@ -90,18 +95,44 @@ const ProductDisplay = () => {
       </Box>
 
       {/* Product Grid */}
-      <Grid container alignItems="center" spacing={2}>
-        {shopproduct.map((product) => (
-          <Grid item xs={6} sm={6} md={3} key={product.id}>
-            <ProductCardThree product={product} />
+      {loading ? (
+        <>
+          <Grid container alignItems="center" spacing={2}>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
+              <Grid item xs={6} sm={6} md={3} key={index}>
+                <ProductCardThreeSkeleton />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      ) : (
+        <>
+          {error ? (
+            <Box>
+              <Typography variant="body2">{error}</Typography>
+            </Box>
+          ) : (
+            <Grid container alignItems="center" spacing={2}>
+              {allProdcut?.map((product) => (
+                <Grid item xs={6} sm={6} md={3} key={product.id}>
+                  <ProductCardThree product={product} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </>
+      )}
 
       {/* Pagination */}
       <Box mt={4} display="flex" justifyContent="center">
-        <Pagination count={10} color="primary" />
+        <Pagination
+          count={totalPage}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
       </Box>
+      {console.log(allProdcut)}
     </Box>
   );
 };

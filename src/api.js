@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api/v1/users",
+  baseURL: "http://localhost:5000/api/v1",
   withCredentials: true, // Ensure cookies are sent with requests (for refresh tokens)
 });
 
@@ -14,7 +14,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await axiosInstance.post("/refresh-token");
+        const { data } = await axiosInstance.post("/users/refresh-token");
         const newToken = data.accessToken;
 
         // Store new token and retry original request

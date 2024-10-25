@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setLoading(true);
-      const response = await axios.post("/login", { email, password });
+      const response = await axios.post("/users/login", { email, password });
 
       // Store the access token in localStorage
       const token = response.data.data.accessToken;
@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
   const register = async (email, password) => {
     try {
       setLoading(true);
-      const response = await axios.post("/register", { email, password });
+      const response = await axios.post("/users/register", { email, password });
 
       // Store the access token in localStorage
       const token = response.data.data.accessToken;
@@ -79,7 +79,7 @@ const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       setLoading(true);
-      await axios.post("/logout", { user }); // Invalidate refresh token from the backend
+      await axios.post("/users/logout", { user }); // Invalidate refresh token from the backend
 
       // Clear stored token and user data
       localStorage.removeItem("accessToken");
@@ -97,7 +97,7 @@ const AuthProvider = ({ children }) => {
   const refreshToken = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/refresh-token"); // Backend should set refresh token in secure cookie
+      const response = await axios.post("/users/refresh-token"); // Backend should set refresh token in secure cookie
       const newToken = response.data.accessToken;
 
       localStorage.setItem("accessToken", newToken);

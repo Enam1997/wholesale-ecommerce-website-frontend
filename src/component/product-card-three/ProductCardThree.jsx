@@ -15,15 +15,17 @@ import { FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 const ProductCardThree = ({ product }) => {
-  const { name, price, discountPrice, image } = product;
+  const { name, price, discount, image } = product;
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   const navigate = useNavigate();
 
-  const discountPercentage = discountPrice
-    ? Math.round(((price - discountPrice) / price) * 100)
-    : null;
+  function calculateDiscountPrice(price, discountPercentage) {
+    const discountAmount = (price * discountPercentage) / 100;
+    const discountedPrice = price - discountAmount;
+    return discountedPrice.toFixed(2); // Rounds to 2 decimal places
+  }
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -73,7 +75,7 @@ const ProductCardThree = ({ product }) => {
               transition: "transform 0.3s ease-in-out",
             }}
           />
-          {discountPercentage && (
+          {discount && (
             <Typography
               variant="caption"
               sx={{
@@ -86,7 +88,7 @@ const ProductCardThree = ({ product }) => {
                 borderRadius: "4px",
               }}
             >
-              -{discountPercentage}%
+              -{discount}%
             </Typography>
           )}
         </Box>
@@ -117,9 +119,9 @@ const ProductCardThree = ({ product }) => {
               variant="body1"
               sx={{ fontWeight: "bold", fontSize: "18px" }}
             >
-              {discountPrice ? (
+              {discount ? (
                 <>
-                  <span>${discountPrice}</span>
+                  <span>${calculateDiscountPrice(price, discount)}</span>
                   <span
                     style={{
                       textDecoration: "line-through",
@@ -219,7 +221,7 @@ const ProductCardThree = ({ product }) => {
 
           {/* Price */}
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Price: ${discountPrice || price}
+            Price: ${calculateDiscountPrice(price, discount) || price}
           </Typography>
 
           <Divider sx={{ margin: "16px 0" }} />
@@ -245,7 +247,10 @@ const ProductCardThree = ({ product }) => {
 
           {/* Total */}
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Total: ${((discountPrice || price) * quantity).toFixed(2)}
+            Total: $
+            {(
+              (calculateDiscountPrice(price, discount) || price) * quantity
+            ).toFixed(2)}
           </Typography>
 
           {/* Add to Cart Button */}

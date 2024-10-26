@@ -1,9 +1,11 @@
 import React from "react";
 import { Box, Typography, IconButton } from "@mui/material";
 import { Add, Remove, Delete, FavoriteBorder } from "@mui/icons-material";
+import { productImageLink } from "../../api";
 
 const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  const { name, description, image, price, quantity } = item;
+  const { name, description, image, price, quantity, featureImage, stock } =
+    item;
 
   return (
     <Box
@@ -15,10 +17,11 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         borderRadius: "8px",
       }}
     >
+      {console.log(item)}
       {/* Product Image */}
       <Box sx={{ width: "100px", height: "100px", mr: 3 }}>
         <img
-          src={image}
+          src={productImageLink(featureImage)}
           alt={name}
           style={{
             width: "100%",
@@ -46,7 +49,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
           <Typography variant="body1" sx={{ mx: 2 }}>
             {quantity}
           </Typography>
-          <IconButton onClick={onIncrease}>
+          <IconButton onClick={onIncrease} disabled={quantity >= stock}>
             <Add />
           </IconButton>
         </Box>

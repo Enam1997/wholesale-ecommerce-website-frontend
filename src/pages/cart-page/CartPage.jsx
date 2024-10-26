@@ -19,19 +19,6 @@ const CartPage = () => {
       <Grid container spacing={4}>
         {/* Left Side: Cart Items */}
         <Grid item xs={12} md={8}>
-          {demoCartItems.map((item, index) => (
-            <CartItem key={index} item={item} />
-          ))}
-        </Grid>
-
-        {/* Right Side: Order Summary */}
-        <Grid item xs={12} md={4}>
-          <OrderSummary summary={orderSummary} />
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={8}>
           {cartItems?.map((item, index) => (
             <CartItem
               key={index}
@@ -46,6 +33,15 @@ const CartPage = () => {
             />
           ))}
         </Grid>
+
+        {/* Right Side: Order Summary */}
+        <Grid item xs={12} md={4}>
+          <OrderSummary summary={orderSummary} />
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={8}></Grid>
       </Grid>
 
       <ProductsSliderOne title="Similar Products" products={newproduct} />

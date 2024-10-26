@@ -24,7 +24,7 @@ const ProductDisplay = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [totalProduct, setTotalProduct] = useState(0);
-  const [allProdcut, setAllProduct] = useState();
+  const [allProdcut, setAllProduct] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,9 +36,10 @@ const ProductDisplay = () => {
         const response = await axiosInstance.get(
           `/product/get-all-with-filter?${query}`
         );
-        setAllProduct(response.data.products);
-        setTotalPage(response.data.totalPages);
-        setTotalProduct(response.data.totalProducts);
+        setAllProduct(response.data.data.products);
+        setTotalPage(response.data.data.totalPages);
+        setTotalProduct(response.data.data.totalProducts);
+        console.log();
       } catch (err) {
         console.log(err.message);
 
@@ -132,7 +133,6 @@ const ProductDisplay = () => {
           color="primary"
         />
       </Box>
-      {console.log(allProdcut)}
     </Box>
   );
 };

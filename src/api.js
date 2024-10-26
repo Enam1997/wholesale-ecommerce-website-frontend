@@ -1,8 +1,15 @@
 // src/api.js
 import axios from "axios";
 
+export const baseURLLink = "http://localhost:5000/api/v1";
+export const productimageURLLink =
+  "http://localhost:5000/uploads/product-images";
+
+export const productImageLink = (imageLink) =>
+  `${productimageURLLink}/${imageLink}`;
+
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
+  baseURL: baseURLLink,
   withCredentials: true, // Ensure cookies are sent with requests (for refresh tokens)
 });
 

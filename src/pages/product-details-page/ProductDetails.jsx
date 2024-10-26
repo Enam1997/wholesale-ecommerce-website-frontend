@@ -19,6 +19,7 @@ import { singelProduct } from "../../demo-data/singelproduct";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
 import { useParams } from "react-router-dom";
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 
 const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,7 @@ const ProductDetails = () => {
       setLoading(true);
       try {
         const response = await axiosInstance.get(`/product/get-product/${id}`);
-        setProductData(response.data.product);
+        setProductData(response.data.data.product);
       } catch (err) {
         console.log(err.message);
 
@@ -89,179 +90,222 @@ const ProductDetails = () => {
 
   return (
     <Box sx={{ padding: "16px" }} className="product-details">
-      {console.log(productData)}
       {loading ? (
         "Loading"
       ) : (
-        <>
-          <Grid container spacing={4}>
-            {/* Left Part: Image Slider */}
-            <Grid item xs={12} md={6}>
-              <CustomSlider images={images} />
-            </Grid>
+        <Box>
+          {error ? (
+            <Box>No Product avaiable</Box>
+          ) : (
+            <>
+              <Grid container spacing={4}>
+                {/* Left Part: Image Slider */}
+                <Grid item xs={12} md={6}>
+                  <CustomSlider
+                    images={[
+                      { url: productData?.featureImage },
+                      ...productData?.images,
+                    ]}
+                  />
+                </Grid>
 
-            {/* Right Part: Product Details */}
-            <Grid item xs={12} md={6}>
-              {/* Product Name */}
-              <Typography variant="h4" sx={{ mb: 1 }}>
-                {productData?.name}
-              </Typography>
+                {/* Right Part: Product Details */}
+                <Grid item xs={12} md={6}>
+                  {/* Product Name */}
+                  <Typography variant="h4" sx={{ mb: 1 }}>
+                    {productData?.name}
+                  </Typography>
 
-              {/* Placeholder for Reviews */}
-              <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
-                <Rating
-                  name="size-large"
-                  precision={0.5}
-                  value={3.5}
-                  size="large"
-                  readOnly
-                />
-                <Typography variant="body1" sx={{ ml: 1 }}>
-                  (3.5/5.0) {/* Replace with dynamic reviews if available */}
-                </Typography>
-              </Box>
+                  {/* Placeholder for Reviews */}
+                  <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
+                    <Rating
+                      name="size-large"
+                      precision={0.5}
+                      value={3.5}
+                      size="large"
+                      readOnly
+                    />
+                    <Typography variant="body1" sx={{ ml: 1 }}>
+                      (3.5/5.0){" "}
+                      {/* Replace with dynamic reviews if available */}
+                    </Typography>
+                  </Box>
 
-              <Divider sx={{ mb: 2 }} />
+                  <Divider sx={{ mb: 2 }} />
 
-              {/* Product Price */}
+                  {/* Product Price */}
 
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <Typography variant="h6" sx={{ mr: 2 }}>
-                  Price:
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ color: discountPrice ? "red" : "black" }}
-                >
-                  {discountPrice ? `$${discountPrice}` : `$${price}`}
-                  {discountPrice && (
-                    <>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          textDecoration: "line-through",
-                          color: "grey",
-                          ml: 1,
-                        }}
-                        component="span"
-                      >
-                        ${price}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "green", ml: 1 }}
-                        component="span"
-                      >
-                        {`Save ${discountPercentage}%`}
-                      </Typography>
-                    </>
-                  )}
-                </Typography>
-              </Box>
-
-              <Divider sx={{ mb: 2 }} />
-
-              {/* Product Per Box*/}
-
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <Typography variant="h6" sx={{ mr: 2 }}>
-                  Per Box:
-                </Typography>
-                <Typography variant="h5" sx={{ color: "black" }}>
-                  20 pcs
-                </Typography>
-              </Box>
-
-              <Divider sx={{ mb: 2 }} />
-
-              {/* Quantity Selector */}
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <Typography variant="h6" sx={{ mr: 2 }}>
-                  Quantity:
-                </Typography>
-                <IconButton
-                  color="primary"
-                  onClick={handleDecrement}
-                  disabled={quantity === 1 && !productInCart}
-                >
-                  <Remove />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mx: 2,
-                    border: "1px solid #ccc",
-                    padding: "0 12px",
-                    borderRadius: "4px",
-                  }}
-                >
-                  {quantity}
-                </Typography>
-                <IconButton color="primary" onClick={handleIncrement}>
-                  <Add />
-                </IconButton>
-              </Box>
-
-              <Divider sx={{ mb: 2 }} />
-
-              {/* Add to Cart and Add to Wishlist Buttons */}
-              <Box display="flex" gap={2} mb={2}>
-                <Box display="flex" gap={2} mb={2}>
-                  {productInCart ? (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleRemoveFromCart}
-                      sx={{ fontWeight: 900 }}
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Typography variant="h6" sx={{ mr: 2 }}>
+                      Price:
+                    </Typography>
+                    <Typography
+                      variant="h5"
+                      sx={{ color: productData?.discount ? "red" : "black" }}
                     >
-                      Remove from Cart
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleAddToCart}
-                      sx={{ fontWeight: 900 }}
-                    >
-                      Add to Cart
-                    </Button>
-                  )}
-                </Box>
-                <Button variant="outlined" color="secondary">
-                  Add to Wishlist
-                </Button>
-              </Box>
-            </Grid>
-          </Grid>
+                      {productData?.discount
+                        ? `$${calculateDiscountPrice(
+                            productData?.price,
+                            productData?.discount
+                          )}`
+                        : `$${productData.price}`}
+                      {productData?.discount && (
+                        <>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              textDecoration: "line-through",
+                              color: "grey",
+                              ml: 1,
+                            }}
+                            component="span"
+                          >
+                            ${productData?.price}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            sx={{ color: "green", ml: 1 }}
+                            component="span"
+                          >
+                            {`Save ${productData?.discount}%`}
+                          </Typography>
+                        </>
+                      )}
+                    </Typography>
+                  </Box>
 
-          {/* Accordion Section */}
-          <Box sx={{ mt: 4 }}>
-            <Accordion defaultExpanded>
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="h5">Product Highlights</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{productDetails}</Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion defaultExpanded>
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="h5">Details</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{productDetails}</Typography>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion defaultExpanded>
-              <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="h5">Delivery and Returns</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{productDetails}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-        </>
+                  <Divider sx={{ mb: 2 }} />
+
+                  {/* Product Per Box*/}
+
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Typography variant="h6" sx={{ mr: 2 }}>
+                      Per Box:
+                    </Typography>
+                    <Typography variant="h5" sx={{ color: "black" }}>
+                      {productData.pcsPerBox}
+                    </Typography>
+                  </Box>
+
+                  <Divider sx={{ mb: 2 }} />
+
+                  {/* Quantity Selector */}
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Typography variant="h6" sx={{ mr: 2 }}>
+                      Quantity:
+                    </Typography>
+                    {productData.stock <= 0 ? (
+                      <Typography variant="body1" color="red">
+                        Stock Empty
+                      </Typography>
+                    ) : (
+                      <>
+                        {" "}
+                        <IconButton
+                          color="primary"
+                          onClick={handleDecrement}
+                          disabled={quantity === 1 && !productInCart}
+                        >
+                          <Remove />
+                        </IconButton>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            mx: 2,
+                            border: "1px solid #ccc",
+                            padding: "0 12px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          {quantity}
+                        </Typography>
+                        <IconButton
+                          color="primary"
+                          onClick={handleIncrement}
+                          disabled={quantity >= productData.stock}
+                        >
+                          <Add />
+                        </IconButton>
+                      </>
+                    )}
+                  </Box>
+
+                  <Divider sx={{ mb: 2 }} />
+
+                  {/* Add to Cart and Add to Wishlist Buttons */}
+                  <Box display="flex" gap={2} mb={2}>
+                    {productData?.stock <= 0 ? (
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ fontWeight: 900 }}
+                      >
+                        Stock Empty
+                      </Button>
+                    ) : (
+                      <>
+                        {" "}
+                        <Box display="flex" gap={2} mb={2}>
+                          {productInCart ? (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={handleRemoveFromCart}
+                              sx={{ fontWeight: 900 }}
+                            >
+                              Remove from Cart
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={handleAddToCart}
+                              sx={{ fontWeight: 900 }}
+                            >
+                              Add to Cart
+                            </Button>
+                          )}
+                        </Box>
+                      </>
+                    )}
+
+                    <Button variant="outlined" color="secondary">
+                      Add to Wishlist
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+
+              {/* Accordion Section */}
+              <Box sx={{ mt: 4 }}>
+                <Accordion defaultExpanded>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Typography variant="h5">Product Highlights</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>{productData?.productHighlights}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion defaultExpanded>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Typography variant="h5">Details</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>{productData?.description}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion defaultExpanded>
+                  <AccordionSummary expandIcon={<ExpandMore />}>
+                    <Typography variant="h5">Delivery and Returns</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>{productData?.deliveryReturnData}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              </Box>
+            </>
+          )}
+        </Box>
       )}
 
       {/* Product Sliders */}
@@ -273,6 +317,7 @@ const ProductDetails = () => {
           products={newproduct}
         />
       </Box>
+      {console.log(productData)}
     </Box>
   );
 };

@@ -13,19 +13,15 @@ import {
 } from "@mui/material";
 import { FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
+import { productImageLink } from "../../api";
 
 const ProductCardThree = ({ product }) => {
-  const { id, name, price, discount, image } = product;
+  const { id, name, price, discount, featureImage } = product;
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   const navigate = useNavigate();
-
-  function calculateDiscountPrice(price, discountPercentage) {
-    const discountAmount = (price * discountPercentage) / 100;
-    const discountedPrice = price - discountAmount;
-    return discountedPrice.toFixed(2); // Rounds to 2 decimal places
-  }
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -66,7 +62,7 @@ const ProductCardThree = ({ product }) => {
         <Box sx={{ position: "relative", height: "70%", overflow: "hidden" }}>
           <CardMedia
             component="img"
-            image={image}
+            image={productImageLink(featureImage)}
             alt={name}
             sx={{
               width: "100%",
@@ -206,7 +202,7 @@ const ProductCardThree = ({ product }) => {
           {/* Product Image */}
           <Box sx={{ textAlign: "center", marginBottom: 2 }}>
             <img
-              src={image}
+              src={featureImage}
               alt={name}
               style={{ width: "100%", height: "auto", maxHeight: 200 }}
             />

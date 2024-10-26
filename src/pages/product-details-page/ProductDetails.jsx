@@ -112,12 +112,12 @@ const ProductDetails = () => {
                 {/* Right Part: Product Details */}
                 <Grid item xs={12} md={6}>
                   {/* Product Name */}
-                  <Typography variant="h4" sx={{ mb: 1 }}>
+                  <Typography variant="h5" sx={{ mb: 1 }}>
                     {productData?.name}
                   </Typography>
 
                   {/* Placeholder for Reviews */}
-                  <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
+                  {/* <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                     <Rating
                       name="size-large"
                       precision={0.5}
@@ -127,9 +127,8 @@ const ProductDetails = () => {
                     />
                     <Typography variant="body1" sx={{ ml: 1 }}>
                       (3.5/5.0){" "}
-                      {/* Replace with dynamic reviews if available */}
                     </Typography>
-                  </Box>
+                  </Box> */}
 
                   <Divider sx={{ mb: 2 }} />
 

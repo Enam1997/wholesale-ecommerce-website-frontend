@@ -19,7 +19,6 @@ import { productImageLink } from "../../api";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { calculateTotalPrice } from "../../utils/orderPrice";
 
-
 const CartDrawer = ({ open, onClose, demoCartItems }) => {
   const [cart, setCart] = useState(demoCartItems);
   const { cartItems, updateCartQuantity, removeFromCart } = useCart();
@@ -54,7 +53,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: 350,
+          width: { sm: "100%", md:"350px" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -82,12 +81,11 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
         sx={{
           flexGrow: 1,
           overflowY: "auto",
-          padding: "16px",
         }}
       >
         <List>
           {cartItems.map((item, index) => (
-            <ListItem key={index} alignItems="flex-start" sx={{ mb: 2 }}>
+            <ListItem key={index} alignItems="flex-start" sx={{ mb: 1 }}>
               {console.log(cartItems)}
               <ListItemAvatar>
                 <Avatar
@@ -169,7 +167,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
           }}
         >
           <Typography variant="h6">Total</Typography>
-          <Typography variant="h6">
+          <Typography variant="body1">
             {" "}
             {`AED ${calculateTotalPrice(cartItems)}`}
           </Typography>
@@ -179,6 +177,15 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
           color="primary"
           fullWidth
           sx={{ fontWeight: 900 }}
+          onClick={() => handleDrawerClose("/cart")}
+        >
+          View Order Details
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 900, marginTop: "10px" }}
           onClick={() => handleDrawerClose("/checkout")}
         >
           Proceed to Checkout

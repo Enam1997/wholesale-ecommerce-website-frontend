@@ -31,7 +31,7 @@ const ProductDisplay = () => {
       setLoading(true);
       try {
         // Construct the query string dynamically
-        const query = `name=${filters.category}&category=${filters.category}&material=&discount=&newArrival=&page=${currentPage}&limit=12`;
+        const query = `name=${filters.category}&category=${filters.category}&material=&discount=&newArrival=&page=${currentPage}&limit=28`;
 
         const response = await axiosInstance.get(
           `/product/get-all-with-filter?${query}`

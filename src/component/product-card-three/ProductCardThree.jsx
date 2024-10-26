@@ -15,6 +15,7 @@ import { FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { productImageLink } from "../../api";
+import ProductQuickViewModal from "../product-quickview-modal/ProductQuickViewModal";
 
 const ProductCardThree = ({ product }) => {
   const { id, name, price, discount, featureImage, pcsPerBox } = product;
@@ -63,7 +64,7 @@ const ProductCardThree = ({ product }) => {
           <CardMedia
             component="img"
             image={productImageLink(featureImage)}
-            alt={name}
+            alt={name.substr(0, 15)}
             sx={{
               width: "100%",
               height: "100%",
@@ -198,90 +199,12 @@ const ProductCardThree = ({ product }) => {
         </IconButton>
       </Card>
 
-      {/* Modal */}
-      <Modal open={openModal} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            outline: "none",
-          }}
-        >
-          {/* Close Button */}
-          <IconButton
-            sx={{ position: "absolute", top: 8, right: 8 }}
-            onClick={handleCloseModal}
-          >
-            <Close />
-          </IconButton>
-
-          {/* Product Image */}
-          <Box sx={{ textAlign: "center", marginBottom: 2 }}>
-            <img
-              src={featureImage}
-              alt={name}
-              style={{ width: "100%", height: "auto", maxHeight: 200 }}
-            />
-          </Box>
-
-          {/* Product Name */}
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            {name}
-          </Typography>
-
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* Price */}
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Price: ${calculateDiscountPrice(price, discount) || price}
-          </Typography>
-
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* Quantity */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <Button
-              variant="contained"
-              onClick={() => handleQuantityChange("decrement")}
-            >
-              -
-            </Button>
-            <Typography>{quantity}</Typography>
-            <Button
-              variant="contained"
-              onClick={() => handleQuantityChange("increment")}
-            >
-              +
-            </Button>
-          </Box>
-
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* Total */}
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Total: $
-            {(
-              (calculateDiscountPrice(price, discount) || price) * quantity
-            ).toFixed(2)}
-          </Typography>
-
-          {/* Add to Cart Button */}
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ fontWeight: 900, marginTop: 2 }}
-          >
-            Add to Cart
-          </Button>
-        </Box>
-      </Modal>
+      <ProductQuickViewModal
+        product={product}
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        quantity={quantity}
+      />
     </>
   );
 };

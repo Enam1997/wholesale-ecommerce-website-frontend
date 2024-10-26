@@ -17,7 +17,7 @@ import axiosInstance from "../../../api";
 import ProductCardThreeSkeleton from "../../../component/product-card-three/ProductCardThreeSkelton";
 
 const ProductDisplay = () => {
-  const [sortValue, setSortValue] = useState("recomended");
+  const [sortValue, setSortValue] = useState("ASC");
   const { filters } = useFilterContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
@@ -31,7 +31,7 @@ const ProductDisplay = () => {
       setLoading(true);
       try {
         // Construct the query string dynamically
-        const query = `name=${filters.category}&category=${filters.category}&material=&discount=&newArrival=&page=${currentPage}&limit=28`;
+        const query = `name=&category=&material=&discount=&newArrival=&page=${currentPage}&limit=28`;
 
         const response = await axiosInstance.get(
           `/product/get-all-with-filter?${query}`
@@ -85,11 +85,8 @@ const ProductDisplay = () => {
               onChange={handleSortChange}
               variant="standard"
             >
-              <MenuItem value="recomended">Recomended</MenuItem>
-              <MenuItem value="discount">Discount</MenuItem>
-              <MenuItem value="newArrivals">New Arrivals</MenuItem>
-              <MenuItem value="priceLowHigh">Price (Low to High)</MenuItem>
-              <MenuItem value="priceHighLow">Price (High to Low)</MenuItem>
+              <MenuItem value="ASC">New</MenuItem>
+              <MenuItem value="Desc">Previos</MenuItem>
             </Select>
           </FormControl>
         </Box>

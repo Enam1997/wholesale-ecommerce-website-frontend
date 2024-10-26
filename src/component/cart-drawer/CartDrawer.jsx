@@ -53,7 +53,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: { sm: "100%", md:"350px" },
+          width: { sm: "100%", md: "350px" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -86,7 +86,6 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
         <List>
           {cartItems.map((item, index) => (
             <ListItem key={index} alignItems="flex-start" sx={{ mb: 1 }}>
-              {console.log(cartItems)}
               <ListItemAvatar>
                 <Avatar
                   alt={item.name}

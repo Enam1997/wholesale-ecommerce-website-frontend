@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -18,9 +18,15 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RecommendedProducts from "./RecommendedProducts";
 import { useFilterContext } from "../../../context/FilterContext";
+import axiosInstance from "../../../api";
 
 const FilterOptions = () => {
-  const { filters, setFilters, handleFilterChange } = useFilterContext();
+  const { filters, setFilters, handleFilterChange, clearFilter } =
+    useFilterContext();
+  const [categorySubcategory, setCategorySubcategory] = useState([]);
+  const [loadingCategorySubCategory, setLoadingCategorySubCategory] =
+    useState(true);
+  const [error, setError] = useState(null);
   // State management for different filters
   const [category, setCategory] = useState([]);
   const [subcategory, setSubcategory] = useState([]);
@@ -30,29 +36,89 @@ const FilterOptions = () => {
   const [occasion, setOccasion] = useState([]);
   const [material, setMaterial] = useState([]);
 
-  // Handler for category selection
+  useEffect(() => {
+    setLoadingCategorySubCategory(true);
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/subcategories/get-all-categories-subcategories`
+        );
+        setCategorySubcategory(response.data.data.categories);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoadingCategorySubCategory(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Depend on 'page' so it fetches again when page changes
+
   const handleCategoryChange = (event, subcategories) => {
+    console.log("Handle change subcategories");
+    console.log(subcategories);
+
     const value = event.target.name;
-    if (event.target.checked) {
-      setCategory([...category, value]);
-    } else {
-      setCategory(category.filter((item) => item !== value));
-      setSubcategory(subcategory.filter((sub) => !subcategories.includes(sub)));
-    }
+
+    setFilters((prev) => {
+      const isCategoryChecked = event.target.checked;
+      const currentCategories = Array.isArray(prev.category)
+        ? prev.category
+        : [];
+      const currentSubcategories = Array.isArray(prev.subcategory)
+        ? prev.subcategory
+        : [];
+
+      // Update categories based on checkbox state
+      const updatedCategories = isCategoryChecked
+        ? [...currentCategories, value]
+        : currentCategories.filter((item) => item !== value);
+
+      // Remove related subcategories if category is unchecked
+      const updatedSubcategories = isCategoryChecked
+        ? currentSubcategories
+        : currentSubcategories.filter((sub) => !subcategories.includes(sub));
+
+      return {
+        ...prev,
+        category: updatedCategories,
+        subcategory: updatedSubcategories,
+      };
+    });
   };
 
-  // Handler for subcategory selection
   const handleSubcategoryChange = (event, parentCategory) => {
     const value = event.target.name;
-    if (event.target.checked) {
-      setSubcategory([...subcategory, value]);
-      if (!category.includes(parentCategory)) {
-        setCategory([...category, parentCategory]);
-      }
-    } else {
-      setSubcategory(subcategory.filter((item) => item !== value));
-    }
+
+    setFilters((prev) => {
+      const isSubcategoryChecked = event.target.checked;
+      const currentCategories = Array.isArray(prev.category)
+        ? prev.category
+        : [];
+      const currentSubcategories = Array.isArray(prev.subcategory)
+        ? prev.subcategory
+        : [];
+
+      // Update the subcategories based on checkbox state
+      const updatedSubcategories = isSubcategoryChecked
+        ? [...currentSubcategories, value]
+        : currentSubcategories.filter((item) => item !== value);
+
+      // Add parent category if not present
+      const updatedCategories =
+        isSubcategoryChecked && !currentCategories.includes(parentCategory)
+          ? [...currentCategories, parentCategory]
+          : currentCategories;
+
+      return {
+        ...prev,
+        subcategory: updatedSubcategories,
+        category: updatedCategories,
+      };
+    });
   };
+
 
   // Handler for price range
   const handlePriceChange = (event) => {
@@ -117,136 +183,84 @@ const FilterOptions = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" mb={2}>
+        {console.log(filters)}
         <Typography variant="h6">Filter by:</Typography>
         <Button
           variant="text"
           color="secondary"
-          onClick={handleClearAll}
+          onClick={clearFilter}
           disabled={
-            !category.length &&
-            !subcategory.length &&
-            !price.min &&
-            !price.max &&
-            !discount.length &&
-            !newArrival.length &&
-            !occasion.length &&
-            !material.length
+            !filters.category.length &&
+            !filters.subcategory.length &&
+            !filters.minPrice &&
+            !filters.maxPrice &&
+            !filters.discount &&
+            !filters.newArrival.length &&
+            !filters.occasion.length &&
+            !filters.material.length
           }
         >
           Clear
         </Button>
       </Box>
+      {/* Fetch Category Implement */}
 
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography sx={{ fontWeight: 900 }}>Category</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={category.includes("Men")}
-                  onChange={(e) =>
-                    handleCategoryChange(e, ["Shirt", "Pant", "T-Shirt"])
-                  }
-                />
-              }
-              label="Men"
-              name="Men"
-            />
-            <FormGroup sx={{ pl: 2 }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Shirt")}
-                    onChange={(e) => handleSubcategoryChange(e, "Men")}
+          {categorySubcategory ? (
+            <>
+              {categorySubcategory.map((ctgy, index) => (
+                <FormGroup key={index}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={filters.category.includes(ctgy?.name)}
+                        onChange={(e) =>
+                          // handleCategoryChange(e, [...ctgy?.Subcategories])
+                          handleCategoryChange(
+                            e,
+                            ctgy?.Subcategories.map((sub) => sub.name)
+                          )
+                        }
+                      />
+                    }
+                    label={ctgy?.name}
+                    name={ctgy?.name}
                   />
-                }
-                label="Shirt"
-                name="Shirt"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Pant")}
-                    onChange={(e) => handleSubcategoryChange(e, "Men")}
-                  />
-                }
-                label="Pant"
-                name="Pant"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("T-Shirt")}
-                    onChange={(e) => handleSubcategoryChange(e, "Men")}
-                  />
-                }
-                label="T-Shirt"
-                name="T-Shirt"
-              />
-            </FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={category.includes("Women")}
-                  onChange={(e) =>
-                    handleCategoryChange(e, [
-                      "Plazo",
-                      "Burkha",
-                      "Salwar",
-                      "Bra",
-                    ])
-                  }
-                />
-              }
-              label="Women"
-              name="Women"
-            />
-            <FormGroup sx={{ pl: 2 }}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Plazo")}
-                    onChange={(e) => handleSubcategoryChange(e, "Women")}
-                  />
-                }
-                label="Plazo"
-                name="Plazo"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Burkha")}
-                    onChange={(e) => handleSubcategoryChange(e, "Women")}
-                  />
-                }
-                label="Burkha"
-                name="Burkha"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Salwar")}
-                    onChange={(e) => handleSubcategoryChange(e, "Women")}
-                  />
-                }
-                label="Salwar"
-                name="Salwar"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={subcategory.includes("Bra")}
-                    onChange={(e) => handleSubcategoryChange(e, "Women")}
-                  />
-                }
-                label="Bra"
-                name="Bra"
-              />
-            </FormGroup>
-          </FormGroup>
+                  {ctgy.Subcategories ? (
+                    <>
+                      <FormGroup sx={{ pl: 2 }}>
+                        {ctgy.Subcategories.map((subCtg, index) => (
+                          <FormControlLabel
+                            key={index}
+                            control={
+                              <Checkbox
+                                checked={filters.subcategory.includes(
+                                  subCtg?.name
+                                )}
+                                onChange={(e) =>
+                                  handleSubcategoryChange(e, ctgy?.name)
+                                }
+                              />
+                            }
+                            label={subCtg?.name}
+                            name={subCtg?.name}
+                          />
+                        ))}
+                      </FormGroup>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </FormGroup>
+              ))}
+            </>
+          ) : (
+            ""
+          )}
         </AccordionDetails>
       </Accordion>
 

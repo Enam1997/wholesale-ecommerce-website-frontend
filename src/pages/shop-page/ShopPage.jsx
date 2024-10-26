@@ -15,8 +15,8 @@ const ShopPage = () => {
   useEffect(() => {
     if (isFirstRender.current) {
       const newFilters = {
-        category: searchParams.get("category") || "",
-        subcategory: searchParams.get("subcategory") || "",
+        category: searchParams.get("category") || [],
+        subcategory: searchParams.get("subcategory") || [],
         minPrice: searchParams.get("minPrice") || 0,
         maxPrice: searchParams.get("maxPrice") || 0,
         discount: searchParams.get("discount") || 0,
@@ -38,8 +38,8 @@ const ShopPage = () => {
   useEffect(() => {
     // Prevent infinite loop: only update the search params if the filters are different
     const currentParams = {
-      category: searchParams.get("category") || "",
-      subcategory: searchParams.get("subcategory") || "",
+      category: searchParams.get("category") || [],
+      subcategory: searchParams.get("subcategory") || [],
       minPrice: searchParams.get("minPrice") || 0,
       maxPrice: searchParams.get("maxPrice") || 0,
       discount: searchParams.get("discount") || 0,

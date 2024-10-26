@@ -26,7 +26,7 @@ const HomePage = () => {
       <BestSellingProducts />
       <PromotionalCards />
       <BlogPreview />
-      <NewsletterSubscription />
+      {/* <NewsletterSubscription /> */}
     </div>
   );
 };

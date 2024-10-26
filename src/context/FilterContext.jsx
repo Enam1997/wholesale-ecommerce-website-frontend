@@ -26,8 +26,24 @@ const FilterProvider = ({ children }) => {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
+  const clearFilter = () => {
+    setFilters({
+      search: "",
+      category: [],
+      subcategory: [],
+      minPrice: 0,
+      maxPrice: 0,
+      discount: "",
+      newArrival: 0,
+      occasion: [],
+      material: [],
+    });
+  };
+
   return (
-    <FilterContext.Provider value={{ filters, setFilters, handleFilterChange }}>
+    <FilterContext.Provider
+      value={{ filters, setFilters, handleFilterChange, clearFilter }}
+    >
       {children}
     </FilterContext.Provider>
   );

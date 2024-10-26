@@ -17,7 +17,7 @@ import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { productImageLink } from "../../api";
 
 const ProductCardThree = ({ product }) => {
-  const { id, name, price, discount, featureImage } = product;
+  const { id, name, price, discount, featureImage, pcsPerBox } = product;
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -104,11 +104,23 @@ const ProductCardThree = ({ product }) => {
           >
             {name}
           </Typography>
+          {pcsPerBox ? (
+            <Typography
+              variant="body1"
+              sx={{
+                color: "grey",
+              }}
+            >
+              PCS: {pcsPerBox}
+            </Typography>
+          ) : (
+            ""
+          )}
 
           <Grid
             container
             justifyContent="space-between"
-            alignItems="center"
+            alignItems="end"
             sx={{ marginTop: "1rem" }}
           >
             <Typography
@@ -116,19 +128,29 @@ const ProductCardThree = ({ product }) => {
               sx={{ fontWeight: "bold", fontSize: "18px" }}
             >
               {discount ? (
-                <>
-                  <span>${calculateDiscountPrice(price, discount)}</span>
+                <Box
+                  display={"flex"}
+                  flexDirection={"column"}
+                  justifyContent={"start"}
+                >
                   <span
                     style={{
                       textDecoration: "line-through",
                       marginLeft: "0.5rem",
                       color: "red",
-                      fontSize: "15px",
+                      fontSize: "12px",
                     }}
                   >
                     ${price}
                   </span>
-                </>
+                  <span
+                    style={{
+                      fontSize: "16px",
+                    }}
+                  >
+                    AED{calculateDiscountPrice(price, discount)}
+                  </span>
+                </Box>
               ) : (
                 <span>${price}</span>
               )}

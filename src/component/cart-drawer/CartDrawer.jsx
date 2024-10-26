@@ -17,7 +17,8 @@ import { useNavigate } from "react-router-dom"; // to navigate between routes
 import { useCart } from "../../context/CartContext";
 import { productImageLink } from "../../api";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
-import { totalProductPrice } from "../../utils/orderPrice";
+import { calculateTotalPrice } from "../../utils/orderPrice";
+
 
 const CartDrawer = ({ open, onClose, demoCartItems }) => {
   const [cart, setCart] = useState(demoCartItems);
@@ -170,7 +171,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
           <Typography variant="h6">Total</Typography>
           <Typography variant="h6">
             {" "}
-            {`AED ${totalProductPrice(cartItems)}`}
+            {`AED ${calculateTotalPrice(cartItems)}`}
           </Typography>
         </Box>
         <Button

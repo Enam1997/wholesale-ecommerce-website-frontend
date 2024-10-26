@@ -14,25 +14,24 @@ import {
 } from "@mui/material";
 import { Close, Remove, Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom"; // to navigate between routes
+import { useCart } from "../../context/CartContext";
+import { productImageLink } from "../../api";
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 
-const CartDrawer = ({ open, onClose, cartItems }) => {
-  const [cart, setCart] = useState(cartItems);
+const CartDrawer = ({ open, onClose, demoCartItems }) => {
+  const [cart, setCart] = useState(demoCartItems);
+  const { cartItems, updateCartQuantity, removeFromCart } = useCart();
+
   const navigate = useNavigate();
 
-  const handleIncrement = (index) => {
-    const updatedCart = cart.map((item, i) =>
-      i === index ? { ...item, quantity: item.quantity + 1 } : item
-    );
-    setCart(updatedCart);
+  const handleIncrement = (item) => {
+    updateCartQuantity(item.id, item.quantity + 1);
   };
 
-  const handleDecrement = (index) => {
-    const updatedCart = cart.map((item, i) =>
-      i === index && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    );
-    setCart(updatedCart);
+  const handleDecrement = (item) => {
+    item.quantity > 1
+      ? updateCartQuantity(item.id, item.quantity - 1)
+      : removeFromCart(item.id);
   };
 
   const totalPrice = cart.reduce(
@@ -85,12 +84,13 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
         }}
       >
         <List>
-          {cart.map((item, index) => (
+          {cartItems.map((item, index) => (
             <ListItem key={index} alignItems="flex-start" sx={{ mb: 2 }}>
+              {console.log(cartItems)}
               <ListItemAvatar>
                 <Avatar
                   alt={item.name}
-                  src={item.image}
+                  src={productImageLink(item.featureImage)}
                   sx={{ width: 60, height: 60 }}
                 />
               </ListItemAvatar>
@@ -115,7 +115,9 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
                         mt: 1,
                       }}
                     >
-                      <Typography variant="body2">${item.price}</Typography>
+                      <Typography variant="body2">
+                        ${calculateDiscountPrice(item.price, item.discount)}
+                      </Typography>
                       <Box
                         sx={{
                           display: "flex",
@@ -124,7 +126,7 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
                         }}
                       >
                         <IconButton
-                          onClick={() => handleDecrement(index)}
+                          onClick={() => handleDecrement(item)}
                           size="small"
                         >
                           <Remove />
@@ -133,8 +135,9 @@ const CartDrawer = ({ open, onClose, cartItems }) => {
                           {item.quantity}
                         </Typography>
                         <IconButton
-                          onClick={() => handleIncrement(index)}
+                          onClick={() => handleIncrement(item)}
                           size="small"
+                          disabled={item.quantity >= item.stock}
                         >
                           <Add />
                         </IconButton>

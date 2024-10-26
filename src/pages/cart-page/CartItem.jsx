@@ -17,7 +17,6 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
         borderRadius: "8px",
       }}
     >
-      {console.log(item)}
       {/* Product Image */}
       <Box sx={{ width: "100px", height: "100px", mr: 3 }}>
         <img

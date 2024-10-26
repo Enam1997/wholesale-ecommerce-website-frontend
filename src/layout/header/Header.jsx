@@ -253,7 +253,7 @@ const Header = (props) => {
       <CartDrawer
         open={isCartOpen}
         onClose={handleCartClose}
-        cartItems={cartItems}
+        demoCartItems={cartItems}
         totalPrice={totalPrice}
       />
     </AppBar>

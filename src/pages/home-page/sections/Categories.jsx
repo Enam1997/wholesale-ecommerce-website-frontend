@@ -3,8 +3,10 @@ import { Box, Typography, ButtonBase, Grid } from "@mui/material";
 import allCategoryiamge from "../../../assets/category1.jpg";
 import { useNavigate } from "react-router-dom";
 import axiosInstance, { categoryImageLink } from "../../../api";
+import { useFilterContext } from "../../../context/FilterContext";
 
 const Categories = () => {
+  const { filters, setFilters } = useFilterContext();
   const [loading, setLoading] = useState(true);
   const [allCategories, setAllCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -29,6 +31,12 @@ const Categories = () => {
     fetchProducts();
   }, []); // Depend on 'page' so it fetches again when page changes
 
+  const onCateGoryChange = (category) => {
+    console.log(category);
+
+    navigate(`/shop?category=${category}`);
+  };
+
   return (
     <Box mt={6} sx={{ padding: "1rem 0" }}>
       {allCategories.length != 0 ? (
@@ -51,7 +59,7 @@ const Categories = () => {
                   },
                 },
               }}
-              onClick={() => navigate("/shop")}
+              onClick={() => onCateGoryChange("")}
             >
               <Box
                 className="overlay"
@@ -102,7 +110,7 @@ const Categories = () => {
                     },
                   },
                 }}
-                onClick={() => navigate("/shop")}
+                onClick={() => onCateGoryChange(category?.name)}
               >
                 <Box
                   className="overlay"

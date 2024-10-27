@@ -195,7 +195,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             ).toFixed(2)}
           </Typography>
 
-          {/* Add to Cart Button */}
+          {/* Add to Cart and details Button */}
           <Button
             variant="outlined"
             color="primary"
@@ -205,8 +205,6 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
           >
             View Full Details
           </Button>
-
-          {/* Add to Cart and Add to Wishlist Buttons */}
           <Box fullWidth mt={2}>
             {stock <= 0 ? (
               <Button

@@ -1,9 +1,12 @@
 import React from "react";
 import { Box, Typography, Button, Divider } from "@mui/material";
+import { calculateTotalOrderPrice } from "../../utils/orderPrice";
+import { useCart } from "../../context/CartContext";
 
-
-const OrderSummary = ({ summary }) => {
-  const { subtotal, shipping, taxes, total } = summary;
+const OrderSummary = () => {
+  const { cartItems } = useCart();
+  const { totalProductPrice, shippingPrice, taxes, totalPrice } =
+    calculateTotalOrderPrice(cartItems);
 
   return (
     <Box
@@ -15,12 +18,12 @@ const OrderSummary = ({ summary }) => {
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Subtotal</Typography>
-        <Typography variant="body1">${subtotal}</Typography>
+        <Typography variant="body1">${totalProductPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Shipping</Typography>
-        <Typography variant="body1">${shipping}</Typography>
+        <Typography variant="body1">${shippingPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
@@ -32,7 +35,7 @@ const OrderSummary = ({ summary }) => {
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
         <Typography variant="h6">Total</Typography>
-        <Typography variant="h6">${total}</Typography>
+        <Typography variant="h6">${totalPrice}</Typography>
       </Box>
 
       <Button variant="contained" color="primary" fullWidth>

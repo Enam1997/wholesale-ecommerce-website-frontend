@@ -11,6 +11,7 @@ import BlogPreview from "./sections/BlogPreview";
 import NewsletterSubscription from "./sections/NewsletterSubscription";
 
 import Hero from "./sections/Hero";
+import { useFilterContext } from "../../context/FilterContext";
 
 const HomePage = () => {
   return (

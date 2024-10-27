@@ -1,8 +1,13 @@
 import React from "react";
 import { Box, Typography, Button, Divider } from "@mui/material";
+import { useCart } from "../../context/CartContext";
+import { calculateTotalOrderPrice } from "../../utils/orderPrice";
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 
-const OrderSummaryCheckOut = ({ items, summary }) => {
-  const { subtotal, shipping, taxes, total } = summary;
+const OrderSummaryCheckOut = ({ items }) => {
+  const { cartItems } = useCart();
+  const { totalProductPrice, shippingPrice, taxes, totalPrice } =
+    calculateTotalOrderPrice(cartItems);
 
   return (
     <Box
@@ -13,16 +18,23 @@ const OrderSummaryCheckOut = ({ items, summary }) => {
       </Typography>
 
       {/* List of Products */}
-      {items.map((item, index) => (
+      {cartItems.map((item, index) => (
         <Box key={index}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <Typography variant="body2">
-              {item.name}{" "}
-              <span style={{ color: "gray" }}>x{item.quantity}</span>
+              {item.name.length > 20
+                ? `${item.name.slice(0, 20)}...`
+                : item.name}
+              {"  "}
+              <span style={{ color: "gray" }}>x {item.quantity}</span>
             </Typography>
-            <Typography variant="body1">$ 300</Typography>
+            <Typography variant="body1">
+              {(
+                (calculateDiscountPrice(item.price, item.discount) ||
+                  item.price) * item.quantity
+              ).toFixed(2)}
+            </Typography>
           </Box>
-          {index < items.length - 1 && <Divider sx={{ my: 2 }} />}
         </Box>
       ))}
 
@@ -31,12 +43,12 @@ const OrderSummaryCheckOut = ({ items, summary }) => {
       {/* Order Summary Details */}
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Subtotal</Typography>
-        <Typography variant="body1">${subtotal}</Typography>
+        <Typography variant="body1">${totalProductPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Shipping</Typography>
-        <Typography variant="body1">${shipping}</Typography>
+        <Typography variant="body1">${shippingPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
@@ -48,7 +60,7 @@ const OrderSummaryCheckOut = ({ items, summary }) => {
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
         <Typography variant="h6">Total</Typography>
-        <Typography variant="h6">${total}</Typography>
+        <Typography variant="h6">${totalPrice}</Typography>
       </Box>
     </Box>
   );

@@ -36,7 +36,7 @@ const CartPage = () => {
 
         {/* Right Side: Order Summary */}
         <Grid item xs={12} md={4}>
-          <OrderSummary summary={orderSummary} />
+          <OrderSummary />
         </Grid>
       </Grid>
 

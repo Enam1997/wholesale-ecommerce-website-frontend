@@ -73,7 +73,7 @@ const CheckoutPage = () => {
 
         {/* Right Side: Order Summary */}
         <Grid item xs={12} md={4}>
-          <OrderSummaryCheckOut items={orderItems} summary={orderSummary} />
+          <OrderSummaryCheckOut items={orderItems} />
         </Grid>
       </Grid>
     </Box>

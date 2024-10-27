@@ -2,11 +2,16 @@
 import axios from "axios";
 
 export const baseURLLink = "http://localhost:5000/api/v1";
-export const productimageBaseURLLink =
-  "http://localhost:5000/uploads/product-images";
+export const imageBaseURLLink = "http://localhost:5000/uploads";
 
 export const productImageLink = (imageLink) =>
-  `${productimageBaseURLLink}/${imageLink}`;
+  `${imageBaseURLLink}/product-images/${imageLink}`;
+
+export const homePageSliderImageLink = (imageLink) =>
+  `${imageBaseURLLink}/home-slider-images/${imageLink}`;
+
+export const categoryImageLink = (imageLink) =>
+  `${imageBaseURLLink}/category-images/${imageLink}`;
 
 const axiosInstance = axios.create({
   baseURL: baseURLLink,

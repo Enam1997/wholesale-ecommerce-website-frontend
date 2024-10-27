@@ -122,7 +122,7 @@ const ProductCardThree = ({ product }) => {
             container
             justifyContent="space-between"
             alignItems="end"
-            sx={{ marginTop: "1rem" }}
+            sx={{ marginTop: "" }}
           >
             <Typography
               variant="body1"
@@ -137,9 +137,8 @@ const ProductCardThree = ({ product }) => {
                   <span
                     style={{
                       textDecoration: "line-through",
-                      marginLeft: "0.5rem",
                       color: "red",
-                      fontSize: "12px",
+                      fontSize: "14px",
                     }}
                   >
                     ${price}
@@ -149,7 +148,7 @@ const ProductCardThree = ({ product }) => {
                       fontSize: "16px",
                     }}
                   >
-                    AED{calculateDiscountPrice(price, discount)}
+                    AED {calculateDiscountPrice(price, discount)}
                   </span>
                 </Box>
               ) : (

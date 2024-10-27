@@ -18,7 +18,7 @@ import ProductCardThreeSkeleton from "../../../component/product-card-three/Prod
 
 const ProductDisplay = () => {
   const [sortValue, setSortValue] = useState("ASC");
-  const { filters } = useFilterContext();
+  const { filters, setFilters, handleFilterChange } = useFilterContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -53,7 +53,8 @@ const ProductDisplay = () => {
   }, [currentPage, filters]); // Depend on 'page' so it fetches again when page changes
 
   const handleSortChange = (event) => {
-    setSortValue(event.target.value);
+    handleFilterChange(event);
+
     // Implement sorting logic based on selected value
   };
 
@@ -80,13 +81,14 @@ const ProductDisplay = () => {
           <FormControl sx={{ minWidth: 150 }}>
             <Select
               labelId="sort-by-label"
-              value={sortValue}
+              value={filters?.sortOrder}
               label="Sort By"
               onChange={handleSortChange}
               variant="standard"
+              name="sortOrder"
             >
               <MenuItem value="ASC">New</MenuItem>
-              <MenuItem value="Desc">Previos</MenuItem>
+              <MenuItem value="DESC">Previos</MenuItem>
             </Select>
           </FormControl>
         </Box>

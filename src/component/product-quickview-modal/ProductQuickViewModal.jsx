@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -30,6 +30,13 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
   const [quantity, setQuantity] = useState(1);
   const { addToCart, removeFromCart, updateCartQuantity, isInCart, cartItems } =
     useCart();
+
+  useEffect(() => {
+    if (isInCart(id)) {
+      const item = cartItems.find((item) => item?.id === id);
+      setQuantity(item.quantity);
+    }
+  }, [cartItems, product]);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);

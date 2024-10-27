@@ -3,11 +3,13 @@ import Slider from "react-slick";
 import { Box } from "@mui/material";
 import { slides } from "../../../demo-data/slides";
 import axiosInstance, { homePageSliderImageLink } from "../../../api";
+import { Link, useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const [loading, setLoading] = useState(true);
   const [allSlides, setAllSlides] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,28 +50,31 @@ const Hero = () => {
       {allSlides.length != 0 ? (
         <Slider {...settings}>
           {allSlides.map((slide) => (
-            <Box
-              key={slide.id}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: { xs: 300, sm: 400, lg: 500 }, // Set height based on screen size
-                backgroundColor: "#f0f0f0", // Fallback background color
-              }}
-            >
+            <Link to={`${slide.targetLink}`}>
               <Box
-                component="img"
-                src={homePageSliderImageLink(slide.image)}
-                alt={slide.alt}
+                key={slide.id}
                 sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
                   width: "100%",
-                  height: "100%",
-                  objectFit: "fill", // Ensure the image covers the entire box
+                  height: { xs: 300, sm: 400, lg: 500 }, // Set height based on screen size
+                  backgroundColor: "#f0f0f0", // Fallback background color
                 }}
-              />
-            </Box>
+              >
+                <Box
+                  component="img"
+                  src={homePageSliderImageLink(slide.image)}
+                  // onClick={() => navigate(`${slide.targetLink}`)}
+                  alt={slide?.alt}
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "fill", // Ensure the image covers the entire box
+                  }}
+                />
+              </Box>
+            </Link>
           ))}
         </Slider>
       ) : (

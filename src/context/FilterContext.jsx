@@ -12,7 +12,7 @@ const FilterProvider = ({ children }) => {
     search: "",
     category: [],
     subcategory: [],
-    minPrice: 20,
+    minPrice: 0,
     maxPrice: 100000,
     discount: "",
     newArrival: 0,

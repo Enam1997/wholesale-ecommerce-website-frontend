@@ -18,7 +18,7 @@ const ShopPage = () => {
         category: searchParams.get("category") || [],
         subcategory: searchParams.get("subcategory") || [],
         minPrice: searchParams.get("minPrice") || 0,
-        maxPrice: searchParams.get("maxPrice") || 0,
+        maxPrice: searchParams.get("maxPrice") || 100000,
         discount: searchParams.get("discount") || 0,
         newArrival: searchParams.get("newArrival") || 0,
         occasion: searchParams.get("occasion") || "",

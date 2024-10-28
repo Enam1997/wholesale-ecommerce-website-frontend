@@ -28,9 +28,6 @@ const FilterOptions = () => {
     useState(true);
   const [error, setError] = useState(null);
   // State management for different filters
-  const [category, setCategory] = useState([]);
-  const [subcategory, setSubcategory] = useState([]);
-  const [price, setPrice] = useState({ min: "", max: "" });
   const [discount, setDiscount] = useState([]);
   const [newArrival, setNewArrival] = useState([]);
   const [occasion, setOccasion] = useState([]);
@@ -119,12 +116,6 @@ const FilterOptions = () => {
     });
   };
 
-  // Handler for price range
-  const handlePriceChange = (event) => {
-    const { name, value } = event.target;
-    setPrice({ ...price, [name]: value });
-  };
-
   // Handler for discount selection
   const handleDiscountChange = (event) => {
     console.log("dicount change");
@@ -168,17 +159,6 @@ const FilterOptions = () => {
     }
   };
 
-  // Handler for clearing all filters
-  const handleClearAll = () => {
-    setCategory([]);
-    setSubcategory([]);
-    setPrice({ min: "", max: "" });
-    setDiscount([]);
-    setNewArrival([]);
-    setOccasion([]);
-    setMaterial([]);
-  };
-
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" mb={2}>
@@ -196,7 +176,9 @@ const FilterOptions = () => {
             !filters.discount &&
             !filters.newArrival.length &&
             !filters.occasion.length &&
-            !filters.material.length
+            !filters.material.length &&
+            filters.maxPrice == 10000 &&
+            filters.minPrice == 0
           }
         >
           Clear
@@ -306,7 +288,6 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Discount</Typography>
         </AccordionSummary>
         <AccordionDetails>
-         
           <FormControl component="fieldset">
             <RadioGroup
               name="discount"
@@ -341,44 +322,28 @@ const FilterOptions = () => {
         </AccordionDetails>
       </Accordion>
 
-      {/* New Arrival Filter */}
+      {/* NewArrival Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography sx={{ fontWeight: 900 }}>New Arrival</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={newArrival.includes("Last 10 days")}
-                  onChange={handleNewArrivalChange}
+          <FormControl component="fieldset">
+            <RadioGroup
+              name="newArrival"
+              value={newArrival}
+              onChange={handleFilterChange}
+            >
+              {[10, 20, 30].map((per) => (
+                <FormControlLabel
+                  key={per}
+                  value={per}
+                  control={<Radio checked={filters.newArrival == per} />}
+                  label={`Lest Than ${per} days`}
                 />
-              }
-              label="Last 10 days"
-              name="Last 10 days"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={newArrival.includes("Last 20 Days")}
-                  onChange={handleNewArrivalChange}
-                />
-              }
-              label="Last 20 Days"
-              name="Last 20 Days"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={newArrival.includes("Last 30 Days")}
-                  onChange={handleNewArrivalChange}
-                />
-              }
-              label="Last 30 Days"
-              name="Last 30 Days"
-            />
-          </FormGroup>
+              ))}
+            </RadioGroup>
+          </FormControl>
         </AccordionDetails>
       </Accordion>
 
@@ -388,99 +353,47 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={occasion.includes("Casual")}
-                  onChange={handleOccasionChange}
+          <FormControl component="fieldset">
+            <RadioGroup
+              name="occasion"
+              value={occasion}
+              onChange={handleFilterChange}
+            >
+              {["Casual", "Formal", "Party", "Sports"].map((per) => (
+                <FormControlLabel
+                  key={per}
+                  value={per}
+                  control={<Radio checked={filters.occasion == per} />}
+                  label={`${per}`}
                 />
-              }
-              label="Casual"
-              name="Casual"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={occasion.includes("Formal")}
-                  onChange={handleOccasionChange}
-                />
-              }
-              label="Formal"
-              name="Formal"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={occasion.includes("Party")}
-                  onChange={handleOccasionChange}
-                />
-              }
-              label="Party"
-              name="Party"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={occasion.includes("Sports")}
-                  onChange={handleOccasionChange}
-                />
-              }
-              label="Sports"
-              name="Sports"
-            />
-          </FormGroup>
+              ))}
+            </RadioGroup>
+          </FormControl>
         </AccordionDetails>
       </Accordion>
 
       {/* Material Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Material</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={material.includes("Cotton")}
-                  onChange={handleMaterialChange}
+          <FormControl component="fieldset">
+            <RadioGroup
+              name="material"
+              value={material}
+              onChange={handleFilterChange}
+            >
+              {["Cotton", "Polyester", "Leather", "Wool"].map((per) => (
+                <FormControlLabel
+                  key={per}
+                  value={per}
+                  control={<Radio checked={filters.material == per} />}
+                  label={`${per}`}
                 />
-              }
-              label="Cotton"
-              name="Cotton"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={material.includes("Polyester")}
-                  onChange={handleMaterialChange}
-                />
-              }
-              label="Polyester"
-              name="Polyester"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={material.includes("Leather")}
-                  onChange={handleMaterialChange}
-                />
-              }
-              label="Leather"
-              name="Leather"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={material.includes("Wool")}
-                  onChange={handleMaterialChange}
-                />
-              }
-              label="Wool"
-              name="Wool"
-            />
-          </FormGroup>
+              ))}
+            </RadioGroup>
+          </FormControl>
         </AccordionDetails>
       </Accordion>
 

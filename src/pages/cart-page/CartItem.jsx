@@ -37,7 +37,9 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
           {name}
         </Typography>
         <Typography variant="body2" sx={{ color: "gray", mb: 2 }}>
-          {description}
+          {description.length > 50
+            ? `${description.slice(0, 50)}...`
+            : description}
         </Typography>
 
         {/* Quantity Control */}

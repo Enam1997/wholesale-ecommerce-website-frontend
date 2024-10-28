@@ -9,6 +9,8 @@ const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
   const [loading, setLoading] = useState(true);
+  const [loginError, setLoginError] = useState();
+  const [registerError, setRegisterError] = useState();
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem("accessToken") || null
   );
@@ -41,12 +43,10 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(loginUser));
       setAccessToken(token);
       setUser(loginUser);
-      console.log(loginUser);
-
       setLoading(false);
       return true;
     } catch (error) {
-      console.error("Login failed", error);
+      setLoginError(error.response.data.error);
       setLoading(false);
     }
   };
@@ -70,7 +70,12 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
       return true;
     } catch (error) {
-      console.error("Registration failed", error);
+      if (String(error.response.data.error) == "Validation error") {
+        setRegisterError("This Email Is Already Used");
+      } else {
+        setRegisterError(error.response.data.error);
+      }
+      console.log(error.response.data.error);
       setLoading(false);
     }
   };
@@ -147,6 +152,8 @@ const AuthProvider = ({ children }) => {
         handleRegisterClose,
         backdropLoadingText,
         setBackdropLoadingText,
+        loginError,
+        registerError,
       }}
     >
       {children}

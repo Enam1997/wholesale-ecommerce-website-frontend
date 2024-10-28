@@ -143,11 +143,11 @@ const ProductDetails = () => {
                       sx={{ color: productData?.discount ? "red" : "black" }}
                     >
                       {productData?.discount
-                        ? `$${calculateDiscountPrice(
+                        ? `AED ${calculateDiscountPrice(
                             productData?.price,
                             productData?.discount
                           )}`
-                        : `$${productData.price}`}
+                        : `AED ${productData.price}`}
                       {productData?.discount && (
                         <>
                           <Typography
@@ -159,7 +159,7 @@ const ProductDetails = () => {
                             }}
                             component="span"
                           >
-                            ${productData?.price}
+                            AED {productData?.price}
                           </Typography>
                           <Typography
                             variant="body2"
@@ -282,7 +282,7 @@ const ProductDetails = () => {
                     <Typography variant="h5">Product Highlights</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>{productData?.productHighlights}</Typography>
+                    <Typography>{productData?.productHeighlight}</Typography>
                   </AccordionDetails>
                 </Accordion>
                 <Accordion defaultExpanded>
@@ -298,7 +298,9 @@ const ProductDetails = () => {
                     <Typography variant="h5">Delivery and Returns</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>{productData?.deliveryReturnData}</Typography>
+                    <Typography>
+                      {productData?.deliveryReturnDetails}
+                    </Typography>
                   </AccordionDetails>
                 </Accordion>
               </Box>
@@ -316,7 +318,6 @@ const ProductDetails = () => {
           products={newproduct}
         />
       </Box>
-      {console.log(productData)}
     </Box>
   );
 };

@@ -8,7 +8,7 @@ import ProductCardThree from "../product-card-three/ProductCardThree";
 
 const ProductsSliderOne = ({ title, products }) => {
   const settings = {
-    dots: true, // Hide dots
+    // dots: true, // Hide dots
     arrows: true,
     infinite: true,
     speed: 500,

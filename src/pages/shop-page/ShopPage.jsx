@@ -23,6 +23,7 @@ const ShopPage = () => {
         newArrival: searchParams.get("newArrival") || 0,
         occasion: searchParams.get("occasion") || "",
         material: searchParams.get("material") || "",
+        search: searchParams.get("search") || "",
       };
 
       // Update filters only if there's a difference from current filters
@@ -46,6 +47,7 @@ const ShopPage = () => {
       newArrival: searchParams.get("newArrival") || 0,
       occasion: searchParams.get("occasion") || "",
       material: searchParams.get("material") || "",
+      search: searchParams.get("search") || "",
     };
 
     if (JSON.stringify(currentParams) !== JSON.stringify(filters)) {
@@ -58,6 +60,7 @@ const ShopPage = () => {
         newArrival: filters.newArrival,
         occasion: filters.occasion,
         material: filters.material,
+        search: filters.search,
       });
     }
   }, [filters, searchParams, setSearchParams]);

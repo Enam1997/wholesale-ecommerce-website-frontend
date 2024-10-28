@@ -2,11 +2,18 @@ import React, { useState, useEffect } from "react";
 import { TextField, InputAdornment, Button } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
+import { useFilterContext } from "../../context/FilterContext";
+import { useNavigate } from "react-router-dom";
 
 const SearchInput = () => {
+  const { filters, setFilters, handleFilterChange, clearFilter } =
+    useFilterContext();
+  const [searchData, setSearcData] = useState("");
+
   const [placeholder, setPlaceholder] = useState("");
   const phrases = "  Search here any product which you want ...";
   let charIndex = 0;
+  const navigate = useNavigate();
 
   // Use Media Query to detect screen size
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -31,11 +38,28 @@ const SearchInput = () => {
     return () => clearInterval(typingInterval);
   }, []);
 
+  // Handler for discount selection
+  const handlePriceChange = () => {
+    setFilters((prev) => {
+      return {
+        ...prev,
+        search: searchData,
+      };
+    });
+    navigate("/shop");
+  };
+
+  const handleSearchDataChange = (event) => {
+    setSearcData(event.target.value);
+  };
+
   return (
     <TextField
+      name="search"
       variant="outlined"
       fullWidth
       placeholder={placeholder}
+      onChange={handleSearchDataChange}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
@@ -51,6 +75,7 @@ const SearchInput = () => {
 
                   fontWeight: "900",
                 }}
+                onClick={handlePriceChange}
               >
                 Search
               </Button>

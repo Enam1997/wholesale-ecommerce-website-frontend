@@ -119,7 +119,6 @@ const FilterOptions = () => {
     });
   };
 
-
   // Handler for price range
   const handlePriceChange = (event) => {
     const { name, value } = event.target;
@@ -307,45 +306,22 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Discount</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormGroup name="discount">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={discount.includes("10%")}
-                  onChange={handleDiscountChange}
-                />
-              }
-              label="10%"
-              name="10%"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={discount.includes("20%")}
-                  onChange={handleDiscountChange}
-                />
-              }
-              label="20%"
-              name="20%"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={discount.includes("30%")}
-                  onChange={handleDiscountChange}
-                />
-              }
-              label="30%"
-              name="30%"
-            />
-          </FormGroup>
+         
           <FormControl component="fieldset">
             <RadioGroup
               name="discount"
               value={discount}
               onChange={handleFilterChange}
             >
-              <FormControlLabel
+              {[10, 20, 30, 40, 50, 60, 70, 80, 90].map((per) => (
+                <FormControlLabel
+                  key={per}
+                  value={per}
+                  control={<Radio checked={filters.discount == per} />}
+                  label={`Lest Than ${per}%`}
+                />
+              ))}
+              {/* <FormControlLabel
                 value="10%"
                 control={<Radio checked={filters.discount === "10%"} />}
                 label="10%"
@@ -359,7 +335,7 @@ const FilterOptions = () => {
                 value="30%"
                 control={<Radio checked={filters.discount === "30%"} />}
                 label="30%"
-              />
+              /> */}
             </RadioGroup>
           </FormControl>
         </AccordionDetails>

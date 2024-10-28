@@ -10,6 +10,10 @@ import {
   Divider,
   CircularProgress,
   Backdrop,
+  Collapse,
+  Alert,
+  IconButton,
+  AlertTitle,
 } from "@mui/material";
 import UserInfoForm from "./UserInfoForm";
 import DeliveryInfoForm from "./DeliveryInfoForm";
@@ -23,6 +27,7 @@ import { AuthContext } from "../../context/AuthContext";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import CompleteOrderSummary from "../../component/complete-order-summary-table/CompleteOrderSummary";
 import { calculateTotalOrderPrice } from "../../utils/orderPrice";
+import { Close } from "@mui/icons-material";
 
 const steps = ["User Info", "Delivery Info", "Payment", "Confirmation"];
 
@@ -33,7 +38,8 @@ const CheckoutPage = () => {
   const [orderStart, setOrderStart] = useState(false);
   const [orderConfirm, setOrderConfirm] = useState(false);
   const [orderConfirmData, setOrderConfirmData] = useState({});
-  const [orderError, setOrderError] = useState();
+  const [orderError, setOrderError] = useState(false);
+  const [orderErrorMessage, setOrderErrorMessage] = useState();
 
   const [activeStep, setActiveStep] = useState(3);
 
@@ -57,6 +63,7 @@ const CheckoutPage = () => {
       billingZip: "",
     },
   });
+  // Form Error
   const [errors, setErrors] = useState({});
 
   const handleOrder = async () => {
@@ -94,8 +101,10 @@ const CheckoutPage = () => {
       setOrderConfirm(true);
       setOrderStart(false);
     } catch (error) {
-      console.log(error);
-      setOrderError(error.message);
+      setOrderError(true);
+      setOrderStart(false);
+      setActiveStep(0);
+      setOrderErrorMessage(error.response.data.errors);
     }
   };
 
@@ -192,6 +201,27 @@ const CheckoutPage = () => {
               <Typography variant="h4" sx={{ mb: 4 }}>
                 Checkout
               </Typography>
+              <Collapse in={orderError}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      color="inherit"
+                      size="small"
+                      onClick={() => {
+                        setOrderError(false);
+                      }}
+                    >
+                      <Close fontSize="inherit" />
+                    </IconButton>
+                  }
+                  sx={{ mb: 2 }}
+                >
+                  <AlertTitle>Error</AlertTitle>
+                  {orderErrorMessage} Please Try Again
+                </Alert>
+              </Collapse>
               <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
                 {steps.map((label) => (
                   <Step key={label}>

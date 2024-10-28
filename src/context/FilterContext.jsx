@@ -33,7 +33,7 @@ const FilterProvider = ({ children }) => {
       category: [],
       subcategory: [],
       minPrice: 0,
-      maxPrice: 0,
+      maxPrice: 100000,
       discount: "",
       newArrival: 0,
       occasion: [],

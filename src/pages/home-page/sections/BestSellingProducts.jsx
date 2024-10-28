@@ -20,6 +20,7 @@ const BestSellingProducts = () => {
           `/product/get-10-best-selling-products`
         );
         setAllBestSellingProducts(response.data.data.bestSellingProductsData);
+        console.log(response.data.data.bestSellingProductsData);
       } catch (err) {
         console.log(err.message);
         setError(err.message);

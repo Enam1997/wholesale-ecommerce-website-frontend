@@ -7,12 +7,18 @@ import {
   DialogTitle,
   Button,
   TextField,
+  Typography,
 } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext.jsx";
 
 const RegisterDialog = () => {
-  const { register, registerOpen, handleRegisterClose } =
-    useContext(AuthContext);
+  const {
+    register,
+    registerOpen,
+    handleRegisterClose,
+    handleLoginOpen,
+    registerError,
+  } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,6 +26,11 @@ const RegisterDialog = () => {
     e.preventDefault();
     const isSuccess = await register(email, password);
     if (isSuccess) handleRegisterClose(); // Close the dialog on successful registration
+  };
+
+  const handleLoginClick = () => {
+    handleLoginOpen();
+    handleRegisterClose(); // Close the regoster dialog
   };
 
   return (
@@ -47,6 +58,20 @@ const RegisterDialog = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {registerError && (
+            <Typography variant="body2" color="secondary" align="center">
+              {registerError}
+            </Typography>
+          )}
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            align="center"
+            sx={{ mt: 2, cursor: "pointer" }}
+            onClick={handleLoginClick}
+          >
+            Alredy have an account? Please login
+          </Typography>
           <DialogActions>
             <Button onClick={handleRegisterClose}>Cancel</Button>
             <Button type="submit" color="primary" variant="contained">

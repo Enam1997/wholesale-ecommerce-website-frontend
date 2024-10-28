@@ -9,6 +9,7 @@ import {
   Menu,
   MenuItem,
   Slide,
+  Badge,
 } from "@mui/material";
 import {
   ShoppingCart,
@@ -21,7 +22,7 @@ import CartDrawer from "../../component/cart-drawer/CartDrawer";
 import { useNavigate } from "react-router-dom"; // to navigate between routes
 import "./header.css";
 import { AuthContext } from "../../context/AuthContext";
-
+import { useCart } from "../../context/CartContext";
 
 const Header = (props) => {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -30,6 +31,7 @@ const Header = (props) => {
 
   const { user, handleLoginOpen, handleRegisterOpen, accessToken, logout } =
     useContext(AuthContext);
+  const { cartItems } = useCart();
 
   const navigate = useNavigate();
 
@@ -60,29 +62,27 @@ const Header = (props) => {
   };
 
   // Sample cart items
-  const cartItems = [
-    {
-      name: "Product 1",
-      price: 50,
-      quantity: 1,
-      image:
-        "https://img.freepik.com/premium-photo/tattooed-man-wearing-sunglasses-white-tshirt-walks-down-cobblestone-street_862489-39720.jpg",
-    },
-    {
-      name: "Product 2",
-      price: 30,
-      quantity: 2,
-      image:
-        "https://s3.ap-south-1.amazonaws.com/goshop.com.bd/uploads/all/dr4lQQ0QqS9BtB5EaCoaWnRreWnG0G1rq2OLT7RH.jpg",
-    },
-  ];
+  // const cartItems = [
+  //   {
+  //     name: "Product 1",
+  //     price: 50,
+  //     quantity: 1,
+  //     image:
+  //       "https://img.freepik.com/premium-photo/tattooed-man-wearing-sunglasses-white-tshirt-walks-down-cobblestone-street_862489-39720.jpg",
+  //   },
+  //   {
+  //     name: "Product 2",
+  //     price: 30,
+  //     quantity: 2,
+  //     image:
+  //       "https://s3.ap-south-1.amazonaws.com/goshop.com.bd/uploads/all/dr4lQQ0QqS9BtB5EaCoaWnRreWnG0G1rq2OLT7RH.jpg",
+  //   },
+  // ];
 
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-
-
 
   return (
     <AppBar position="sticky" sx={{ backgroundColor: "#fff", boxShadow: 1 }}>
@@ -119,7 +119,9 @@ const Header = (props) => {
               <Favorite />
             </IconButton>
             <IconButton onClick={handleCartOpen}>
-              <ShoppingCart />
+              <Badge color="primary" badgeContent={cartItems?.length}>
+                <ShoppingCart />
+              </Badge>
             </IconButton>
 
             {/*Logged in user account menu Account Menu */}

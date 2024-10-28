@@ -17,7 +17,7 @@ function calculateTotalProductPrice(cartItems) {
 
 function calculateTotalOrderPrice(cartItems) {
   const productPrice = calculateTotalProductPrice(cartItems);
-  const shippingPrice = 20;
+  const shippingPrice = 0;
   const taxes = 10;
 
   // Ensure the values are numbers

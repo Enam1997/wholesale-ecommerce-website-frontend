@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Drawer,
   Box,
@@ -18,9 +18,11 @@ import { useCart } from "../../context/CartContext";
 import { productImageLink } from "../../api";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { calculateTotalProductPrice } from "../../utils/orderPrice";
+import { AuthContext } from "../../context/AuthContext";
 
 const CartDrawer = ({ open, onClose, demoCartItems }) => {
   const [cart, setCart] = useState(demoCartItems);
+  const { user, handleLoginOpen, handleRegisterOpen } = useContext(AuthContext);
   const { cartItems, updateCartQuantity, removeFromCart } = useCart();
 
   const navigate = useNavigate();
@@ -44,6 +46,16 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
   const handleDrawerClose = (route) => {
     navigate(route); // Navigate to the corresponding route
     onClose(); // Close the menu
+  };
+
+  const handleCheckOutButtonClick = (route) => {
+    if (user) {
+      navigate(route); // Navigate to the corresponding route
+      onClose(); // Close the menu
+    } else {
+      handleLoginOpen();
+      onClose();
+    }
   };
 
   return (
@@ -190,7 +202,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
           color="primary"
           fullWidth
           sx={{ fontWeight: 900, marginTop: "10px" }}
-          onClick={() => handleDrawerClose("/checkout")}
+          onClick={() => handleCheckOutButtonClick("/checkout")}
         >
           Proceed to Checkout
         </Button>

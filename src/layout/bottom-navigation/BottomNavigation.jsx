@@ -5,6 +5,7 @@ import {
   ShoppingCart,
   Favorite,
   AccountCircle,
+  ShoppingBag,
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext.jsx";
@@ -67,7 +68,7 @@ const BottomNav = () => {
       }}
     >
       <BottomNavigationAction label="Home" icon={<Home />} />
-      <BottomNavigationAction label="Shop" icon={<Favorite />} />
+      <BottomNavigationAction label="Shop" icon={<ShoppingBag />} />
       <BottomNavigationAction label="Cart" icon={<ShoppingCart />} />
       <BottomNavigationAction label="Profile" icon={<AccountCircle />} />
     </BottomNavigation>

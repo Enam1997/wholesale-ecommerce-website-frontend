@@ -3,14 +3,16 @@ import { Box, Typography, Divider } from "@mui/material";
 import { orderItems, orderSummary } from "../../demo-data/checkoutPageData";
 import { calculateTotalOrderPrice } from "../../utils/orderPrice";
 import { useCart } from "../../context/CartContext";
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 
-const Confirmation = () => {
+const Confirmation = ({ data }) => {
   const { cartItems } = useCart();
   const { totalProductPrice, shippingPrice, taxes, totalPrice } =
     calculateTotalOrderPrice(cartItems);
 
   return (
     <Box>
+      {console.log(data)}
       <Typography variant="h6" sx={{ mb: 2 }}>
         Confirmation
       </Typography>
@@ -31,7 +33,13 @@ const Confirmation = () => {
                 {"  "}
                 <span style={{ color: "gray" }}>x {item.quantity}</span>
               </Typography>
-              <Typography variant="body1">${item.totalPrice}</Typography>
+              <Typography variant="body1">
+                AED{" "}
+                {(
+                  (calculateDiscountPrice(item.price, item.discount) ||
+                    item.price) * item.quantity
+                ).toFixed(2)}
+              </Typography>
             </Box>
           </Box>
         ))}
@@ -41,22 +49,22 @@ const Confirmation = () => {
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Subtotal</Typography>
-        <Typography variant="body1">${totalProductPrice}</Typography>
+        <Typography variant="body1">AED {totalProductPrice}</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Shipping</Typography>
-        <Typography variant="body1">${shippingPrice}</Typography>
+        <Typography variant="body1">AED {shippingPrice}</Typography>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Taxes</Typography>
-        <Typography variant="body1">${taxes}</Typography>
+        <Typography variant="body1">AED {taxes}</Typography>
       </Box>
 
       <Divider sx={{ my: 2 }} />
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
         <Typography variant="h6">Total</Typography>
-        <Typography variant="h6">${totalPrice}</Typography>
+        <Typography variant="h6">AED{totalPrice}</Typography>
       </Box>
 
       <Typography variant="body1">

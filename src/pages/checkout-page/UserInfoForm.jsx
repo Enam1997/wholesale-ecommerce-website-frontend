@@ -1,24 +1,50 @@
 import { Box, Typography, TextField } from "@mui/material";
 
-const UserInfoForm = () => {
+const UserInfoForm = ({ data, setData, errors }) => {
+  const handleChange = (e) => {
+    setData((prev) => ({
+      ...prev,
+      userInfo: { ...prev.userInfo, [e.target.name]: e.target.value },
+    }));
+  };
+
   return (
     <Box>
       <Typography variant="h6" sx={{ mb: 2 }}>
-        User Information
+        Receiver Information
       </Typography>
-      {/* Add form fields here */}
       <TextField
         fullWidth
-        label="Full Name"
+        name="name"
+        label="Name"
         variant="outlined"
         sx={{ mb: 2 }}
+        value={data.name}
+        onChange={handleChange}
+        error={!!errors.name}
+        helperText={errors.name}
       />
-      <TextField fullWidth label="Email" variant="outlined" sx={{ mb: 2 }} />
       <TextField
         fullWidth
+        name="email"
+        label="Email"
+        variant="outlined"
+        sx={{ mb: 2 }}
+        value={data.email}
+        onChange={handleChange}
+        error={!!errors.email}
+        helperText={errors.email}
+      />
+      <TextField
+        fullWidth
+        name="phone"
         label="Phone Number"
         variant="outlined"
         sx={{ mb: 2 }}
+        value={data.phone}
+        onChange={handleChange}
+        error={!!errors.phone}
+        helperText={errors.phone}
       />
     </Box>
   );

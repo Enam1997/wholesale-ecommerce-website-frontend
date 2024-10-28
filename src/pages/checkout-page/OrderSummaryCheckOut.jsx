@@ -29,7 +29,7 @@ const OrderSummaryCheckOut = ({ items }) => {
               <span style={{ color: "gray" }}>x {item.quantity}</span>
             </Typography>
             <Typography variant="body1">
-              {(
+             AED {(
                 (calculateDiscountPrice(item.price, item.discount) ||
                   item.price) * item.quantity
               ).toFixed(2)}
@@ -43,24 +43,24 @@ const OrderSummaryCheckOut = ({ items }) => {
       {/* Order Summary Details */}
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Subtotal</Typography>
-        <Typography variant="body1">${totalProductPrice}</Typography>
+        <Typography variant="body1">AED {totalProductPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Shipping</Typography>
-        <Typography variant="body1">${shippingPrice}</Typography>
+        <Typography variant="body1">AED {shippingPrice}</Typography>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
         <Typography variant="body1">Taxes</Typography>
-        <Typography variant="body1">${taxes}</Typography>
+        <Typography variant="body1">AED {taxes}</Typography>
       </Box>
 
       <Divider sx={{ my: 2 }} />
 
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
         <Typography variant="h6">Total</Typography>
-        <Typography variant="h6">${totalPrice}</Typography>
+        <Typography variant="h6">AED {totalPrice}</Typography>
       </Box>
     </Box>
   );

@@ -16,33 +16,49 @@ const CartPage = () => {
         Shopping Cart
       </Typography>
 
-      <Grid container spacing={4}>
-        {/* Left Side: Cart Items */}
-        <Grid item xs={12} md={8}>
-          {cartItems?.map((item, index) => (
-            <CartItem
-              key={index}
-              item={item}
-              onIncrease={() => updateCartQuantity(item.id, item.quantity + 1)}
-              onDecrease={() =>
-                item.quantity > 1
-                  ? updateCartQuantity(item.id, item.quantity - 1)
-                  : removeFromCart(item.id)
-              }
-              onRemove={() => removeFromCart(item.id)}
-            />
-          ))}
-        </Grid>
+      {cartItems?.length !== 0 ? (
+        <>
+          <Grid container spacing={4}>
+            {/* Left Side: Cart Items */}
+            <Grid item xs={12} md={8}>
+              {cartItems?.map((item, index) => (
+                <CartItem
+                  key={index}
+                  item={item}
+                  onIncrease={() =>
+                    updateCartQuantity(item.id, item.quantity + 1)
+                  }
+                  onDecrease={() =>
+                    item.quantity > 1
+                      ? updateCartQuantity(item.id, item.quantity - 1)
+                      : removeFromCart(item.id)
+                  }
+                  onRemove={() => removeFromCart(item.id)}
+                />
+              ))}
+            </Grid>
 
-        {/* Right Side: Order Summary */}
-        <Grid item xs={12} md={4}>
-          <OrderSummary />
-        </Grid>
-      </Grid>
+            {/* Right Side: Order Summary */}
+            <Grid item xs={12} md={4}>
+              <OrderSummary />
+            </Grid>
+          </Grid>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={8}></Grid>
-      </Grid>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={8}></Grid>
+          </Grid>
+        </>
+      ) : (
+        <Box
+          display={"flex"}
+          justifyContent={"center"}
+          width={"100%"}
+          alignItems={"center"}
+          minHeight={"400px"}
+        >
+          <Typography variant="h5" color="gray">Your Cart Is Empty Please Add miniMum 1 Product</Typography>
+        </Box>
+      )}
 
       <ProductsSliderOne title="Similar Products" products={newproduct} />
     </Box>

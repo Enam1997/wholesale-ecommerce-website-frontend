@@ -64,7 +64,7 @@ const ProductCardThree = ({ product }) => {
           <CardMedia
             component="img"
             image={productImageLink(featureImage)}
-            alt={name.substr(0, 15)}
+            alt={name?.substr(0, 15)}
             sx={{
               width: "100%",
               height: "100%",

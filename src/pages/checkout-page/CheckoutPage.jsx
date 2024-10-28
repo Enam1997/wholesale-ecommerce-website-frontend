@@ -21,6 +21,8 @@ import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
 import { AuthContext } from "../../context/AuthContext";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
+import CompleteOrderSummary from "../../component/complete-order-summary-table/CompleteOrderSummary";
+import { calculateTotalOrderPrice } from "../../utils/orderPrice";
 
 const steps = ["User Info", "Delivery Info", "Payment", "Confirmation"];
 
@@ -33,7 +35,7 @@ const CheckoutPage = () => {
   const [orderConfirmData, setOrderConfirmData] = useState({});
   const [orderError, setOrderError] = useState();
 
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(3);
 
   const [formData, setFormData] = useState({
     userInfo: { name: "asdad", email: "a@gmail.com", phone: "23123424234" },
@@ -65,24 +67,30 @@ const CheckoutPage = () => {
         price: calculateDiscountPrice(item?.price, item?.discount),
       };
     };
+    const { shippingPrice, taxes, totalPrice } =
+      calculateTotalOrderPrice(cartItems);
+
     try {
       setOrderStart(true);
       const orderData = {
         userId: user?.id,
         items: cartItems.map((itm) => itemIterate(itm)),
-        totalPrice: 500,
-        shippingPrice: 10,
-        taxesPrice: 5,
+        totalPrice: Number(totalPrice),
+        shippingPrice: Number(shippingPrice),
+        taxesPrice: Number(taxes),
         paymentMethod: "CashOn",
         address: formData?.deliveryInfo,
         reciverInfo: formData?.userInfo,
       };
+      console.log(orderData);
+
       const response = await axiosInstance.post(
         "/order/create-order",
         orderData
       );
       const orderConfirmData = response.data.data;
-      console.log(JSON.stringify(orderConfirmData));
+      console.log(orderConfirmData);
+      setOrderConfirmData(orderConfirmData);
       setOrderConfirm(true);
       setOrderStart(false);
     } catch (error) {
@@ -173,19 +181,17 @@ const CheckoutPage = () => {
   };
   return (
     <Box sx={{ padding: "24px" }}>
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        Checkout
-      </Typography>
       {orderConfirm ? (
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-        ></Box>
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <CompleteOrderSummary order={orderConfirmData} />
+        </Box>
       ) : (
         <>
           {cartItems?.length !== 0 ? (
             <>
+              <Typography variant="h4" sx={{ mb: 4 }}>
+                Checkout
+              </Typography>
               <Stepper activeStep={activeStep} alternativeLabel sx={{ mb: 4 }}>
                 {steps.map((label) => (
                   <Step key={label}>

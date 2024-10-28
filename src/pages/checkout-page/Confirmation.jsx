@@ -12,7 +12,6 @@ const Confirmation = ({ data }) => {
 
   return (
     <Box>
-      {console.log(data)}
       <Typography variant="h6" sx={{ mb: 2 }}>
         Confirmation
       </Typography>

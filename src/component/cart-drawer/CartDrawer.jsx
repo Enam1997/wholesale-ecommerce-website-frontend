@@ -12,7 +12,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
-import { Close, Remove, Add } from "@mui/icons-material";
+import { Close, Remove, Add, Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom"; // to navigate between routes
 import { useCart } from "../../context/CartContext";
 import { productImageLink } from "../../api";
@@ -99,9 +99,14 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <Typography variant="body1">{item.name}</Typography>
-                    <Typography variant="body2" sx={{ color: "gray" }}>
-                      x{item.quantity}
-                    </Typography>
+                    <Box display={"flex"} alignItems={"center"}>
+                      <Typography variant="body2" sx={{ color: "gray" }}>
+                        x{item.quantity}
+                      </Typography>
+                      <IconButton onClick={() => removeFromCart(item.id)}>
+                        <Delete />
+                      </IconButton>
+                    </Box>
                   </Box>
                 }
                 secondary={
@@ -115,7 +120,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
                       }}
                     >
                       <Typography variant="body2">
-                        ${calculateDiscountPrice(item.price, item.discount)}
+                        AED {calculateDiscountPrice(item.price, item.discount)}
                       </Typography>
                       <Box
                         sx={{

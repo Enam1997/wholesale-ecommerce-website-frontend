@@ -18,14 +18,14 @@ const DeliveryInfoForm = ({ data, setData, errors }) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
-            name="stretAddress"
+            name="streetAdress"
             label="Street Address"
             variant="outlined"
             sx={{ mb: 2 }}
-            value={data.stretAddress}
+            value={data.streetAdress}
             onChange={handleChange}
-            error={!!errors.stretAddress}
-            helperText={errors.stretAddress}
+            error={!!errors.streetAdress}
+            helperText={errors.streetAdress}
           />
         </Grid>
         <Grid item xs={12}>
@@ -92,8 +92,6 @@ const DeliveryInfoForm = ({ data, setData, errors }) => {
             helperText={errors.country}
           >
             <MenuItem value="UAE">United Arab Emirat</MenuItem>
-            <MenuItem value="CA">Canada</MenuItem>
-            <MenuItem value="UK">United Kingdom</MenuItem>
           </TextField>
         </Grid>
         <Grid item xs={12}>

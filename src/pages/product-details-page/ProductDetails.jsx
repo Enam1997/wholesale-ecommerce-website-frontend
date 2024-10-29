@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Grid,
   Box,
@@ -20,11 +20,15 @@ import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
 import { useParams } from "react-router-dom";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProductDetails = () => {
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productData, setProductData] = useState();
+  const [allBestSellingProducts, setAllBestSellingProducts] = useState([]);
+  const [allRecomendedProducts, setAllRecomendedProducts] = useState([]);
 
   let { id } = useParams();
 
@@ -87,6 +91,46 @@ const ProductDetails = () => {
   const handleRemoveFromCart = () => {
     removeFromCart(productData.id);
   };
+
+  // Fetch Best Selling Product
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/product/get-10-best-selling-products`
+        );
+        setAllBestSellingProducts(response.data.data.bestSellingProductsData);
+        console.log(response.data.data.bestSellingProductsData);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Depend on 'page' so it fetches again when page changes
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/product/get-10-recomended-products/${user ? user?.id : "notLogin"}`
+        );
+        setAllRecomendedProducts(response.data.data.recommendedProducts);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Depend on 'page' so it fetches again when page changes
 
   return (
     <Box sx={{ padding: "16px" }} className="product-details">
@@ -311,11 +355,17 @@ const ProductDetails = () => {
 
       {/* Product Sliders */}
       <Box sx={{ mt: 4 }}>
-        <ProductsSliderOne title="Similar Products" products={newproduct} />
-        <ProductsSliderOne title="How About These" products={newproduct} />
+        <ProductsSliderOne
+          title="Similar Products"
+          products={allBestSellingProducts}
+        />
+        <ProductsSliderOne
+          title="How About These"
+          products={allRecomendedProducts}
+        />
         <ProductsSliderOne
           title="Best Selling Products"
-          products={newproduct}
+          products={allBestSellingProducts}
         />
       </Box>
     </Box>

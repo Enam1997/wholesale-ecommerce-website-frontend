@@ -31,7 +31,9 @@ const ProductDisplay = () => {
       setLoading(true);
       try {
         // Construct the query string dynamically
-        const query = `name=&category=&material=&discount=&newArrival=&page=${currentPage}&limit=28`;
+        // const query = `name=&category=${filters.category}&subcategory=${filters.subcategory}&minPrice=${filters.minPrice}&maxPrice=${filters.maxPrice}&material${filters.material}=&discount=${filters.discount}&newArrival=${filters.newArrival}&page=${currentPage}&limit=28&status=Active&order=${filters.sortOrder}`;
+
+        const query = `name=${filters.search}&category=${filters.category}&subcategory=${filters.subcategory}&minPrice=${filters.minPrice}&maxPrice=${filters.maxPrice}&material${filters.material}=&discount=&newArrival&page=${currentPage}&limit=28&status=Active&order=${filters.sortOrder}`;
 
         const response = await axiosInstance.get(
           `/product/get-all-with-filter?${query}`
@@ -39,7 +41,6 @@ const ProductDisplay = () => {
         setAllProduct(response.data.data.products);
         setTotalPage(response.data.data.totalPages);
         setTotalProduct(response.data.data.totalProducts);
-        console.log();
       } catch (err) {
         console.log(err.message);
 

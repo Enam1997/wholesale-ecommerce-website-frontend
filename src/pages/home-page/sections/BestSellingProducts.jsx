@@ -33,7 +33,7 @@ const BestSellingProducts = () => {
   }, []); // Depend on 'page' so it fetches again when page changes
 
   const settings = {
-    dots: true, // Hide dots
+    // dots: true, // Hide dots
     arrows: false,
     infinite: true,
     speed: 500,
@@ -42,9 +42,15 @@ const BestSellingProducts = () => {
 
     responsive: [
       {
+        breakpoint: 1448,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2.5,
         },
       },
       {
@@ -54,9 +60,15 @@ const BestSellingProducts = () => {
         },
       },
       {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1.9,
+        },
+      },
+      {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.2,
+          slidesToShow: 1.06,
         },
       },
     ],

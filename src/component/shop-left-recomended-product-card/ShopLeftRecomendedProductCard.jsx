@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { FavoriteBorder, ShoppingCart } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { productImageLink } from "../../api";
 
 const ShopLeftRecomendedProductCard = ({ product }) => {
   const { id, name, price, discount, featureImage, pcsPerBox } = product;
@@ -40,10 +41,10 @@ const ShopLeftRecomendedProductCard = ({ product }) => {
       onClick={() => navigate(`/productdetails/${id}`)}
     >
       {/* Left Side: Product Image */}
-      <Box sx={{ flex: "0 0 35%", position: "relative" }}>
+      <Box sx={{ flex: "0 0 30%", position: "relative" }}>
         <CardMedia
           component="img"
-          image={featureImage}
+          image={productImageLink(featureImage)}
           alt={name}
           sx={{
             width: "100%",

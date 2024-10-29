@@ -24,6 +24,7 @@ const ShopPage = () => {
         occasion: searchParams.get("occasion") || "",
         material: searchParams.get("material") || "",
         search: searchParams.get("search") || "",
+        sortOrder: searchParams.get("sortOrder") || "ASC",
       };
 
       // Update filters only if there's a difference from current filters
@@ -48,6 +49,7 @@ const ShopPage = () => {
       occasion: searchParams.get("occasion") || "",
       material: searchParams.get("material") || "",
       search: searchParams.get("search") || "",
+      sortOrder: searchParams.get("sortOrder") || "ASC",
     };
 
     if (JSON.stringify(currentParams) !== JSON.stringify(filters)) {
@@ -61,6 +63,7 @@ const ShopPage = () => {
         occasion: filters.occasion,
         material: filters.material,
         search: filters.search,
+        sortOrder: filters.sortOrder,
       });
     }
   }, [filters, searchParams, setSearchParams]);

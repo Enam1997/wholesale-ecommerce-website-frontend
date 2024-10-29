@@ -38,6 +38,7 @@ const FilterProvider = ({ children }) => {
       newArrival: 0,
       occasion: [],
       material: [],
+      sortOrder: "ASC",
     });
   };
 

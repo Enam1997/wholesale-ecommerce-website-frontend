@@ -10,6 +10,8 @@ import {
   Paper,
   Divider,
 } from "@mui/material";
+import ManageProfile from "./ManageProfile";
+import DeliveryInformation from "./DeliveryInformation";
 
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -50,11 +52,11 @@ const ProfilePage = () => {
                 orientation={isMobile ? "horizontal" : "vertical"}
                 sx={{
                   "& .MuiTab-root:hover": {
-                    backgroundColor: "#004526",
+                    backgroundColor: "#01A651",
                     color: "white !important",
                   },
                   "& .Mui-selected": {
-                    backgroundColor: "#004526",
+                    backgroundColor: "#01A651",
                     color: "white !important",
                   },
                   "& .MuiTabs-indicator": {
@@ -86,26 +88,18 @@ const ProfilePage = () => {
             {selectedTab === 0 && (
               <Box>
                 <Typography variant="h5" gutterBottom>
-                  Manage Profile Content
+                  Profile
                 </Typography>
 
                 <Divider sx={{ marginBottom: 2 }} />
 
-                <Box display="flex" alignItems="center" justifyContent="center">
-                  <Typography variant="h4" gutterBottom>
-                    Under Construction
-                  </Typography>
-                </Box>
+                <ManageProfile />
               </Box>
             )}
             {selectedTab === 1 && (
               <Typography variant="body1">My Orders Content</Typography>
             )}
-            {selectedTab === 2 && (
-              <Typography variant="body1">
-                Delivery Addresses Content
-              </Typography>
-            )}
+            {selectedTab === 2 && <DeliveryInformation />}
             {selectedTab === 3 && (
               <Typography variant="body1">Support Ticket Content</Typography>
             )}

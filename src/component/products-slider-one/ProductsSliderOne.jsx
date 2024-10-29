@@ -16,12 +16,17 @@ const ProductsSliderOne = ({ title, products }) => {
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-
     responsive: [
+      {
+        breakpoint: 1448,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2.5,
         },
       },
       {
@@ -31,9 +36,15 @@ const ProductsSliderOne = ({ title, products }) => {
         },
       },
       {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1.9,
+        },
+      },
+      {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.1,
+          slidesToShow: 1.06,
         },
       },
     ],

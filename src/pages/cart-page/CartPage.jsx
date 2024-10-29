@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Box, Typography } from "@mui/material";
 import { demoCartItems, orderSummary } from "../../demo-data/cartData";
 
@@ -7,9 +7,33 @@ import OrderSummary from "./OrderSummary";
 import ProductsSliderOne from "../../component/products-slider-one/ProductsSliderOne";
 import { newproduct } from "../../demo-data/newproduct";
 import { useCart } from "../../context/CartContext";
+import axiosInstance from "../../api";
 
 const CartPage = () => {
   const { cartItems, updateCartQuantity, removeFromCart } = useCart();
+  const [allBestSellingProducts, setAllBestSellingProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/product/get-10-best-selling-products`
+        );
+        setAllBestSellingProducts(response.data.data.bestSellingProductsData);
+        console.log(response.data.data.bestSellingProductsData);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Depend on 'page' so it fetches again when page changes
   return (
     <Box sx={{ padding: "24px" }}>
       <Typography variant="h4" sx={{ mb: 4 }}>
@@ -56,11 +80,16 @@ const CartPage = () => {
           alignItems={"center"}
           minHeight={"400px"}
         >
-          <Typography variant="h5" color="gray">Your Cart Is Empty Please Add miniMum 1 Product</Typography>
+          <Typography variant="h5" color="gray">
+            Your Cart Is Empty Please Add miniMum 1 Product
+          </Typography>
         </Box>
       )}
 
-      <ProductsSliderOne title="Similar Products" products={newproduct} />
+      <ProductsSliderOne
+        title="Best Selling Products"
+        products={allBestSellingProducts}
+      />
     </Box>
   );
 };

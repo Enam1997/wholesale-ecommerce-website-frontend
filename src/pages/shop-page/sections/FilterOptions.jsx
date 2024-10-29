@@ -177,8 +177,9 @@ const FilterOptions = () => {
             !filters.newArrival.length &&
             !filters.occasion.length &&
             !filters.material.length &&
-            filters.maxPrice == 10000 &&
-            filters.minPrice == 0
+            filters.maxPrice == 100000 &&
+            filters.minPrice == 0 &&
+            filters.sortOrder == "ASC"
           }
         >
           Clear
@@ -251,7 +252,7 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Price</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box display="flex" gap={2}>
+          <Box display="flex" flexDirection={"column"} gap={2}>
             <FormControl variant="outlined">
               <OutlinedInput
                 name="minPrice"
@@ -375,7 +376,7 @@ const FilterOptions = () => {
       {/* Material Filter */}
       <Accordion defaultExpanded>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
+          <Typography sx={{ fontWeight: 900 }}>Material</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormControl component="fieldset">

@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom"; // to navigate between routes
 import "./header.css";
 import { AuthContext } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
+import logo from "../../assets/logo.png";
 
 const Header = (props) => {
   const [isCartOpen, setCartOpen] = useState(false);
@@ -99,7 +100,15 @@ const Header = (props) => {
           }}
           onClick={() => navigate("/")}
         >
-          Bangla Cottonae
+          {/* Bangla Cottonae */}
+          <img
+            src={logo}
+            alt="Logo"
+            style={{
+              height: 80,
+              marginRight: 8,
+            }}
+          />
         </Box>
 
         <Box sx={{ flexGrow: 2, mx: 2 }}>
@@ -145,16 +154,16 @@ const Header = (props) => {
                 <Box>
                   <MenuItem
                     sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
+                      // "&:hover": {
+                      //   backgroundColor: "#F0FBD5",
+                      // },
                       fontWeight: 700,
                     }}
                     onClick={() => handleMenuClick("/profile")}
                   >
-                    Manage Profile
+                    My Profile
                   </MenuItem>
-                  <MenuItem
+                  {/* <MenuItem
                     sx={{
                       "&:hover": {
                         backgroundColor: "#F0FBD5",
@@ -197,12 +206,12 @@ const Header = (props) => {
                     onClick={() => handleMenuClick("/profile")}
                   >
                     Wishlist
-                  </MenuItem>
+                  </MenuItem> */}
                   <MenuItem
                     sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
+                      // "&:hover": {
+                      //   backgroundColor: "#F0FBD5",
+                      // },
                       fontWeight: 700,
                       color: "red",
                     }}

@@ -102,7 +102,7 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
                 <Avatar
                   alt={item.name}
                   src={productImageLink(item.featureImage)}
-                  sx={{ width: 60, height: 60 }}
+                  sx={{ width: 60, height: 60, mr: "5px" }}
                 />
               </ListItemAvatar>
               <ListItemText
@@ -110,7 +110,11 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <Typography variant="body1">{item.name}</Typography>
+                    <Typography variant="body1">
+                      {item.name.length > 38
+                        ? `${item.name.slice(0, 37)}...`
+                        : item.name}
+                    </Typography>
                     <Box display={"flex"} alignItems={"center"}>
                       <Typography variant="body2" sx={{ color: "gray" }}>
                         x{item.quantity}

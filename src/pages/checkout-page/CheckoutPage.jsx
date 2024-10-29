@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Grid,
   Box,
@@ -32,27 +32,26 @@ import { Close } from "@mui/icons-material";
 const steps = ["User Info", "Delivery Info", "Payment", "Confirmation"];
 
 const CheckoutPage = () => {
-  const { cartItems } = useCart();
+  const { cartItems, setCartItems } = useCart();
   const { user, handleLoginOpen, handleRegisterOpen } = useContext(AuthContext);
-
   const [orderStart, setOrderStart] = useState(false);
   const [orderConfirm, setOrderConfirm] = useState(false);
   const [orderConfirmData, setOrderConfirmData] = useState({});
   const [orderError, setOrderError] = useState(false);
   const [orderErrorMessage, setOrderErrorMessage] = useState();
 
-  const [activeStep, setActiveStep] = useState(3);
+  const [activeStep, setActiveStep] = useState(0);
 
   const [formData, setFormData] = useState({
-    userInfo: { name: "asdad", email: "a@gmail.com", phone: "23123424234" },
+    userInfo: { name: "", email: "", phone: "" },
     deliveryInfo: {
-      stretAddress: "12312",
-      apartment: "123123",
-      city: "12312",
-      state: "12312",
-      zip: "12312",
+      streetAdress: "",
+      apartment: "",
+      city: "",
+      state: "",
+      zip: "",
       country: "UAE",
-      phone: "12312",
+      phone: "",
     },
     paymentInfo: {
       paymentType: "CashOn",
@@ -99,6 +98,7 @@ const CheckoutPage = () => {
       console.log(orderConfirmData);
       setOrderConfirmData(orderConfirmData);
       setOrderConfirm(true);
+      setCartItems([]);
       setOrderStart(false);
     } catch (error) {
       setOrderError(true);
@@ -120,9 +120,9 @@ const CheckoutPage = () => {
         stepErrors.phone = "Valid phone number is required";
     }
     if (step === 1) {
-      const { stretAddress, apartment, city, state, zip, country, phone } =
+      const { streetAdress, apartment, city, state, zip, country, phone } =
         formData.deliveryInfo;
-      if (!stretAddress) stepErrors.stretAddress = "Street Address is required";
+      if (!streetAdress) stepErrors.streetAdress = "Street Address is required";
       // if (!apartment) stepErrors.address = "Apartment is required";
       if (!city) stepErrors.city = "City is required";
       if (!state) stepErrors.state = "State is required";
@@ -188,6 +188,46 @@ const CheckoutPage = () => {
         return "Unknown step";
     }
   };
+
+  const fetchDeliveryData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/users/get-delivery-info/${user?.id}`
+      );
+      setFormData((prev) => ({
+        ...prev,
+        deliveryInfo: response.data.data.deliveryInfo,
+      }));
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching delivery data:", error);
+    }
+  };
+
+  const fetchProfileData = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `/users/get-profile-info/${user?.id}`
+      );
+
+      let { name, email, phone } = response.data;
+      setFormData((prev) => ({
+        ...prev,
+        userInfo: { name, email, phone },
+      }));
+
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching delivery data:", error);
+    }
+  };
+
+  // Fetch delivery data on component mount
+  useEffect(() => {
+    fetchDeliveryData();
+    fetchProfileData();
+  }, [user?.id]);
+
   return (
     <Box sx={{ padding: "24px" }}>
       {orderConfirm ? (

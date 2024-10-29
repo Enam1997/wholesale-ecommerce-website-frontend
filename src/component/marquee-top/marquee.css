@@ -1,7 +1,8 @@
 .marquee-wrapper {
   overflow: hidden;
   white-space: nowrap;
-  background-color: #004526; /* Background color */
+  /* background-color: #004526;  */
+  background-color: #01a651;
   padding: 10px 0;
   position: relative;
 }

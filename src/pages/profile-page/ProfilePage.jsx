@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import ManageProfile from "./ManageProfile";
 import DeliveryInformation from "./DeliveryInformation";
+import AllOrder from "./AllOrder";
 
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -97,7 +98,9 @@ const ProfilePage = () => {
               </Box>
             )}
             {selectedTab === 1 && (
-              <Typography variant="body1">My Orders Content</Typography>
+              <Typography variant="body1">
+                <AllOrder />
+              </Typography>
             )}
             {selectedTab === 2 && <DeliveryInformation />}
             {selectedTab === 3 && (

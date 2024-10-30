@@ -84,7 +84,8 @@ const BestSellingProducts = () => {
           <Slider {...settings}>
             {allBestSellingProducts.map((product, index) => (
               <Box key={index} sx={{ marginRight: "20px !important" }}>
-                <ProductCardThree product={product} />
+                {console.log(product.Product)}
+                <ProductCardThree product={product.Product} />
               </Box>
             ))}
           </Slider>

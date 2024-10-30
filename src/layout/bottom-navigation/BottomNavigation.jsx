@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { Badge, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import {
   Home,
   ShoppingCart,
@@ -9,11 +9,13 @@ import {
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext.jsx";
+import { useCart } from "../../context/CartContext.jsx";
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, handleLoginOpen } = useContext(AuthContext);
+  const { cartItems } = useCart();
 
   // Define active value based on current route
   const getActiveTab = () => {
@@ -69,7 +71,14 @@ const BottomNav = () => {
     >
       <BottomNavigationAction label="Home" icon={<Home />} />
       <BottomNavigationAction label="Shop" icon={<ShoppingBag />} />
-      <BottomNavigationAction label="Cart" icon={<ShoppingCart />} />
+      <BottomNavigationAction
+        label="Cart"
+        icon={
+          <Badge color="primary" badgeContent={cartItems?.length}>
+            <ShoppingCart />
+          </Badge>
+        }
+      />
       <BottomNavigationAction label="Profile" icon={<AccountCircle />} />
     </BottomNavigation>
   );

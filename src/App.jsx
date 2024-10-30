@@ -28,6 +28,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
 
+
 function App() {
   return (
     <Box>
@@ -80,6 +81,7 @@ function App() {
               <LoginDialog />
               <RegisterDialog />
               <BackdropLoading />
+          
             </ThemeProvider>
           </CartProvider>
         </FilterProvider>

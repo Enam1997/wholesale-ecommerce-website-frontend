@@ -88,7 +88,7 @@ const CartPage = () => {
 
       <ProductsSliderOne
         title="Best Selling Products"
-        products={allBestSellingProducts}
+        products={allBestSellingProducts.map((product) => product.Product)}
       />
     </Box>
   );

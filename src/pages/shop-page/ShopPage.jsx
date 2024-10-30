@@ -5,6 +5,7 @@ import ProductDisplay from "./sections/ProductDisplay";
 
 import { useSearchParams } from "react-router-dom";
 import { useFilterContext } from "../../context/FilterContext";
+import FilterDrawer from "../../component/filter-drawer/FilterDrawer";
 
 const ShopPage = () => {
   const { filters, setFilters } = useFilterContext();
@@ -80,6 +81,9 @@ const ShopPage = () => {
         <Grid item xs={12} md={9}>
           <ProductDisplay />
         </Grid>
+        <Box sx={{ display: { xs: "block", md: "none" } }}>
+          <FilterDrawer />
+        </Box>
       </Grid>
     </Box>
   );

@@ -62,24 +62,6 @@ const Header = (props) => {
     handleMenuClose(); // Close the menu
   };
 
-  // Sample cart items
-  // const cartItems = [
-  //   {
-  //     name: "Product 1",
-  //     price: 50,
-  //     quantity: 1,
-  //     image:
-  //       "https://img.freepik.com/premium-photo/tattooed-man-wearing-sunglasses-white-tshirt-walks-down-cobblestone-street_862489-39720.jpg",
-  //   },
-  //   {
-  //     name: "Product 2",
-  //     price: 30,
-  //     quantity: 2,
-  //     image:
-  //       "https://s3.ap-south-1.amazonaws.com/goshop.com.bd/uploads/all/dr4lQQ0QqS9BtB5EaCoaWnRreWnG0G1rq2OLT7RH.jpg",
-  //   },
-  // ];
-
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -124,16 +106,22 @@ const Header = (props) => {
             >
               Shop
             </Button>
+          </Hidden>
+
+          <Hidden mdDown>
             <IconButton>
               <Favorite />
             </IconButton>
-            <IconButton onClick={handleCartOpen}>
-              <Badge color="primary" badgeContent={cartItems?.length}>
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
+          </Hidden>
 
-            {/*Logged in user account menu Account Menu */}
+          <IconButton onClick={handleCartOpen}>
+            <Badge color="primary" badgeContent={cartItems?.length}>
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
+
+          {/*Logged in user account menu Account Menu */}
+          <Hidden mdDown>
             <IconButton onClick={handleMenuOpen}>
               {accessToken ? <AccountCircle /> : <Login />}
             </IconButton>

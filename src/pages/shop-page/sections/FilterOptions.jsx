@@ -26,6 +26,13 @@ const FilterOptions = () => {
   const [categorySubcategory, setCategorySubcategory] = useState([]);
   const [loadingCategorySubCategory, setLoadingCategorySubCategory] =
     useState(true);
+
+  const [occasionData, setOccasionData] = useState([]);
+  const [loadingOccasionData, setLoadingOccasion] = useState(true);
+
+  const [materialData, setMaterialData] = useState([]);
+  const [loadingMaterialData, setLoadingMaterial] = useState(true);
+
   const [error, setError] = useState(null);
   // State management for different filters
   const [discount, setDiscount] = useState([]);
@@ -50,7 +57,41 @@ const FilterOptions = () => {
     };
 
     fetchProducts();
-  }, []); // Depend on 'page' so it fetches again when page changes
+  }, []);
+
+  useEffect(() => {
+    setLoadingOccasion(true);
+    const fetchOccasions = async () => {
+      try {
+        const response = await axiosInstance.get(`/occasion/get-all-occasion`);
+        setOccasionData(response.data.data.occasion);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoadingOccasion(false);
+      }
+    };
+
+    fetchOccasions();
+  }, []);
+
+  useEffect(() => {
+    setLoadingMaterial(true);
+    const fetchOccasions = async () => {
+      try {
+        const response = await axiosInstance.get(`/materials/get-all-material`);
+        setMaterialData(response.data.data.material);
+      } catch (err) {
+        console.log(err.message);
+        setError(err.message);
+      } finally {
+        setLoadingMaterial(false);
+      }
+    };
+
+    fetchOccasions();
+  }, []);
 
   const handleCategoryChange = (event, subcategories) => {
     console.log("Handle change subcategories");
@@ -114,49 +155,6 @@ const FilterOptions = () => {
         category: updatedCategories,
       };
     });
-  };
-
-  // Handler for discount selection
-  const handleDiscountChange = (event) => {
-    console.log("dicount change");
-
-    handleFilterChange(event);
-    const value = event.target.name;
-    if (event.target.checked) {
-      setDiscount([...discount, value]);
-    } else {
-      setDiscount(discount.filter((item) => item !== value));
-    }
-  };
-
-  // Handler for new arrival selection
-  const handleNewArrivalChange = (event) => {
-    const value = event.target.name;
-    if (event.target.checked) {
-      setNewArrival([...newArrival, value]);
-    } else {
-      setNewArrival(newArrival.filter((item) => item !== value));
-    }
-  };
-
-  // Handler for occasion selection
-  const handleOccasionChange = (event) => {
-    const value = event.target.name;
-    if (event.target.checked) {
-      setOccasion([...occasion, value]);
-    } else {
-      setOccasion(occasion.filter((item) => item !== value));
-    }
-  };
-
-  // Handler for material selection
-  const handleMaterialChange = (event) => {
-    const value = event.target.name;
-    if (event.target.checked) {
-      setMaterial([...material, value]);
-    } else {
-      setMaterial(material.filter((item) => item !== value));
-    }
   };
 
   return (
@@ -354,7 +352,28 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControl component="fieldset">
+          {occasionData ? (
+            <>
+              {occasionData.map((ocas, index) => (
+                <FormGroup key={index}>
+                  <FormControlLabel
+                    label={ocas?.name}
+                    name={"occasion"}
+                    control={
+                      <Checkbox
+                        value={ocas.name}
+                        checked={filters.occasion.includes(ocas?.name)}
+                        onChange={handleFilterChange}
+                      />
+                    }
+                  />
+                </FormGroup>
+              ))}
+            </>
+          ) : (
+            ""
+          )}
+          {/* <FormControl component="fieldset">
             <RadioGroup
               name="occasion"
               value={occasion}
@@ -369,7 +388,7 @@ const FilterOptions = () => {
                 />
               ))}
             </RadioGroup>
-          </FormControl>
+          </FormControl> */}
         </AccordionDetails>
       </Accordion>
 
@@ -379,7 +398,28 @@ const FilterOptions = () => {
           <Typography sx={{ fontWeight: 900 }}>Material</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControl component="fieldset">
+          {materialData ? (
+            <>
+              {materialData.map((mat, index) => (
+                <FormGroup key={index}>
+                  <FormControlLabel
+                    label={mat?.name}
+                    name={"material"}
+                    control={
+                      <Checkbox
+                        value={mat.name}
+                        checked={filters.material.includes(mat?.name)}
+                        onChange={handleFilterChange}
+                      />
+                    }
+                  />
+                </FormGroup>
+              ))}
+            </>
+          ) : (
+            ""
+          )}
+          {/* <FormControl component="fieldset">
             <RadioGroup
               name="material"
               value={material}
@@ -394,7 +434,7 @@ const FilterOptions = () => {
                 />
               ))}
             </RadioGroup>
-          </FormControl>
+          </FormControl> */}
         </AccordionDetails>
       </Accordion>
 

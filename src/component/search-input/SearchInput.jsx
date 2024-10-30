@@ -39,7 +39,7 @@ const SearchInput = () => {
   }, []);
 
   // Handler for discount selection
-  const handlePriceChange = () => {
+  const handleSearchClick = () => {
     setFilters((prev) => {
       return {
         ...prev,
@@ -65,7 +65,7 @@ const SearchInput = () => {
           <InputAdornment position="end">
             {/* Show button on large screens and icon on small screens */}
             {isSmallScreen ? (
-              <Search />
+              <Search onClick={handleSearchClick} />
             ) : (
               <Button
                 variant="contained"
@@ -75,7 +75,7 @@ const SearchInput = () => {
 
                   fontWeight: "900",
                 }}
-                onClick={handlePriceChange}
+                onClick={handleSearchClick}
               >
                 Search
               </Button>

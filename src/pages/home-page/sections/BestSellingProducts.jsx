@@ -20,9 +20,7 @@ const BestSellingProducts = () => {
           `/product/get-10-best-selling-products`
         );
 
-        let data = response.data.data.bestSellingProductsData.map(
-          (pro) => pro.Product
-        );
+        let data = response.data.data.bestSellingProductsData;
         setAllBestSellingProducts(data);
       } catch (err) {
         setError(err.message);

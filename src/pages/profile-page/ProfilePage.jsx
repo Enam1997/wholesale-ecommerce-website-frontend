@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Typography,
@@ -14,9 +14,11 @@ import {
 import ManageProfile from "./ManageProfile";
 import DeliveryInformation from "./DeliveryInformation";
 import AllOrder from "./AllOrder";
+import { AuthContext } from "../../context/AuthContext";
 
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const { logout } = useContext(AuthContext);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -97,6 +99,7 @@ const ProfilePage = () => {
                     variant="outlined"
                     color="secondary"
                     sx={{ fontWeight: 700 }}
+                    onClick={logout}
                   >
                     Logout
                   </Button>

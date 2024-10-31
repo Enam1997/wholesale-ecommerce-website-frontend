@@ -100,13 +100,11 @@ const ProductDetails = () => {
         const response = await axiosInstance.get(
           `/product/get-10-best-selling-products`
         );
-        setAllBestSellingProducts(
-          response.data.data.bestSellingProductsData.map((pro) => pro.Product)
+
+        let data = response.data.data.bestSellingProductsData.map(
+          (pro) => pro.Product
         );
-
-        console.log("Best Selling Product");
-
-        console.log(response.data.data.bestSellingProductsData);
+        setAllBestSellingProducts(data);
       } catch (err) {
         console.log(err.message);
         setError(err.message);

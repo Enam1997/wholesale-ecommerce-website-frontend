@@ -25,7 +25,7 @@ const ShopPage = () => {
         occasion: searchParams.get("occasion") || "",
         material: searchParams.get("material") || "",
         search: searchParams.get("search") || "",
-        sortOrder: searchParams.get("sortOrder") || "ASC",
+        sortOrder: searchParams.get("sortOrder") || "DESC",
       };
 
       // Update filters only if there's a difference from current filters
@@ -50,7 +50,7 @@ const ShopPage = () => {
       occasion: searchParams.get("occasion") || "",
       material: searchParams.get("material") || "",
       search: searchParams.get("search") || "",
-      sortOrder: searchParams.get("sortOrder") || "ASC",
+      sortOrder: searchParams.get("sortOrder") || "DESC",
     };
 
     if (JSON.stringify(currentParams) !== JSON.stringify(filters)) {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import {
   Skeleton,
   Typography,
@@ -10,21 +10,26 @@ import {
   Paper,
   IconButton,
   Divider,
-} from '@mui/material';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import DoneIcon from '@mui/icons-material/Done';
-import PendingIcon from '@mui/icons-material/Pending';
+} from "@mui/material";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import DoneIcon from "@mui/icons-material/Done";
+import PendingIcon from "@mui/icons-material/Pending";
+import axiosInstance from "../../api";
+import { AuthContext } from "../../context/AuthContext";
 
 const AllOrder = ({ userId }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/v1/order/get-customer-all-order/${1}`);
+        const response = await axiosInstance.get(
+          `/order/get-customer-all-order/${user?.id}`
+        );
         setOrders(response.data.data.orders);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -54,10 +59,14 @@ const AllOrder = ({ userId }) => {
 
   return (
     <Grid container spacing={2}>
-      {orders.map((order) => (
+      {orders.map((order, index) => (
         <Grid item xs={12} sm={6} md={4} key={order.id}>
-          <Card component={Paper} elevation={4} sx={{ borderRadius: 3, overflow: 'hidden' }}>
-            <CardContent sx={{ bgcolor: '#f9fafc', padding: '20px' }}>
+          <Card
+            component={Paper}
+            elevation={4}
+            sx={{ borderRadius: 3, overflow: "hidden" }}
+          >
+            <CardContent sx={{ bgcolor: "#f9fafc", padding: "20px" }}>
               <Typography variant="h6" color="primary" gutterBottom>
                 Order #{order.id}
               </Typography>
@@ -83,7 +92,12 @@ const AllOrder = ({ userId }) => {
                   <LocalShippingIcon color="action" />
                 </Grid>
                 <Grid item>
-                  <Typography variant="body1">Shipping Price: {order.shipingPrice ? `$${order.shipingPrice.toFixed(2)}` : "N/A"}</Typography>
+                  <Typography variant="body1">
+                    Shipping Price:{" "}
+                    {order.shipingPrice
+                      ? `$${order.shipingPrice.toFixed(2)}`
+                      : "N/A"}
+                  </Typography>
                 </Grid>
               </Grid>
 
@@ -92,28 +106,45 @@ const AllOrder = ({ userId }) => {
               <Typography variant="subtitle2" color="textSecondary">
                 Delivery Status:
               </Typography>
-              <Typography variant="body1" color={order.deliveryStatus === 'Delivered' ? 'success.main' : 'textPrimary'}>
-                {order.deliveryStatus} {order.deliveryStatus === 'Delivered' ? <DoneIcon color="success" /> : <PendingIcon color="warning" />}
+              <Typography
+                variant="body1"
+                color={
+                  order.deliveryStatus === "Delivered"
+                    ? "success.main"
+                    : "textPrimary"
+                }
+              >
+                {order.deliveryStatus}{" "}
+                {order.deliveryStatus === "Delivered" ? (
+                  <DoneIcon color="success" />
+                ) : (
+                  <PendingIcon color="warning" />
+                )}
               </Typography>
 
-              <Typography variant="subtitle2" color="textSecondary" sx={{ mt: 2 }}>
+              <Typography
+                variant="subtitle2"
+                color="textSecondary"
+                sx={{ mt: 2 }}
+              >
                 Receiver Information:
               </Typography>
               <Typography variant="body2">
                 {order.reciverInfo.name} ({order.reciverInfo.phone})
               </Typography>
               <Typography variant="body2">
-                {order.address.streetAdress}, {order.address.city}, {order.address.state}
+                {order.address.streetAdress}, {order.address.city},{" "}
+                {order.address.state}
               </Typography>
             </CardContent>
 
-            <CardActions sx={{ bgcolor: '#e0f7fa', padding: '16px' }}>
+            {/* <CardActions sx={{ bgcolor: "#e0f7fa", padding: "16px" }}>
               <IconButton color="primary" aria-label="Order Details">
                 <Typography variant="button" color="primary">
                   View Details
                 </Typography>
               </IconButton>
-            </CardActions>
+            </CardActions> */}
           </Card>
         </Grid>
       ))}

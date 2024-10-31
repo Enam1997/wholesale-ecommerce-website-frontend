@@ -22,7 +22,9 @@ const CartPage = () => {
         const response = await axiosInstance.get(
           `/product/get-10-best-selling-products`
         );
-        setAllBestSellingProducts(response.data.data.bestSellingProductsData);
+        setAllBestSellingProducts(
+          response.data.data.bestSellingProductsData.map((pro) => pro.Product)
+        );
       } catch (err) {
         setError(err.message);
       } finally {
@@ -86,7 +88,7 @@ const CartPage = () => {
 
       <ProductsSliderOne
         title="Best Selling Products"
-        products={allBestSellingProducts.map((product) => product)}
+        products={allBestSellingProducts}
       />
     </Box>
   );

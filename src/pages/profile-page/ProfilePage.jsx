@@ -9,6 +9,7 @@ import {
   useTheme,
   Paper,
   Divider,
+  Button,
 } from "@mui/material";
 import ManageProfile from "./ManageProfile";
 import DeliveryInformation from "./DeliveryInformation";
@@ -29,7 +30,6 @@ const ProfilePage = () => {
     "Delivery Addresses",
     "Support Ticket",
     "Wishlist",
-    "Logout",
   ];
 
   return (
@@ -39,9 +39,6 @@ const ProfilePage = () => {
         <Grid item xs={12} sm={4}>
           <Paper sx={{ padding: "16px", border: "1px solid #ddd" }}>
             {/* Name Section */}
-            <Typography variant="h6" fontWeight={900} gutterBottom>
-              HI Enam
-            </Typography>
 
             {/* Tabs Section */}
             <Box sx={{ border: "1px solid #ddd", borderRadius: "8px" }}>
@@ -88,9 +85,22 @@ const ProfilePage = () => {
           >
             {selectedTab === 0 && (
               <Box>
-                <Typography variant="h5" gutterBottom>
-                  Profile
-                </Typography>
+                <Box
+                  display={"flex"}
+                  alignItems={"center"}
+                  justifyContent={"space-between"}
+                  paddingBottom={2}
+                >
+                  <Typography variant="h5">Profile</Typography>
+
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    sx={{ fontWeight: 700 }}
+                  >
+                    Logout
+                  </Button>
+                </Box>
 
                 <Divider sx={{ marginBottom: 2 }} />
 
@@ -108,9 +118,6 @@ const ProfilePage = () => {
             )}
             {selectedTab === 4 && (
               <Typography variant="body1">Wishlist Content</Typography>
-            )}
-            {selectedTab === 5 && (
-              <Typography variant="body1">Logout Section</Typography>
             )}
           </Paper>
         </Grid>

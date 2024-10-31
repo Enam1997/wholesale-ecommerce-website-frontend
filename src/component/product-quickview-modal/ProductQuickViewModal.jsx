@@ -53,6 +53,11 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
     }
   };
 
+  const handleViewFullDetailsClick = () => {
+    handleCloseModal();
+    navigate(`/productdetails/${product?.id}`);
+  };
+
   return (
     <div>
       {/* Modal */}
@@ -110,9 +115,15 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             <Typography variant="h6" sx={{ mr: 2 }}>
               Price:
             </Typography>
-            <Typography variant="h5" sx={{ color: product?.discount ? "red" : "black" }}>
+            <Typography
+              variant="h5"
+              sx={{ color: product?.discount ? "red" : "black" }}
+            >
               {product?.discount
-                ? `$${calculateDiscountPrice(product?.price, product?.discount)}`
+                ? `$${calculateDiscountPrice(
+                    product?.price,
+                    product?.discount
+                  )}`
                 : `$${product?.price}`}
               {product?.discount && (
                 <>
@@ -190,7 +201,8 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             Total: $
             {(
-              (calculateDiscountPrice(product?.price, product?.discount) || product?.price) * quantity
+              (calculateDiscountPrice(product?.price, product?.discount) ||
+                product?.price) * quantity
             ).toFixed(2)}
           </Typography>
 
@@ -200,7 +212,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             color="primary"
             fullWidth
             sx={{ fontWeight: 900, marginTop: 2 }}
-            onClick={() => navigate(`/productdetails/${product?.id}`)}
+            onClick={handleViewFullDetailsClick}
           >
             View Full Details
           </Button>

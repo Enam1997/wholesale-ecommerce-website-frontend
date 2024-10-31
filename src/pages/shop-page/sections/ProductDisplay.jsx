@@ -88,8 +88,8 @@ const ProductDisplay = () => {
               variant="standard"
               name="sortOrder"
             >
-              <MenuItem value="ASC">New</MenuItem>
-              <MenuItem value="DESC">Previos</MenuItem>
+              <MenuItem value="DESC">New</MenuItem>
+              <MenuItem value="ASC">Previos</MenuItem>
             </Select>
           </FormControl>
         </Box>

@@ -23,9 +23,7 @@ const CartPage = () => {
           `/product/get-10-best-selling-products`
         );
         setAllBestSellingProducts(response.data.data.bestSellingProductsData);
-        console.log(response.data.data.bestSellingProductsData);
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -88,7 +86,7 @@ const CartPage = () => {
 
       <ProductsSliderOne
         title="Best Selling Products"
-        products={allBestSellingProducts.map((product) => product.Product)}
+        products={allBestSellingProducts.map((product) => product)}
       />
     </Box>
   );

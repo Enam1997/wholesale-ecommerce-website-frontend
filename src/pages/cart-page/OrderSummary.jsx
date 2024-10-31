@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, Typography, Button, Divider } from "@mui/material";
 import { calculateTotalOrderPrice } from "../../utils/orderPrice";
 import { useCart } from "../../context/CartContext";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const OrderSummary = () => {
   const { cartItems } = useCart();
+  const { user, handleLoginOpen, handleRegisterOpen } = useContext(AuthContext);
   const { totalProductPrice, shippingPrice, taxes, totalPrice } =
     calculateTotalOrderPrice(cartItems);
+
+  const navigate = useNavigate();
+
+  const handleCheckOutButtonClick = (route) => {
+    if (user) {
+      navigate(route); // Navigate to the corresponding route
+    } else {
+      handleLoginOpen();
+    }
+  };
 
   return (
     <Box
@@ -39,6 +52,15 @@ const OrderSummary = () => {
       </Box>
 
       <Button variant="contained" color="primary" fullWidth>
+        Proceed to Checkout
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        sx={{ fontWeight: 900, marginTop: "10px" }}
+        onClick={() => handleCheckOutButtonClick("/checkout")}
+      >
         Proceed to Checkout
       </Button>
     </Box>

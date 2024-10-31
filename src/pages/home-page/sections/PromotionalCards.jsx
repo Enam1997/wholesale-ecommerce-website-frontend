@@ -60,7 +60,6 @@ const PromotionalCards = () => {
         );
         setAllPromotionalCards(response.data.data.allPromotionalCard);
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -76,12 +75,11 @@ const PromotionalCards = () => {
         padding: "2rem 0",
       }}
     >
-      {console.log(allPromotionalCards)}
+ 
       {allPromotionalCards?.length !== 0 ? (
         <Grid container spacing={3} justifyContent="center">
           {allPromotionalCards.map((promo) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={promo.id}>
-              {console.log(promo)}
               <Card
                 sx={{
                   position: "relative",

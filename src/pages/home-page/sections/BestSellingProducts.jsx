@@ -20,9 +20,8 @@ const BestSellingProducts = () => {
           `/product/get-10-best-selling-products`
         );
         setAllBestSellingProducts(response.data.data.bestSellingProductsData);
-        console.log(response.data.data.bestSellingProductsData);
+
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -84,8 +83,7 @@ const BestSellingProducts = () => {
           <Slider {...settings}>
             {allBestSellingProducts.map((product, index) => (
               <Box key={index} sx={{ marginRight: "20px !important" }}>
-                {console.log(product.Product)}
-                <ProductCardThree product={product.Product} />
+                <ProductCardThree product={product} />
               </Box>
             ))}
           </Slider>

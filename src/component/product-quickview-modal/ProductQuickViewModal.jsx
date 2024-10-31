@@ -24,7 +24,6 @@ import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
-  const { id, name, price, discount, featureImage, pcsPerBox, stock } = product;
   const navigate = useNavigate();
 
   const [quantity, setQuantity] = useState(1);
@@ -32,25 +31,25 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
     useCart();
 
   useEffect(() => {
-    if (isInCart(id)) {
-      const item = cartItems.find((item) => item?.id === id);
+    if (isInCart(product?.id)) {
+      const item = cartItems.find((item) => item?.id === product?.id);
       setQuantity(item.quantity);
     }
   }, [cartItems, product]);
 
   const handleIncrement = () => {
     setQuantity(quantity + 1);
-    isInCart(id)
-      ? updateCartQuantity(id, quantity + 1)
+    isInCart(product?.id)
+      ? updateCartQuantity(product?.id, quantity + 1)
       : addToCart(product, quantity + 1);
   };
 
   const handleDecrement = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      updateCartQuantity(id, quantity - 1);
+      updateCartQuantity(product?.id, quantity - 1);
     } else {
-      removeFromCart(id);
+      removeFromCart(product?.id);
     }
   };
 
@@ -82,15 +81,15 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
           {/* Product Image */}
           <Box sx={{ textAlign: "center", marginBottom: 2 }}>
             <img
-              src={productImageLink(featureImage)}
-              alt={name}
+              src={productImageLink(product?.featureImage)}
+              alt={product?.name}
               style={{ width: "100%", height: "auto", maxHeight: 200 }}
             />
           </Box>
 
           {/* Product Name */}
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            {name}
+            {product?.name}
           </Typography>
 
           <Divider sx={{ margin: "16px 0" }} />
@@ -102,7 +101,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
               Per Box:
             </Typography>
             <Typography variant="h6" sx={{ color: "black" }}>
-              {pcsPerBox} pcs
+              {product?.pcsPerBox} pcs
             </Typography>
           </Box>
           <Divider sx={{ margin: "16px 0" }} />
@@ -111,11 +110,11 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             <Typography variant="h6" sx={{ mr: 2 }}>
               Price:
             </Typography>
-            <Typography variant="h5" sx={{ color: discount ? "red" : "black" }}>
-              {discount
-                ? `$${calculateDiscountPrice(price, discount)}`
-                : `$${price}`}
-              {discount && (
+            <Typography variant="h5" sx={{ color: product?.discount ? "red" : "black" }}>
+              {product?.discount
+                ? `$${calculateDiscountPrice(product?.price, product?.discount)}`
+                : `$${product?.price}`}
+              {product?.discount && (
                 <>
                   <Typography
                     variant="body2"
@@ -126,14 +125,14 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
                     }}
                     component="span"
                   >
-                    ${price}
+                    ${product?.price}
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ color: "green", ml: 1 }}
                     component="span"
                   >
-                    {`Save ${discount}%`}
+                    {`Save ${product?.discount}%`}
                   </Typography>
                 </>
               )}
@@ -149,7 +148,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             <Typography variant="h6" sx={{ mr: 2 }}>
               Quantity:
             </Typography>
-            {stock <= 0 ? (
+            {product?.stock <= 0 ? (
               <Typography variant="body1" color="red">
                 Stock Empty
               </Typography>
@@ -159,7 +158,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
                 <IconButton
                   color="primary"
                   onClick={handleDecrement}
-                  disabled={quantity === 1 && !isInCart(id)}
+                  disabled={quantity === 1 && !isInCart(product?.id)}
                 >
                   <Remove />
                 </IconButton>
@@ -177,7 +176,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
                 <IconButton
                   color="primary"
                   onClick={handleIncrement}
-                  disabled={quantity >= stock}
+                  disabled={quantity >= product?.stock}
                 >
                   <Add />
                 </IconButton>
@@ -191,7 +190,7 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
           <Typography variant="body1" sx={{ fontWeight: "bold" }}>
             Total: $
             {(
-              (calculateDiscountPrice(price, discount) || price) * quantity
+              (calculateDiscountPrice(product?.price, product?.discount) || product?.price) * quantity
             ).toFixed(2)}
           </Typography>
 
@@ -201,12 +200,12 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             color="primary"
             fullWidth
             sx={{ fontWeight: 900, marginTop: 2 }}
-            onClick={() => navigate(`/productdetails/${id}`)}
+            onClick={() => navigate(`/productdetails/${product?.id}`)}
           >
             View Full Details
           </Button>
           <Box fullWidth mt={2}>
-            {stock <= 0 ? (
+            {product?.stock <= 0 ? (
               <Button
                 variant="outlined"
                 color="secondary"
@@ -218,12 +217,12 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
               <>
                 {" "}
                 <Box>
-                  {isInCart(id) ? (
+                  {isInCart(product?.id) ? (
                     <Button
                       variant="contained"
                       color="secondary"
                       fullWidth
-                      onClick={() => removeFromCart(id)}
+                      onClick={() => removeFromCart(product?.id)}
                       sx={{ fontWeight: 900 }}
                     >
                       Remove from Cart

@@ -56,8 +56,8 @@ const ProductsSliderOne = ({ title, products }) => {
         {title}
       </Typography>
       <Slider {...settings}>
-        {products.map((product) => (
-          <Box key={product.id} sx={{ margin: "0 10px" }}>
+        {products.map((product, index) => (
+          <Box key={index} sx={{ margin: "0 10px" }}>
             {" "}
             {/* Add margin between slides */}
             <ProductCardThree product={product} />

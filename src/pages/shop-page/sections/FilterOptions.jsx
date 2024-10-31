@@ -49,7 +49,6 @@ const FilterOptions = () => {
         );
         setCategorySubcategory(response.data.data.categories);
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoadingCategorySubCategory(false);
@@ -66,7 +65,6 @@ const FilterOptions = () => {
         const response = await axiosInstance.get(`/occasion/get-all-occasion`);
         setOccasionData(response.data.data.occasion);
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoadingOccasion(false);
@@ -83,7 +81,6 @@ const FilterOptions = () => {
         const response = await axiosInstance.get(`/materials/get-all-material`);
         setMaterialData(response.data.data.material);
       } catch (err) {
-        console.log(err.message);
         setError(err.message);
       } finally {
         setLoadingMaterial(false);
@@ -94,9 +91,6 @@ const FilterOptions = () => {
   }, []);
 
   const handleCategoryChange = (event, subcategories) => {
-    console.log("Handle change subcategories");
-    console.log(subcategories);
-
     const value = event.target.name;
 
     setFilters((prev) => {
@@ -160,7 +154,6 @@ const FilterOptions = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" mb={2}>
-        {console.log(filters)}
         <Typography variant="h6">Filter by:</Typography>
         <Button
           variant="text"

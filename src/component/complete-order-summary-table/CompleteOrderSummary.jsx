@@ -12,9 +12,12 @@ import {
   Divider,
   Box,
   Grid,
+  Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const CompleteOrderSummary = ({ order }) => {
+  const navigate = useNavigate();
   return (
     <Box>
       <Box
@@ -143,6 +146,27 @@ const CompleteOrderSummary = ({ order }) => {
           </TableContainer>
         </CardContent>
       </Card>
+
+      <Box>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 900, marginTop: "10px" }}
+          onClick={() => navigate("/shop")}
+        >
+          Got to Shop
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ fontWeight: 900, marginTop: "10px" }}
+          onClick={() => navigate("/")}
+        >
+          Got to Home
+        </Button>
+      </Box>
     </Box>
   );
 };

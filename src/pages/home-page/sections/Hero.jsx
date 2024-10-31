@@ -49,8 +49,8 @@ const Hero = () => {
     >
       {allSlides.length != 0 ? (
         <Slider {...settings}>
-          {allSlides.map((slide) => (
-            <Link to={`${slide.targetLink}`}>
+          {allSlides.map((slide, index) => (
+            <Link to={`${slide.targetLink}`} key={index}>
               <Box
                 key={slide.id}
                 sx={{

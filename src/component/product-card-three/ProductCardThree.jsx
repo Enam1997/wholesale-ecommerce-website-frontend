@@ -18,7 +18,6 @@ import { productImageLink } from "../../api";
 import ProductQuickViewModal from "../product-quickview-modal/ProductQuickViewModal";
 
 const ProductCardThree = ({ product }) => {
-  const { id, name, price, discount, featureImage, pcsPerBox } = product;
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -58,13 +57,13 @@ const ProductCardThree = ({ product }) => {
             transform: "scale(1.1)",
           },
         }}
-        onClick={() => navigate(`/productdetails/${id}`)}
+        onClick={() => navigate(`/productdetails/${product?.id}`)}
       >
         <Box sx={{ position: "relative", height: "70%", overflow: "hidden" }}>
           <CardMedia
             component="img"
-            image={productImageLink(featureImage)}
-            alt={name?.substr(0, 15)}
+            image={productImageLink(product?.featureImage)}
+            alt={product?.name?.substr(0, 15)}
             sx={{
               width: "100%",
               height: "100%",
@@ -72,7 +71,7 @@ const ProductCardThree = ({ product }) => {
               transition: "transform 0.3s ease-in-out",
             }}
           />
-          {discount && (
+          {product?.discount && (
             <Typography
               variant="caption"
               sx={{
@@ -85,7 +84,7 @@ const ProductCardThree = ({ product }) => {
                 borderRadius: "4px",
               }}
             >
-              -{discount}%
+              -{product?.discount}%
             </Typography>
           )}
         </Box>
@@ -103,16 +102,16 @@ const ProductCardThree = ({ product }) => {
               lineHeight: "1.6em",
             }}
           >
-            {name}
+            {product?.name}
           </Typography>
-          {pcsPerBox ? (
+          {product?.pcsPerBox ? (
             <Typography
               variant="body1"
               sx={{
                 color: "grey",
               }}
             >
-              PCS: {pcsPerBox}
+              PCS: {product?.pcsPerBox}
             </Typography>
           ) : (
             ""
@@ -128,7 +127,7 @@ const ProductCardThree = ({ product }) => {
               variant="body1"
               sx={{ fontWeight: "bold", fontSize: "18px" }}
             >
-              {discount ? (
+              {product?.discount ? (
                 <Box
                   display={"flex"}
                   flexDirection={"column"}
@@ -141,18 +140,18 @@ const ProductCardThree = ({ product }) => {
                       fontSize: "14px",
                     }}
                   >
-                    ${price}
+                    ${product?.price}
                   </span>
                   <span
                     style={{
                       fontSize: "16px",
                     }}
                   >
-                    AED {calculateDiscountPrice(price, discount)}
+                    AED {calculateDiscountPrice(product?.price, product?.discount)}
                   </span>
                 </Box>
               ) : (
-                <span>${price}</span>
+                <span>${product?.price}</span>
               )}
             </Typography>
             <Button

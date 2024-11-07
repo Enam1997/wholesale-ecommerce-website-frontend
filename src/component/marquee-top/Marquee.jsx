@@ -17,8 +17,6 @@ const Marquee = () => {
   const fetchAllMarqueis = async () => {
     try {
       const response = await axiosInstance.get("/website/marque/all");
-      console.log(response.data.marquies);
-
       setMarqueis(response.data.marquies);
     } catch (err) {
       console.error("Error fetching Marqueis:", err);

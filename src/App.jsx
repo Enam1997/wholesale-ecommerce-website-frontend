@@ -27,7 +27,8 @@ import BackdropLoading from "./component/backdrop-loading/BackdropLoading";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
-
+import AllBlog from "./pages/blog/AllBlog";
+import BlogDetails from "./pages/blog-details/BlogDetails";
 
 function App() {
   return (
@@ -74,6 +75,8 @@ function App() {
                     element={<TermsAndConditions />}
                   />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/blog" element={<AllBlog />} />
+                  <Route path="/blog-details/:blogId" element={<BlogDetails />} />
                 </Routes>
                 <Footer />
                 <BottomNavigation />
@@ -81,7 +84,6 @@ function App() {
               <LoginDialog />
               <RegisterDialog />
               <BackdropLoading />
-          
             </ThemeProvider>
           </CartProvider>
         </FilterProvider>

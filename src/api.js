@@ -19,6 +19,9 @@ export const categoryImageLink = (imageLink) =>
 export const websiteImageLink = (imageLink) =>
   `${imageBaseURLLink}/website-images/${imageLink}`;
 
+export const blogImageLink = (imageLink) =>
+  `${imageBaseURLLink}/blog-images/${imageLink}`;
+
 const axiosInstance = axios.create({
   baseURL: baseURLLink,
   withCredentials: true, // Ensure cookies are sent with requests (for refresh tokens)

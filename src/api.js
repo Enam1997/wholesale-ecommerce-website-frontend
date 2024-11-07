@@ -16,6 +16,9 @@ export const homePageSliderImageLink = (imageLink) =>
 export const categoryImageLink = (imageLink) =>
   `${imageBaseURLLink}/category-images/${imageLink}`;
 
+export const websiteImageLink = (imageLink) =>
+  `${imageBaseURLLink}/website-images/${imageLink}`;
+
 const axiosInstance = axios.create({
   baseURL: baseURLLink,
   withCredentials: true, // Ensure cookies are sent with requests (for refresh tokens)

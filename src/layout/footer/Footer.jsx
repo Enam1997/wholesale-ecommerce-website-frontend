@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -7,10 +7,51 @@ import {
   Typography,
   IconButton,
   Divider,
+  Skeleton,
 } from "@mui/material";
-import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
+import {
+  Instagram,
+  Facebook,
+  Twitter,
+  ConnectWithoutContact,
+  YouTube,
+  SportsEsports,
+  MusicNote,
+  LinkedIn,
+  Forum,
+} from "@mui/icons-material";
+import axiosInstance from "../../api";
+
+const allSocialIcons = {
+  Facebook: <Facebook />,
+  Twitter: <Twitter />,
+  Instagram: <Instagram />,
+  Twitch: <ConnectWithoutContact />,
+  YouTube: <YouTube />,
+  Discord: <SportsEsports />,
+  TikTok: <MusicNote />,
+  LinkedIn: <LinkedIn />,
+  Community: <Forum />,
+};
 
 const Footer = () => {
+  const [socialMediaData, setSocialMediaData] = useState([]);
+  const [socialMediaDataLoading, setSocialMediaDataLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setSocialMediaDataLoading(true);
+      try {
+        const response = await axiosInstance.get("website/social/data/all");
+        setSocialMediaData(response.data);
+        setSocialMediaDataLoading(false);
+      } catch (error) {
+        console.error("Error fetching Social Media data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <Box sx={{ backgroundColor: "#333", color: "#fff", padding: "2rem 1rem" }}>
       <Container>
@@ -87,7 +128,7 @@ const Footer = () => {
               </Link>
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          {/* <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
               Follow Us
             </Typography>
@@ -105,6 +146,49 @@ const Footer = () => {
                 <LinkedIn />
               </IconButton>
             </Box>
+          </Grid> */}
+
+          <Grid item xs={12} sm={6} md={3}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
+              Follow Us
+            </Typography>
+            {socialMediaDataLoading ? (
+              <Skeleton
+                variant="text"
+                sx={{
+                  bgcolor: "grey.700",
+                  minHeight: "20px",
+                  maxWidth: "100px",
+                }}
+              />
+            ) : (
+              <>
+                {socialMediaData ? (
+                  <>
+                    <Box>
+                      {socialMediaData.map((social, index) => (
+                        <IconButton
+                          key={index}
+                          href={social.link}
+                          target="_blank"
+                          sx={{
+                            color: "#fff",
+                            "&:hover": {
+                              color: "#ff6b6b",
+                            },
+                            transition: "color 0.3s ease",
+                          }}
+                        >
+                          {allSocialIcons[social?.name]}
+                        </IconButton>
+                      ))}
+                    </Box>
+                  </>
+                ) : (
+                  ""
+                )}
+              </>
+            )}
           </Grid>
         </Grid>
         <Divider sx={{ borderColor: "#444", mb: 2 }} />

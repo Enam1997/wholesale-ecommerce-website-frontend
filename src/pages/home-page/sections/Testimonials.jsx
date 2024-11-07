@@ -1,9 +1,11 @@
 // Testimonials.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "./testimonials.css";
+import axiosInstance, { websiteImageLink } from "../../../api";
 
 const Testimonials = () => {
+  const [allTestimonials, setAllTestimonials] = useState([]);
   const testimonials = [
     {
       id: 1,
@@ -22,6 +24,22 @@ const Testimonials = () => {
     },
     // Add more testimonials as needed
   ];
+  const fetchAlltestimonials = async () => {
+    try {
+      const response = await axiosInstance.get(
+        "/frontend-home-page/reviews/all"
+      );
+      console.log(response.data.data.allReview);
+
+      setAllTestimonials(response.data.data.allReview);
+    } catch (err) {
+      console.error("Error fetching Testimonail:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAlltestimonials();
+  }, []);
 
   const settings = {
     dots: true,
@@ -35,15 +53,31 @@ const Testimonials = () => {
   return (
     <div className="testimonials">
       <h2>What Our Customers Say</h2>
-      <Slider {...settings}>
-        {testimonials.map((testi) => (
-          <div key={testi.id} className="testimonial">
-            <img src={testi.image} alt={testi.name} />
-            <p>"{testi.feedback}"</p>
-            <h4>- {testi.name}</h4>
-          </div>
-        ))}
-      </Slider>
+      {allTestimonials ? (
+        <>
+          <Slider {...settings}>
+            {allTestimonials.map((testi) => (
+              <div key={testi?.id} className="testimonial">
+                <img src={websiteImageLink(testi.image)} alt={testi.id} />
+                <p>"{testi.review}"</p>
+                <h4>- {testi?.name}</h4>
+              </div>
+            ))}
+          </Slider>
+        </>
+      ) : (
+        <>
+          <Slider {...settings}>
+            {testimonials.map((testi) => (
+              <div key={testi.id} className="testimonial">
+                <img src={testi.image} alt={testi.name} />
+                <p>"{testi.feedback}"</p>
+                <h4>- {testi.name}</h4>
+              </div>
+            ))}
+          </Slider>
+        </>
+      )}
     </div>
   );
 };

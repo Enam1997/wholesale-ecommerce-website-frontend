@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Container,
@@ -8,64 +8,87 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import axiosInstance from "../../api";
+import { formatDate } from "../../utils/formetDateTimeToEnUs";
 
 const TermsAndConditions = () => {
+  const [temsCondition, setTemsCondition] = useState({
+    acceptanceOfTerms: "",
+    userResponsibilities: "",
+    limitationOfLiability: "",
+    changesToTerms: "",
+    updatedAt: new Date(),
+  });
+
+  const [firstLoading, setFirstLoading] = useState(false); // For button loading state
+
+  // Fetch the data when the component loads
+  useEffect(() => {
+    const fetchData = async () => {
+      setFirstLoading(true);
+      try {
+        const response = await axiosInstance.get(
+          `/website/tcpage/data/tcdetails`
+        );
+        setTemsCondition(response.data); // Assuming API returns an object like { address, phone, mobile, details }
+        setFirstLoading(false);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching contact data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <Container sx={{ padding: "2rem 0" }}>
-      <Typography variant="h4" gutterBottom>
-        Terms & Conditions
-      </Typography>
+    <Container sx={{ padding: "2rem 1rem" }}>
+      {firstLoading ? (
+        ""
+      ) : (
+        <>
+          <Typography variant="h4" gutterBottom>
+            Terms & Conditions
+          </Typography>
 
-      <Divider sx={{ marginBottom: "2rem" }} />
+          <Divider sx={{ marginBottom: "2rem" }} />
 
-      <Typography variant="h6" gutterBottom>
-        Acceptance of Terms
-      </Typography>
-      <Typography paragraph>
-        By accessing and using our platform, you agree to be bound by these
-        terms and conditions. Please read them carefully.
-      </Typography>
+          <Typography variant="h6" gutterBottom>
+            Acceptance of Terms
+          </Typography>
+          <Typography paragraph>{temsCondition.acceptanceOfTerms}</Typography>
 
-      <Box>
-        <Typography variant="h6" gutterBottom>
-          User Responsibilities
-        </Typography>
-        <List>
-          <ListItem>
-            <ListItemText primary="Provide accurate and up-to-date information." />
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Comply with all local laws and regulations." />
-          </ListItem>
-        </List>
-      </Box>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              User Responsibilities
+            </Typography>
+            <Typography paragraph>
+              {temsCondition.userResponsibilities}
+            </Typography>
+          </Box>
 
-      <Box>
-        <Typography variant="h6" gutterBottom>
-          Limitation of Liability
-        </Typography>
-        <Typography paragraph>
-          We are not liable for any damages that result from the use or
-          inability to use our platform, including data loss or service
-          interruptions.
-        </Typography>
-      </Box>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Limitation of Liability
+            </Typography>
+            <Typography paragraph>
+              {temsCondition.limitationOfLiability}
+            </Typography>
+          </Box>
 
-      <Box>
-        <Typography variant="h6" gutterBottom>
-          Changes to Terms
-        </Typography>
-        <Typography paragraph>
-          We reserve the right to modify these terms at any time. Changes will
-          be communicated to users via our platform.
-        </Typography>
-      </Box>
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              Changes to Terms
+            </Typography>
+            <Typography paragraph>{temsCondition.changesToTerms}</Typography>
+          </Box>
 
-      <Divider sx={{ marginY: "2rem" }} />
+          <Divider sx={{ marginY: "2rem" }} />
 
-      <Typography variant="body2" color="textSecondary">
-        Last Updated: September 2024
-      </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Last Updated: {formatDate(temsCondition?.updatedAt)}
+          </Typography>
+        </>
+      )}
     </Container>
   );
 };

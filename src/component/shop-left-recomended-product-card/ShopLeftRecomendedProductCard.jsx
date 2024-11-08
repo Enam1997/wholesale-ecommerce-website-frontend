@@ -7,19 +7,25 @@ import {
   IconButton,
   Grid,
   Box,
+  Tooltip,
   Button,
 } from "@mui/material";
-import { FavoriteBorder, ShoppingCart } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, ShoppingCart } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useWishlist } from "../../context/WishListContext"; // Adjust path as needed
+import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { productImageLink } from "../../api";
 
-const ShopLeftRecomendedProductCard = ({ product }) => {
+const ShopLeftRecommendedProductCard = ({ product }) => {
   const { id, name, price, discount, featureImage, pcsPerBox } = product;
-  const discountPercentage = discount
-    ? Math.round(((price - discount) / price) * 100)
-    : null;
-
   const navigate = useNavigate();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const isProductInWishlist = isInWishlist(id);
+
+  const handleWishlistToggle = (e) => {
+    e.stopPropagation();
+    isProductInWishlist ? removeFromWishlist(id) : addToWishlist(product);
+  };
 
   return (
     <Card
@@ -28,19 +34,16 @@ const ShopLeftRecomendedProductCard = ({ product }) => {
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        maxWidth: 400,
-        position: "relative",
+        // maxWidth: 300,
+        borderRadius: 2,
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
         overflow: "hidden",
-        borderRadius: "10px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         cursor: "pointer",
-        "&:hover img": {
-          transform: "scale(1.1)",
-        },
+        "&:hover img": { transform: "scale(1.05)" },
       }}
       onClick={() => navigate(`/productdetails/${id}`)}
     >
-      {/* Left Side: Product Image */}
+      {/* Image Section */}
       <Box sx={{ flex: "0 0 30%", position: "relative" }}>
         <CardMedia
           component="img"
@@ -51,7 +54,6 @@ const ShopLeftRecomendedProductCard = ({ product }) => {
             height: "100%",
             objectFit: "cover",
             transition: "transform 0.3s ease-in-out",
-            // "&:hover": { transform: "scale(1.1)" },
           }}
         />
         {discount && (
@@ -63,38 +65,38 @@ const ShopLeftRecomendedProductCard = ({ product }) => {
               right: 8,
               backgroundColor: "red",
               color: "white",
-              padding: "0.25rem",
+              padding: "2px 4px",
               borderRadius: "4px",
               fontWeight: "bold",
-              fontSize: "12px",
             }}
           >
             -{discount}%
           </Typography>
         )}
         <IconButton
+          onClick={handleWishlistToggle}
           sx={{
             position: "absolute",
             top: 8,
             left: 8,
             backgroundColor: "white",
-            color: "black",
-            padding: "0.25rem",
-            borderRadius: "20px",
+            color: isProductInWishlist ? "green" : "black",
+            padding: "2px",
+            borderRadius: "50%",
           }}
         >
-          <FavoriteBorder sx={{ fontSize: "20px" }} />
+          {isProductInWishlist ? <Favorite /> : <FavoriteBorder />}
         </IconButton>
       </Box>
 
-      {/* Right Side: Product Details */}
+      {/* Product Details Section */}
       <CardContent
         sx={{
           flex: "1 0 65%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "10px 15px",
+          padding: "8px 12px",
         }}
       >
         <Typography
@@ -107,61 +109,47 @@ const ShopLeftRecomendedProductCard = ({ product }) => {
             maxWidth: "100%",
           }}
         >
-          {name.length > 21 ? `${name.slice(0, 20)}...` : name}
+          {name.length > 20 ? `${name.slice(0, 20)}...` : name}
         </Typography>
-        {pcsPerBox ? (
-          <Typography
-            variant="body2"
-            sx={{
-              color: "grey",
-            }}
-          >
+        {pcsPerBox && (
+          <Typography variant="body2" sx={{ color: "grey" }}>
             PCS: {pcsPerBox}
           </Typography>
-        ) : (
-          ""
         )}
 
         <Grid container justifyContent="space-between" alignItems="center">
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: "bold", fontSize: "16px" }}
-          >
+          <Typography variant="body2" sx={{ fontWeight: "bold", fontSize: "14px" }}>
             {discount ? (
               <>
-                <span style={{ color: "#2d2d2d" }}>AED {discount}</span>
-                <span
-                  style={{
-                    textDecoration: "line-through",
-                    marginLeft: "8px",
-                    color: "grey",
-                    fontSize: "14px",
-                  }}
-                >
-                  {price}
+                <span>AED {calculateDiscountPrice(price, discount)}</span>
+                <span style={{ textDecoration: "line-through", color: "grey", marginLeft: 4 }}>
+                  AED {price}
                 </span>
               </>
             ) : (
               <span>AED {price}</span>
             )}
           </Typography>
-          {/* <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              padding: "4px 8px",
-              minWidth: "auto",
-              borderRadius: "20px",
-              transition: "0.3s",
-              "&:hover": { backgroundColor: "#f0f0f0" },
-            }}
-          >
-            <ShoppingCart fontSize="small" />
-          </Button> */}
+          <Tooltip title="Add to Cart">
+            <Button
+              onClick={(e) => e.stopPropagation()}
+              variant="outlined"
+              size="small"
+              sx={{
+                padding: "4px",
+                minWidth: "auto",
+                borderRadius: "50%",
+                transition: "0.3s",
+                "&:hover": { backgroundColor: "#f0f0f0" },
+              }}
+            >
+              <ShoppingCart fontSize="small" />
+            </Button>
+          </Tooltip>
         </Grid>
       </CardContent>
     </Card>
   );
 };
 
-export default ShopLeftRecomendedProductCard;
+export default ShopLeftRecommendedProductCard;

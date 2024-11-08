@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -16,8 +16,10 @@ import DeliveryInformation from "./DeliveryInformation";
 import AllOrder from "./AllOrder";
 import { AuthContext } from "../../context/AuthContext";
 import WishListItemsTab from "./WishListItemsTab";
+import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
+  let { tab } = useParams();
   const [selectedTab, setSelectedTab] = useState(0);
   const { logout } = useContext(AuthContext);
   const theme = useTheme();
@@ -35,6 +37,10 @@ const ProfilePage = () => {
     "Wishlist",
   ];
 
+  useEffect(() => {
+    setSelectedTab(tab);
+  }, []);
+
   return (
     <Box mt={4} mb={4}>
       <Grid container spacing={2}>
@@ -46,7 +52,7 @@ const ProfilePage = () => {
             {/* Tabs Section */}
             <Box sx={{ border: "1px solid #ddd", borderRadius: "8px" }}>
               <Tabs
-                value={selectedTab}
+                value={Number(selectedTab)}
                 onChange={handleTabChange}
                 variant={isMobile ? "scrollable" : "fullWidth"}
                 scrollButtons="auto"
@@ -86,7 +92,7 @@ const ProfilePage = () => {
           <Paper
             sx={{ border: "1px solid #ccc", padding: 3, minHeight: "500px" }}
           >
-            {selectedTab === 0 && (
+            {selectedTab == 0 && (
               <Box>
                 <Box
                   display={"flex"}
@@ -111,16 +117,16 @@ const ProfilePage = () => {
                 <ManageProfile />
               </Box>
             )}
-            {selectedTab === 1 && (
+            {selectedTab == 1 && (
               <Typography variant="body1">
                 <AllOrder />
               </Typography>
             )}
-            {selectedTab === 2 && <DeliveryInformation />}
-            {selectedTab === 3 && (
+            {selectedTab == 2 && <DeliveryInformation />}
+            {selectedTab == 3 && (
               <Typography variant="body1">Support Ticket Content</Typography>
             )}
-            {selectedTab === 4 && <WishListItemsTab />}
+            {selectedTab == 4 && <WishListItemsTab />}
           </Paper>
         </Grid>
       </Grid>

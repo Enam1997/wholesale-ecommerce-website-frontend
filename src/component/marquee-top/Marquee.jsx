@@ -30,7 +30,7 @@ const Marquee = () => {
   return (
     <Box className="marquee-wrapper" color="white">
       <Box className="marquee-content">
-        {marqueis ? (
+        {marqueis.length != 0 ? (
           <>
             {/* Repeat the content twice to create a seamless effect */}
             {marqueis.map((marq, index) => (

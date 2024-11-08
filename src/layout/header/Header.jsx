@@ -109,7 +109,7 @@ const Header = (props) => {
           </Hidden>
 
           <Hidden mdDown>
-            <IconButton>
+            <IconButton onClick={() => navigate("/profile/4")}>
               <Favorite />
             </IconButton>
           </Hidden>
@@ -147,7 +147,7 @@ const Header = (props) => {
                       // },
                       fontWeight: 700,
                     }}
-                    onClick={() => handleMenuClick("/profile")}
+                    onClick={() => handleMenuClick("/profile/0")}
                   >
                     My Profile
                   </MenuItem>

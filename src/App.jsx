@@ -32,8 +32,6 @@ import BlogDetails from "./pages/blog-details/BlogDetails";
 import { WishlistProvider } from "./context/WishListContext";
 
 function App() {
-
-  
   return (
     <Box>
       <AuthProvider>
@@ -63,7 +61,7 @@ function App() {
                       }
                     />
                     <Route
-                      path="/profile"
+                      path="/profile/:tab"
                       element={
                         <ProtectedRoute>
                           <ProfilePage />

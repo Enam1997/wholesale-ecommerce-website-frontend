@@ -53,7 +53,7 @@ const Testimonials = () => {
   return (
     <div className="testimonials">
       <h2>What Our Customers Say</h2>
-      {allTestimonials ? (
+      {allTestimonials.length != 0 ? (
         <>
           <Slider {...settings}>
             {allTestimonials.map((testi) => (

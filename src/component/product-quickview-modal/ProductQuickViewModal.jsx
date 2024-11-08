@@ -68,11 +68,16 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: 400,
+            maxWidth: 400,
+            width: "100%",
+            height: { xs: "100%", md: "700px" },
             bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
             outline: "none",
+            display: "flex",
+            flexDirection:"column",
+            justifyContent:"space-between"
           }}
         >
           {/* Close Button */}
@@ -83,176 +88,180 @@ const ProductQuickViewModal = ({ product, openModal, handleCloseModal }) => {
             <Close />
           </IconButton>
 
-          {/* Product Image */}
-          <Box sx={{ textAlign: "center", marginBottom: 2 }}>
-            <img
-              src={productImageLink(product?.featureImage)}
-              alt={product?.name}
-              style={{ width: "100%", height: "auto", maxHeight: 200 }}
-            />
-          </Box>
+          <Box>
+            {/* Product Image */}
+            <Box sx={{ textAlign: "center", marginBottom: 2 }}>
+              <img
+                src={productImageLink(product?.featureImage)}
+                alt={product?.name}
+                style={{ width: "100%", height: "auto", maxHeight: 200 }}
+              />
+            </Box>
 
-          {/* Product Name */}
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            {product?.name}
-          </Typography>
-
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* Per Box Data */}
-
-          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <Typography variant="h6" sx={{ mr: 2 }}>
-              Per Box:
+            {/* Product Name */}
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              {product?.name}
             </Typography>
-            <Typography variant="h6" sx={{ color: "black" }}>
-              {product?.pcsPerBox} pcs
-            </Typography>
-          </Box>
-          <Divider sx={{ margin: "16px 0" }} />
 
-          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <Typography variant="h6" sx={{ mr: 2 }}>
-              Price:
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{ color: product?.discount ? "red" : "black" }}
-            >
-              {product?.discount
-                ? `$${calculateDiscountPrice(
-                    product?.price,
-                    product?.discount
-                  )}`
-                : `$${product?.price}`}
-              {product?.discount && (
+            <Divider sx={{ margin: "16px 0" }} />
+
+            {/* Per Box Data */}
+
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Typography variant="h6" sx={{ mr: 2 }}>
+                Per Box:
+              </Typography>
+              <Typography variant="h6" sx={{ color: "black" }}>
+                {product?.pcsPerBox} pcs
+              </Typography>
+            </Box>
+            <Divider sx={{ margin: "16px 0" }} />
+
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Typography variant="h6" sx={{ mr: 2 }}>
+                Price:
+              </Typography>
+              <Typography
+                variant="h5"
+                sx={{ color: product?.discount ? "red" : "black" }}
+              >
+                {product?.discount
+                  ? `$${calculateDiscountPrice(
+                      product?.price,
+                      product?.discount
+                    )}`
+                  : `$${product?.price}`}
+                {product?.discount && (
+                  <>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        textDecoration: "line-through",
+                        color: "grey",
+                        ml: 1,
+                      }}
+                      component="span"
+                    >
+                      ${product?.price}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "green", ml: 1 }}
+                      component="span"
+                    >
+                      {`Save ${product?.discount}%`}
+                    </Typography>
+                  </>
+                )}
+              </Typography>
+            </Box>
+
+            <Divider sx={{ margin: "16px 0" }} />
+
+            {/* increment dicrement */}
+
+            {/* Quantity Selector */}
+            <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+              <Typography variant="h6" sx={{ mr: 2 }}>
+                Quantity:
+              </Typography>
+              {product?.stock <= 0 ? (
+                <Typography variant="body1" color="red">
+                  Stock Empty
+                </Typography>
+              ) : (
                 <>
+                  {" "}
+                  <IconButton
+                    color="primary"
+                    onClick={handleDecrement}
+                    disabled={quantity === 1 && !isInCart(product?.id)}
+                  >
+                    <Remove />
+                  </IconButton>
                   <Typography
-                    variant="body2"
+                    variant="h6"
                     sx={{
-                      textDecoration: "line-through",
-                      color: "grey",
-                      ml: 1,
+                      mx: 2,
+                      border: "1px solid #ccc",
+                      padding: "0 12px",
+                      borderRadius: "4px",
                     }}
-                    component="span"
                   >
-                    ${product?.price}
+                    {quantity}
                   </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "green", ml: 1 }}
-                    component="span"
+                  <IconButton
+                    color="primary"
+                    onClick={handleIncrement}
+                    disabled={quantity >= product?.stock}
                   >
-                    {`Save ${product?.discount}%`}
-                  </Typography>
+                    <Add />
+                  </IconButton>
                 </>
               )}
+            </Box>
+
+            <Divider sx={{ margin: "16px 0" }} />
+
+            {/* Total */}
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+              Total: $
+              {(
+                (calculateDiscountPrice(product?.price, product?.discount) ||
+                  product?.price) * quantity
+              ).toFixed(2)}
             </Typography>
           </Box>
 
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* increment dicrement */}
-
-          {/* Quantity Selector */}
-          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <Typography variant="h6" sx={{ mr: 2 }}>
-              Quantity:
-            </Typography>
-            {product?.stock <= 0 ? (
-              <Typography variant="body1" color="red">
-                Stock Empty
-              </Typography>
-            ) : (
-              <>
-                {" "}
-                <IconButton
-                  color="primary"
-                  onClick={handleDecrement}
-                  disabled={quantity === 1 && !isInCart(product?.id)}
+          <Box>
+            {/* Add to Cart and details Button */}
+            <Button
+              variant="outlined"
+              color="primary"
+              fullWidth
+              sx={{ fontWeight: 900, marginTop: 2 }}
+              onClick={handleViewFullDetailsClick}
+            >
+              View Full Details
+            </Button>
+            <Box fullWidth mt={2}>
+              {product?.stock <= 0 ? (
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  sx={{ fontWeight: 900 }}
                 >
-                  <Remove />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    mx: 2,
-                    border: "1px solid #ccc",
-                    padding: "0 12px",
-                    borderRadius: "4px",
-                  }}
-                >
-                  {quantity}
-                </Typography>
-                <IconButton
-                  color="primary"
-                  onClick={handleIncrement}
-                  disabled={quantity >= product?.stock}
-                >
-                  <Add />
-                </IconButton>
-              </>
-            )}
-          </Box>
-
-          <Divider sx={{ margin: "16px 0" }} />
-
-          {/* Total */}
-          <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-            Total: $
-            {(
-              (calculateDiscountPrice(product?.price, product?.discount) ||
-                product?.price) * quantity
-            ).toFixed(2)}
-          </Typography>
-
-          {/* Add to Cart and details Button */}
-          <Button
-            variant="outlined"
-            color="primary"
-            fullWidth
-            sx={{ fontWeight: 900, marginTop: 2 }}
-            onClick={handleViewFullDetailsClick}
-          >
-            View Full Details
-          </Button>
-          <Box fullWidth mt={2}>
-            {product?.stock <= 0 ? (
-              <Button
-                variant="outlined"
-                color="secondary"
-                sx={{ fontWeight: 900 }}
-              >
-                Stock Empty
-              </Button>
-            ) : (
-              <>
-                {" "}
-                <Box>
-                  {isInCart(product?.id) ? (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      fullWidth
-                      onClick={() => removeFromCart(product?.id)}
-                      sx={{ fontWeight: 900 }}
-                    >
-                      Remove from Cart
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      fullWidth
-                      onClick={() => addToCart(product, quantity)}
-                      sx={{ fontWeight: 900 }}
-                    >
-                      Add to Cart
-                    </Button>
-                  )}
-                </Box>
-              </>
-            )}
+                  Stock Empty
+                </Button>
+              ) : (
+                <>
+                  {" "}
+                  <Box>
+                    {isInCart(product?.id) ? (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        fullWidth
+                        onClick={() => removeFromCart(product?.id)}
+                        sx={{ fontWeight: 900 }}
+                      >
+                        Remove from Cart
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={() => addToCart(product, quantity)}
+                        sx={{ fontWeight: 900 }}
+                      >
+                        Add to Cart
+                      </Button>
+                    )}
+                  </Box>
+                </>
+              )}
+            </Box>
           </Box>
         </Box>
       </Modal>

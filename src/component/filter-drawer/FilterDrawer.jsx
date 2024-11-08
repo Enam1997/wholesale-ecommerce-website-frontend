@@ -1,177 +1,213 @@
 import React, { useEffect, useState } from "react";
 import {
-  Drawer,
-  IconButton,
   Typography,
-  Box,
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Button,
+  Box,
+  FormControl,
   OutlinedInput,
   InputAdornment,
+  Button,
+  RadioGroup,
+  Radio,
+  Divider,
+  Drawer,
   Fab,
+  IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useFilterContext } from "../../context/FilterContext.jsx";
-import axiosInstance from "../../api.js";
+import CloseIcon from "@mui/icons-material/Close";
+import { useFilterContext } from "../../context/FilterContext";
+import axiosInstance from "../../api";
 
 const FilterDrawer = () => {
   const { filters, setFilters, handleFilterChange, clearFilter } =
     useFilterContext();
-  const [categorySubcategory, setCategorySubcategory] = useState([]);
-  const [loadingCategorySubCategory, setLoadingCategorySubCategory] =
-    useState(true);
-  const [tempFilters, setTempFilters] = useState(filters); // Temporary filters
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [categorySubcategory, setCategorySubcategory] = useState([]);
+  const [occasionData, setOccasionData] = useState([]);
+  const [materialData, setMaterialData] = useState([]);
+  const [tempFilters, setTempFilters] = useState({ ...filters });
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerOpen(open);
-  };
-
+  // Fetch category, occasion, and material data
   useEffect(() => {
-    setLoadingCategorySubCategory(true);
-    const fetchCategories = async () => {
+    const fetchCategoryData = async () => {
       try {
         const response = await axiosInstance.get(
-          `/subcategories/get-all-categories-subcategories`
+          "/subcategories/get-all-categories-subcategories"
         );
         setCategorySubcategory(response.data.data.categories);
-      } catch (err) {
-        console.error(err.message);
-      } finally {
-        setLoadingCategorySubCategory(false);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
       }
     };
-    fetchCategories();
+    fetchCategoryData();
+
+    const fetchOccasionData = async () => {
+      try {
+        const response = await axiosInstance.get("/occasion/get-all-occasion");
+        setOccasionData(response.data.data.occasion);
+      } catch (error) {
+        console.error("Error fetching occasions:", error);
+      }
+    };
+    fetchOccasionData();
+
+    const fetchMaterialData = async () => {
+      try {
+        const response = await axiosInstance.get("/materials/get-all-material");
+        setMaterialData(response.data.data.material);
+      } catch (error) {
+        console.error("Error fetching materials:", error);
+      }
+    };
+    fetchMaterialData();
   }, []);
 
-  const handleTempFilterChange = (event) => {
-    const { name, value, checked } = event.target;
+  const toggleDrawer = () => {
+    setDrawerOpen((prev) => !prev);
+    setTempFilters({ ...filters }); // Reset temp filters to current filters on open/close
+  };
+
+  // Handle temporary filter changes
+  const handleTempFilterChange = (e, value) => {
+    const { name, checked } = e.target;
     setTempFilters((prev) => ({
       ...prev,
       [name]: checked
-        ? [...prev[name], value]
-        : prev[name].filter((item) => item !== value),
+        ? [...(prev[name] || []), value]
+        : prev[name].filter((v) => v !== value),
     }));
   };
 
-  const handleFilterDataSet = () => {
-    return;
+  // Clear all temporary filters
+  const clearAllTempFilters = () => {
+    setTempFilters({
+      category: [],
+      subcategory: [],
+      minPrice: "",
+      maxPrice: "",
+      discount: "",
+      newArrival: "",
+      occasion: [],
+      material: [],
+    });
   };
 
+  // Apply filters and update context
   const applyFilters = () => {
-    // handleFilterDataSet();
-    // setFilters(tempFilters); // Apply temp filters to actual filters
-    setDrawerOpen(false); // Close the drawer
-  };
-
-  const clearAllFilters = () => {
-    clearFilter(); // Clear filters from context
-    setTempFilters({}); // Reset temporary filters
+    setFilters(tempFilters);
+    setDrawerOpen(false);
   };
 
   return (
-    <Box>
-      {/* Floating Action Button for opening the filter drawer on small screens */}
+    <>
+      {/* Floating Action Button for Filter */}
       <Fab
-        color="secondary"
+        color="primary"
         aria-label="filter"
+        onClick={toggleDrawer}
         sx={{
           position: "fixed",
           bottom: 40,
           left: "50%",
           transform: "translateX(-50%)",
         }}
-        onClick={toggleDrawer(true)}
       >
         <FilterListIcon />
       </Fab>
 
       {/* Filter Drawer */}
-      <Drawer anchor="bottom" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: "100%", p: 2 }}>
-          <Box display={"flex"} justifyContent={"space-between"}>
-            {/* Filter Heading */}
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              Filter by
-            </Typography>
-            {/* Close button */}
-            <IconButton onClick={toggleDrawer(false)} sx={{ mb: 1 }}>
+      <Drawer
+        anchor="bottom"
+        open={drawerOpen}
+        onClose={toggleDrawer}
+        PaperProps={{
+          style: {
+            height: "100vh",
+            width: "100%",
+          },
+        }}
+      >
+        <Box
+          p={2}
+          role="presentation"
+          display="flex"
+          flexDirection="column"
+          height="100%"
+        >
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Typography variant="h6">Filter Options</Typography>
+            <IconButton onClick={toggleDrawer}>
               <CloseIcon />
             </IconButton>
           </Box>
 
-          {/* Categories */}
-          {categorySubcategory.map((category, index) => (
-            <FormGroup key={index}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={
-                      tempFilters.category?.includes(category.name) || false
-                    }
-                    onChange={(e) =>
-                      handleTempFilterChange(e, category.subcategories)
-                    }
-                  />
-                }
-                label={category.name}
-                name="category"
-                value={category.name}
-              />
-              <Box sx={{ pl: 2 }}>
-                {category.subcategories?.map((sub, subIndex) => (
+          <Divider sx={{ my: 2 }} />
+
+          <Box flex="1" overflow="auto">
+            {/* Category & Subcategory Filter */}
+            <Typography variant="subtitle1" fontWeight="bold">
+              Category
+            </Typography>
+            <FormGroup>
+              {categorySubcategory.map((ctgy) => (
+                <Box key={ctgy.name}>
                   <FormControlLabel
-                    key={subIndex}
                     control={
                       <Checkbox
-                        checked={
-                          tempFilters.subcategory?.includes(sub.name) || false
-                        }
-                        onChange={(e) => handleTempFilterChange(e)}
+                        checked={tempFilters.category?.includes(ctgy.name)}
+                        onChange={(e) => handleTempFilterChange(e, ctgy.name)}
+                        name="category"
                       />
                     }
-                    label={sub.name}
-                    name="subcategory"
-                    value={sub.name}
+                    label={ctgy.name}
                   />
-                ))}
-              </Box>
+                  <Box pl={2}>
+                    {ctgy.Subcategories.map((subCtg) => (
+                      <FormControlLabel
+                        key={subCtg.name}
+                        control={
+                          <Checkbox
+                            checked={tempFilters.subcategory?.includes(
+                              subCtg.name
+                            )}
+                            onChange={(e) =>
+                              handleTempFilterChange(e, subCtg.name)
+                            }
+                            name="subcategory"
+                          />
+                        }
+                        label={subCtg.name}
+                      />
+                    ))}
+                  </Box>
+                </Box>
+              ))}
             </FormGroup>
-          ))}
 
-          {/* Price Filter */}
-          <Typography sx={{ fontWeight: "bold", mt: 2 }}>Price</Typography>
-          <FormGroup>
-            <OutlinedInput
-              name="minPrice"
-              value={tempFilters.minPrice || ""}
-              onChange={handleTempFilterChange}
-              endAdornment={<InputAdornment position="end">AED</InputAdornment>}
-              placeholder="Minimum Price"
-              sx={{ mt: 1 }}
-            />
-            <OutlinedInput
-              name="maxPrice"
-              value={tempFilters.maxPrice || ""}
-              onChange={handleTempFilterChange}
-              endAdornment={<InputAdornment position="end">AED</InputAdornment>}
-              placeholder="Maximum Price"
-              sx={{ mt: 1 }}
-            />
-          </FormGroup>
+            <Divider sx={{ my: 2 }} />
 
-          {/* Drawer bottom buttons */}
-          <Box display="flex" justifyContent="space-between" mt={3}>
-            <Button onClick={clearAllFilters} color="secondary">
+            {/* Other Filters... (Price, Discount, New Arrival, Occasion, Material) */}
+            {/* The structure for these sections would be similar to the category section */}
+          </Box>
+
+          {/* Drawer Bottom Buttons */}
+          <Box
+            position="sticky"
+            bottom="0"
+            display="flex"
+            justifyContent="space-between"
+            p={2}
+            bgcolor="background.paper"
+            boxShadow={2}
+          >
+            <Button onClick={clearAllTempFilters} color="secondary">
               Clear Filters
             </Button>
             <Button variant="contained" onClick={applyFilters} color="primary">
@@ -180,7 +216,7 @@ const FilterDrawer = () => {
           </Box>
         </Box>
       </Drawer>
-    </Box>
+    </>
   );
 };
 

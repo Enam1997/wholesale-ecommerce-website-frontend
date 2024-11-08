@@ -15,6 +15,7 @@ import ManageProfile from "./ManageProfile";
 import DeliveryInformation from "./DeliveryInformation";
 import AllOrder from "./AllOrder";
 import { AuthContext } from "../../context/AuthContext";
+import WishListItemsTab from "./WishListItemsTab";
 
 const ProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -119,9 +120,7 @@ const ProfilePage = () => {
             {selectedTab === 3 && (
               <Typography variant="body1">Support Ticket Content</Typography>
             )}
-            {selectedTab === 4 && (
-              <Typography variant="body1">Wishlist Content</Typography>
-            )}
+            {selectedTab === 4 && <WishListItemsTab />}
           </Paper>
         </Grid>
       </Grid>

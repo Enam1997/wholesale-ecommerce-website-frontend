@@ -29,62 +29,70 @@ import { FilterProvider } from "./context/FilterContext";
 import { CartProvider } from "./context/CartContext";
 import AllBlog from "./pages/blog/AllBlog";
 import BlogDetails from "./pages/blog-details/BlogDetails";
+import { WishlistProvider } from "./context/WishListContext";
 
 function App() {
+
+  
   return (
     <Box>
       <AuthProvider>
         <FilterProvider>
           <CartProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              <Router>
-                <ScrollToTop /> {/* <-- Add this component here */}
-                <Header />
-                <Marquee />
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/shop" element={<ShopPage />} />
-                  <Route
-                    path="/productdetails/:id"
-                    element={<ProductDetails />}
-                  />
-                  <Route path="/cart" element={<CartPage />} />
-                  <Route
-                    path="/checkout"
-                    element={
-                      <ProtectedRoute>
-                        <CheckoutPage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/profile"
-                    element={
-                      <ProtectedRoute>
-                        <ProfilePage />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/shipping-returns"
-                    element={<ShippingAndReturns />}
-                  />
-                  <Route
-                    path="/terms-conditions"
-                    element={<TermsAndConditions />}
-                  />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/blog" element={<AllBlog />} />
-                  <Route path="/blog-details/:blogId" element={<BlogDetails />} />
-                </Routes>
-                <Footer />
-                <BottomNavigation />
-              </Router>
-              <LoginDialog />
-              <RegisterDialog />
-              <BackdropLoading />
-            </ThemeProvider>
+            <WishlistProvider>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Router>
+                  <ScrollToTop /> {/* <-- Add this component here */}
+                  <Header />
+                  <Marquee />
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/shop" element={<ShopPage />} />
+                    <Route
+                      path="/productdetails/:id"
+                      element={<ProductDetails />}
+                    />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route
+                      path="/checkout"
+                      element={
+                        <ProtectedRoute>
+                          <CheckoutPage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRoute>
+                          <ProfilePage />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/shipping-returns"
+                      element={<ShippingAndReturns />}
+                    />
+                    <Route
+                      path="/terms-conditions"
+                      element={<TermsAndConditions />}
+                    />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/blog" element={<AllBlog />} />
+                    <Route
+                      path="/blog-details/:blogId"
+                      element={<BlogDetails />}
+                    />
+                  </Routes>
+                  <Footer />
+                  <BottomNavigation />
+                </Router>
+                <LoginDialog />
+                <RegisterDialog />
+                <BackdropLoading />
+              </ThemeProvider>
+            </WishlistProvider>
           </CartProvider>
         </FilterProvider>
       </AuthProvider>

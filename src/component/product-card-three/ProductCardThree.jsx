@@ -10,32 +10,49 @@ import {
   Button,
   Modal,
   Divider,
+  Snackbar,
+  Alert,
 } from "@mui/material";
-import { FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
+import { Favorite, FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { productImageLink } from "../../api";
 import ProductQuickViewModal from "../product-quickview-modal/ProductQuickViewModal";
+import { useWishlist } from "../../context/WishListContext"; // Adjust the import path as needed
 
 const ProductCardThree = ({ product }) => {
   const [openModal, setOpenModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const navigate = useNavigate();
+  const isProductInWishlist = isInWishlist(product.id);
 
   const handleOpenModal = () => {
     setOpenModal(true);
-    document.body.style.overflow = "hidden"; // Prevent background scroll
+    document.body.style.overflow = "hidden";
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-    document.body.style.overflow = "auto"; // Reset background scroll
+    document.body.style.overflow = "auto";
   };
 
-  const handleQuantityChange = (operation) => {
-    if (operation === "increment") setQuantity(quantity + 1);
-    if (operation === "decrement" && quantity > 1) setQuantity(quantity - 1);
+  const handleWishlistToggle = () => {
+    if (isProductInWishlist) {
+      removeFromWishlist(product.id);
+      setSnackbarMessage("Product removed from wishlist");
+    } else {
+      addToWishlist(product);
+      setSnackbarMessage("Product added to wishlist");
+    }
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -57,7 +74,6 @@ const ProductCardThree = ({ product }) => {
             transform: "scale(1.1)",
           },
         }}
-        onClick={() => navigate(`/productdetails/${product?.id}`)}
       >
         <Box sx={{ position: "relative", height: "70%", overflow: "hidden" }}>
           <CardMedia
@@ -100,39 +116,24 @@ const ProductCardThree = ({ product }) => {
               fontWeight: "700",
               height: "3.2em",
               lineHeight: "1.6em",
+              "&:hover": {
+                textDecoration: "underline",
+              },
             }}
+            onClick={() => navigate(`/productdetails/${product?.id}`)}
           >
             {product?.name}
           </Typography>
-          {product?.pcsPerBox ? (
-            <Typography
-              variant="body1"
-              sx={{
-                color: "grey",
-              }}
-            >
+          {product?.pcsPerBox && (
+            <Typography variant="body1" sx={{ color: "grey" }}>
               PCS: {product?.pcsPerBox}
             </Typography>
-          ) : (
-            ""
           )}
 
-          <Grid
-            container
-            justifyContent="space-between"
-            alignItems="end"
-            sx={{ marginTop: "" }}
-          >
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: "bold", fontSize: "18px" }}
-            >
+          <Grid container justifyContent="space-between" alignItems="end">
+            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "18px" }}>
               {product?.discount ? (
-                <Box
-                  display={"flex"}
-                  flexDirection={"column"}
-                  justifyContent={"start"}
-                >
+                <Box display="flex" flexDirection="column" justifyContent="start">
                   <span
                     style={{
                       textDecoration: "line-through",
@@ -142,11 +143,7 @@ const ProductCardThree = ({ product }) => {
                   >
                     ${product?.price}
                   </span>
-                  <span
-                    style={{
-                      fontSize: "16px",
-                    }}
-                  >
+                  <span style={{ fontSize: "16px" }}>
                     AED {calculateDiscountPrice(product?.price, product?.discount)}
                   </span>
                 </Box>
@@ -165,7 +162,7 @@ const ProductCardThree = ({ product }) => {
                 },
               }}
               onClick={(e) => {
-                e.stopPropagation(); // Prevent card click
+                e.stopPropagation();
                 handleOpenModal();
               }}
             >
@@ -184,6 +181,10 @@ const ProductCardThree = ({ product }) => {
           </Grid>
         </CardContent>
         <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            handleWishlistToggle();
+          }}
           sx={{
             position: "absolute",
             top: 8,
@@ -193,7 +194,11 @@ const ProductCardThree = ({ product }) => {
             borderRadius: "20px",
           }}
         >
-          <FavoriteBorder sx={{ color: "black", fontSize: "25px" }} />
+          {isProductInWishlist ? (
+            <Favorite sx={{ color: "green", fontSize: "25px" }} />
+          ) : (
+            <FavoriteBorder sx={{ color: "black", fontSize: "25px" }} />
+          )}
         </IconButton>
       </Card>
 
@@ -203,6 +208,18 @@ const ProductCardThree = ({ product }) => {
         handleCloseModal={handleCloseModal}
         quantity={quantity}
       />
+
+      {/* Snackbar for wishlist feedback */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

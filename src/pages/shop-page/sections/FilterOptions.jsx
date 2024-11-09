@@ -366,22 +366,6 @@ const FilterOptions = () => {
           ) : (
             ""
           )}
-          {/* <FormControl component="fieldset">
-            <RadioGroup
-              name="occasion"
-              value={occasion}
-              onChange={handleFilterChange}
-            >
-              {["Casual", "Formal", "Party", "Sports"].map((per) => (
-                <FormControlLabel
-                  key={per}
-                  value={per}
-                  control={<Radio checked={filters.occasion == per} />}
-                  label={`${per}`}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl> */}
         </AccordionDetails>
       </Accordion>
 
@@ -412,22 +396,6 @@ const FilterOptions = () => {
           ) : (
             ""
           )}
-          {/* <FormControl component="fieldset">
-            <RadioGroup
-              name="material"
-              value={material}
-              onChange={handleFilterChange}
-            >
-              {["Cotton", "Polyester", "Leather", "Wool"].map((per) => (
-                <FormControlLabel
-                  key={per}
-                  value={per}
-                  control={<Radio checked={filters.material == per} />}
-                  label={`${per}`}
-                />
-              ))}
-            </RadioGroup>
-          </FormControl> */}
         </AccordionDetails>
       </Accordion>
 

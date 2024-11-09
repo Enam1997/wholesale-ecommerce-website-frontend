@@ -31,6 +31,7 @@ import AllBlog from "./pages/blog/AllBlog";
 import BlogDetails from "./pages/blog-details/BlogDetails";
 import { WishlistProvider } from "./context/WishListContext";
 import Wishlist from "./pages/wishlist/Wishlist";
+import Contuct from "./pages/contuct/Contuct";
 
 function App() {
   return (
@@ -95,6 +96,7 @@ function App() {
                         element={<BlogDetails />}
                       />
                       <Route path="/wishlist" element={<Wishlist />} />
+                      <Route path="/contact" element={<Contuct />} />
                     </Routes>
                   </Box>
                   <Footer />

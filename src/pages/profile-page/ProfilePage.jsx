@@ -15,7 +15,6 @@ import ManageProfile from "./ManageProfile";
 import DeliveryInformation from "./DeliveryInformation";
 import AllOrder from "./AllOrder";
 import { AuthContext } from "../../context/AuthContext";
-import WishListItemsTab from "./WishListItemsTab";
 import { useParams } from "react-router-dom";
 
 const ProfilePage = () => {
@@ -34,7 +33,6 @@ const ProfilePage = () => {
     "My Orders",
     "Delivery Addresses",
     "Support Ticket",
-    "Wishlist",
   ];
 
   useEffect(() => {
@@ -126,7 +124,6 @@ const ProfilePage = () => {
             {selectedTab == 3 && (
               <Typography variant="body1">Support Ticket Content</Typography>
             )}
-            {selectedTab == 4 && <WishListItemsTab />}
           </Paper>
         </Grid>
       </Grid>

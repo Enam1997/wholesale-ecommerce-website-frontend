@@ -121,7 +121,7 @@ const Header = (props) => {
           </Hidden>
 
           <Hidden mdDown>
-            <IconButton onClick={() => navigate("/profile/4")}>
+            <IconButton onClick={() => navigate("/wishlist")}>
               <Favorite />
             </IconButton>
           </Hidden>

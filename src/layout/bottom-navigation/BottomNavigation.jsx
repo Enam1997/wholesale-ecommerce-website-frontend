@@ -24,9 +24,9 @@ const BottomNav = () => {
         return 0;
       case "/shop":
         return 1;
-      case "/cart":
+      case "/wishlist":
         return 2;
-      case "/profile":
+      case "/profile/0":
         return 3;
       default:
         return -1;
@@ -42,7 +42,7 @@ const BottomNav = () => {
         navigate("/shop");
         break;
       case 2:
-        navigate("/cart");
+        navigate("/wishlist");
         break;
       case 3:
         if (user) {
@@ -71,14 +71,7 @@ const BottomNav = () => {
     >
       <BottomNavigationAction label="Home" icon={<Home />} />
       <BottomNavigationAction label="Shop" icon={<ShoppingBag />} />
-      <BottomNavigationAction
-        label="Cart"
-        icon={
-          <Badge color="primary" badgeContent={cartItems?.length}>
-            <ShoppingCart />
-          </Badge>
-        }
-      />
+      <BottomNavigationAction label="Favourite" icon={<Favorite />} />
       <BottomNavigationAction label="Profile" icon={<AccountCircle />} />
     </BottomNavigation>
   );

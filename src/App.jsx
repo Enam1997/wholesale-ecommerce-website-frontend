@@ -30,6 +30,7 @@ import { CartProvider } from "./context/CartContext";
 import AllBlog from "./pages/blog/AllBlog";
 import BlogDetails from "./pages/blog-details/BlogDetails";
 import { WishlistProvider } from "./context/WishListContext";
+import Wishlist from "./pages/wishlist/Wishlist";
 
 function App() {
   return (
@@ -93,6 +94,7 @@ function App() {
                         path="/blog-details/:blogId"
                         element={<BlogDetails />}
                       />
+                      <Route path="/wishlist" element={<Wishlist />} />
                     </Routes>
                   </Box>
                   <Footer />

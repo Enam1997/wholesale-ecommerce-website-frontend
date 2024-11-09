@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -15,8 +15,29 @@ import {
 } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BlogCard from "../../component/blog-card/BlogCard";
+import axiosInstance from "../../api";
 
 const AllBlog = () => {
+  const [blog, setBlog] = useState([]);
+  const [loading, seLoading] = useState([]);
+
+  const fetchBlog = async () => {
+    seLoading(true);
+    try {
+      const response = await axiosInstance.get("/blog/get-all-blog");
+      console.log(response.data);
+      setBlog(response.data.data.allBlog);
+      seLoading(false);
+    } catch (err) {
+      console.error("Error fetching Blog:", err);
+      seLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlog();
+  }, []);
+
   const posts = [
     {
       id: 1,
@@ -102,13 +123,25 @@ const AllBlog = () => {
 
   return (
     <Box sx={{ padding: "2rem 1rem" }}>
-      <Grid container spacing={3} justifyContent="center">
-        {posts.map((post) => (
-          <Grid item xs={12} sm={6} md={3} key={post.id}>
-            <BlogCard post={post} />
-          </Grid>
-        ))}
-      </Grid>
+      {loading ? (
+        <>Loading</>
+      ) : (
+        <>
+          {blog ? (
+            <>
+              <Grid container spacing={3} justifyContent="center">
+                {blog.map((blog) => (
+                  <Grid item xs={12} sm={6} md={3} key={blog.id}>
+                    <BlogCard post={blog} />
+                  </Grid>
+                ))}
+              </Grid>
+            </>
+          ) : (
+            <>No Blog Available</>
+          )}
+        </>
+      )}
     </Box>
   );
 };

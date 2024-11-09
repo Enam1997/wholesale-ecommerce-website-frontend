@@ -42,47 +42,59 @@ function App() {
                 <CssBaseline />
                 <Router>
                   <ScrollToTop /> {/* <-- Add this component here */}
-                  <Header />
-                  <Marquee />
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/shop" element={<ShopPage />} />
-                    <Route
-                      path="/productdetails/:id"
-                      element={<ProductDetails />}
-                    />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route
-                      path="/checkout"
-                      element={
-                        <ProtectedRoute>
-                          <CheckoutPage />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="/profile/:tab"
-                      element={
-                        <ProtectedRoute>
-                          <ProfilePage />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route
-                      path="/shipping-returns"
-                      element={<ShippingAndReturns />}
-                    />
-                    <Route
-                      path="/terms-conditions"
-                      element={<TermsAndConditions />}
-                    />
-                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                    <Route path="/blog" element={<AllBlog />} />
-                    <Route
-                      path="/blog-details/:blogId"
-                      element={<BlogDetails />}
-                    />
-                  </Routes>
+                  <Box
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    width={"100%"}
+                  >
+                    <Header />
+                  </Box>
+                  <Box marginTop={"100px"}>
+                    <Marquee />
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/shop" element={<ShopPage />} />
+                      <Route
+                        path="/productdetails/:id"
+                        element={<ProductDetails />}
+                      />
+                      <Route path="/cart" element={<CartPage />} />
+                      <Route
+                        path="/checkout"
+                        element={
+                          <ProtectedRoute>
+                            <CheckoutPage />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/profile/:tab"
+                        element={
+                          <ProtectedRoute>
+                            <ProfilePage />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/shipping-returns"
+                        element={<ShippingAndReturns />}
+                      />
+                      <Route
+                        path="/terms-conditions"
+                        element={<TermsAndConditions />}
+                      />
+                      <Route
+                        path="/privacy-policy"
+                        element={<PrivacyPolicy />}
+                      />
+                      <Route path="/blog" element={<AllBlog />} />
+                      <Route
+                        path="/blog-details/:blogId"
+                        element={<BlogDetails />}
+                      />
+                    </Routes>
+                  </Box>
                   <Footer />
                   <BottomNavigation />
                 </Router>

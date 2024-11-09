@@ -68,7 +68,19 @@ const Header = (props) => {
   );
 
   return (
-    <AppBar position="sticky" sx={{ backgroundColor: "#fff", boxShadow: 1 }}>
+    <AppBar
+      position="fixed"
+      zIndex={1100}
+      sx={{
+        backgroundColor: "#fff",
+        boxShadow: "none",
+        maxWidth: "1500px",
+        width: "100%", // Allow full width until maxWidth is reached
+        margin: "0 auto", // Center horizontally
+        left: "0",
+        right: "0",
+      }}
+    >
       <Toolbar>
         <Box
           sx={{

@@ -22,9 +22,7 @@ const CartPage = () => {
         const response = await axiosInstance.get(
           `/product/get-10-best-selling-products`
         );
-        setAllBestSellingProducts(
-          response.data.data.bestSellingProductsData.map((pro) => pro.Product)
-        );
+        setAllBestSellingProducts(response.data.data.bestSellingProductsData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -86,10 +84,14 @@ const CartPage = () => {
         </Box>
       )}
 
-      <ProductsSliderOne
-        title="Best Selling Products"
-        products={allBestSellingProducts}
-      />
+      {allBestSellingProducts ? (
+        <ProductsSliderOne
+          title="Best Selling Products"
+          products={allBestSellingProducts}
+        />
+      ) : (
+        ""
+      )}
     </Box>
   );
 };

@@ -34,6 +34,7 @@ const BestSellingProducts = () => {
 
   const settings = {
     // dots: true, // Hide dots
+    autoplay: true,
     arrows: false,
     infinite: true,
     speed: 500,
@@ -65,10 +66,18 @@ const BestSellingProducts = () => {
           slidesToShow: 1.9,
         },
       },
+      // {
+      //   breakpoint: 480,
+      //   settings: {
+      //     slidesToShow: 1.3,
+      //   },
+      // },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.06,
+          centerMode: true, // Center the main slide
+          centerPadding: "50px", // Gap on each side of the main slide
+          slidesToShow: 1, // Show 1 main slide in the center
         },
       },
     ],

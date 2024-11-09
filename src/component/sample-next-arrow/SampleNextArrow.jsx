@@ -1,10 +1,11 @@
 import React from "react";
 import { ArrowForwardIos } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 const SampleNextArrow = (props) => {
   const { className, style, onClick } = props;
   return (
-    <div
+    <Box
       className={className}
       style={{
         ...style,
@@ -22,7 +23,7 @@ const SampleNextArrow = (props) => {
       onClick={onClick}
     >
       <ArrowForwardIos style={{ color: "black", fontSize: "24px" }} />
-    </div>
+    </Box>
   );
 };
 

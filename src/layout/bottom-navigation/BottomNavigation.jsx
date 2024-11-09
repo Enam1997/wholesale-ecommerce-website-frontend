@@ -46,7 +46,7 @@ const BottomNav = () => {
         break;
       case 3:
         if (user) {
-          navigate("/profile");
+          navigate("/profile/0");
         } else {
           handleLoginOpen(); // Open login modal if user is not logged in
         }

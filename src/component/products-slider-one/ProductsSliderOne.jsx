@@ -9,6 +9,7 @@ import ProductCardThree from "../product-card-three/ProductCardThree";
 const ProductsSliderOne = ({ title, products }) => {
   const settings = {
     // dots: true, // Hide dots
+    autoplay: true,
     arrows: true,
     infinite: true,
     speed: 500,
@@ -39,12 +40,16 @@ const ProductsSliderOne = ({ title, products }) => {
         breakpoint: 500,
         settings: {
           slidesToShow: 1.9,
+          arrows: false,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1.06,
+          centerMode: true, // Center the main slide
+          centerPadding: "50px", // Gap on each side of the main slide
+          slidesToShow: 1, // Show 1 main slide in the center
+          arrows: false,
         },
       },
     ],

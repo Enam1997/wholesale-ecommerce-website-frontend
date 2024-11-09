@@ -6,78 +6,81 @@ import axiosInstance, { websiteImageLink } from "../../../api";
 
 const Testimonials = () => {
   const [allTestimonials, setAllTestimonials] = useState([]);
-  const testimonials = [
+  const defaultTestimonials = [
     {
       id: 1,
       name: "John Doe",
-      feedback:
-        "Amazing products and great customer service! Amazing products and great customer service! Amazing products and great customer service! Amazing products and great customer service! Amazing products and great customer service!",
-      image:
-        "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
+      feedback: "Exceptional service and top-quality products!",
+      image: "https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg",
     },
     {
       id: 2,
       name: "Jane Smith",
-      feedback: "Fast delivery and the quality is top-notch.",
-      image:
-        "https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg",
+      feedback: "Fast delivery and great customer service.",
+      image: "https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg",
     },
-    // Add more testimonials as needed
+    {
+      id: 3,
+      name: "Mike Johnson",
+      feedback: "The best shopping experience I've ever had!",
+      image: "https://img.freepik.com/free-photo/handsome-man-white-shirt-isolated_53876-62768.jpg",
+    },
   ];
-  const fetchAlltestimonials = async () => {
-    try {
-      const response = await axiosInstance.get(
-        "/frontend-home-page/reviews/all"
-      );
-      console.log(response.data.data.allReview);
 
+  const fetchAllTestimonials = async () => {
+    try {
+      const response = await axiosInstance.get("/frontend-home-page/reviews/all");
       setAllTestimonials(response.data.data.allReview);
     } catch (err) {
-      console.error("Error fetching Testimonail:", err);
+      console.error("Error fetching testimonials:", err);
     }
   };
 
   useEffect(() => {
-    fetchAlltestimonials();
+    fetchAllTestimonials();
   }, []);
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 700,
     autoplay: true,
-    slidesToShow: 1,
+    slidesToShow: 3, // Shows 3 testimonials on large screens
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 600,
+        settings: { slidesToShow: 1 },
+      },
+    ],
   };
 
+  const testimonialsToShow = allTestimonials.length ? allTestimonials : defaultTestimonials;
+
   return (
-    <div className="testimonials">
+    <div className="testimonials-section">
       <h2>What Our Customers Say</h2>
-      {allTestimonials.length != 0 ? (
-        <>
-          <Slider {...settings}>
-            {allTestimonials.map((testi) => (
-              <div key={testi?.id} className="testimonial">
-                <img src={websiteImageLink(testi.image)} alt={testi.id} />
-                <p>"{testi.review}"</p>
-                <h4>- {testi?.name}</h4>
+      <Slider {...settings}>
+        {testimonialsToShow.map((testi) => (
+          <div key={testi.id} className="testimonial-card">
+            <div className="testimonial-content">
+              <div className="testimonial-header">
+                <img
+                  src={allTestimonials.length ? websiteImageLink(testi.image) : testi.image}
+                  alt={testi.name}
+                  className="testimonial-image"
+                />
+                <h4 className="testimonial-name">{testi.name}</h4>
               </div>
-            ))}
-          </Slider>
-        </>
-      ) : (
-        <>
-          <Slider {...settings}>
-            {testimonials.map((testi) => (
-              <div key={testi.id} className="testimonial">
-                <img src={testi.image} alt={testi.name} />
-                <p>"{testi.feedback}"</p>
-                <h4>- {testi.name}</h4>
-              </div>
-            ))}
-          </Slider>
-        </>
-      )}
+              <p className="testimonial-feedback">"{testi.review || testi.feedback}"</p>
+            </div>
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };

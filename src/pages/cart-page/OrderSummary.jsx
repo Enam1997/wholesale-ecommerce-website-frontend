@@ -50,10 +50,6 @@ const OrderSummary = () => {
         <Typography variant="h6">Total</Typography>
         <Typography variant="h6">${totalPrice}</Typography>
       </Box>
-
-      <Button variant="contained" color="primary" fullWidth>
-        Proceed to Checkout
-      </Button>
       <Button
         variant="contained"
         color="primary"

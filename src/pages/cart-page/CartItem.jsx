@@ -68,9 +68,9 @@ const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
             <IconButton onClick={() => onRemove()}>
               <Delete />
             </IconButton>
-            <IconButton onClick={() => console.log("Add to Wishlist")}>
+            {/* <IconButton onClick={() => console.log("Add to Wishlist")}>
               <FavoriteBorder />
-            </IconButton>
+            </IconButton> */}
           </Box>
         </Box>
       </Box>

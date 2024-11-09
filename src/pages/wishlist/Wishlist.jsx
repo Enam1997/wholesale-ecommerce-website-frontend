@@ -17,7 +17,9 @@ const Wishlist = () => {
             ))}
           </>
         ) : (
-          <>No Product Available</>
+          <Box display="flex" justifyContent="center" width='100%'>
+            No Product In Wishlist
+          </Box>
         )}
       </Grid>
     </Box>

@@ -32,7 +32,7 @@ const ProfilePage = () => {
     "Manage Profile",
     "My Orders",
     "Delivery Addresses",
-    "Support Ticket",
+    // "Support Ticket",
   ];
 
   useEffect(() => {
@@ -121,9 +121,9 @@ const ProfilePage = () => {
               </Typography>
             )}
             {selectedTab == 2 && <DeliveryInformation />}
-            {selectedTab == 3 && (
+            {/* {selectedTab == 3 && (
               <Typography variant="body1">Support Ticket Content</Typography>
-            )}
+            )} */}
           </Paper>
         </Grid>
       </Grid>

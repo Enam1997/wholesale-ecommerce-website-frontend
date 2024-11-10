@@ -24,7 +24,7 @@ const ShopPage = () => {
         newArrival: searchParams.get("newArrival") || 0,
         occasion: searchParams.get("occasion") || "",
         material: searchParams.get("material") || "",
-        search: searchParams.get("search") || "",
+        search: searchParams.get("search") || filters.search ||"",
         sortOrder: searchParams.get("sortOrder") || "DESC",
       };
 
@@ -49,7 +49,7 @@ const ShopPage = () => {
       newArrival: searchParams.get("newArrival") || 0,
       occasion: searchParams.get("occasion") || "",
       material: searchParams.get("material") || "",
-      search: searchParams.get("search") || "",
+      search: searchParams.get("search") || filters.search || "",
       sortOrder: searchParams.get("sortOrder") || "DESC",
     };
 

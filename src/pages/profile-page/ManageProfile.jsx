@@ -7,11 +7,13 @@ import {
   Box,
   Paper,
   Stack,
+  IconButton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import axiosInstance from "../../api";
+import axiosInstance, { productImageLink, profileImageLink } from "../../api";
+import { AddPhotoAlternate } from "@mui/icons-material";
 
 // Custom styles for an eye-catching look
 const ProfileContainer = styled(Paper)(({ theme }) => ({
@@ -22,13 +24,6 @@ const ProfileContainer = styled(Paper)(({ theme }) => ({
   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
   background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)",
 }));
-
-const ProfileAvatar = styled(Avatar)({
-  width: 100,
-  height: 100,
-  border: "4px solid white",
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-});
 
 const ProfileButton = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(3),
@@ -94,10 +89,72 @@ const ManageProfile = () => {
     }
   };
 
+  // Handle image upload
+  const handleImageChange = async (e) => {
+    event.preventDefault();
+    const files = Array.from(event.target.files);
+
+    const formData = new FormData();
+    files.forEach((image) => {
+      formData.append("profileImage", image);
+    });
+
+    try {
+      const response = await axiosInstance.put(
+        `/users/update-profile-image/${user?.id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      setProfile((prevProfile) => ({
+        ...prevProfile,
+        avatar: response.data.data.profileImage,
+      }));
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
     <ProfileContainer elevation={4}>
       <Stack alignItems="center" spacing={2} mb={3}>
-        <ProfileAvatar src={profile.imageUrl} alt="Profile Image" />
+        {/* Admin Image Upload */}
+        <Box sx={{ mb: 3, textAlign: "center" }}>
+          <input
+            accept="image/*"
+            style={{ display: "none" }}
+            id="admin-image-upload"
+            type="file"
+            onChange={handleImageChange}
+          />
+          <label htmlFor="admin-image-upload">
+            <IconButton component="span">
+              {profile.avatar ? (
+                <Avatar
+                  src={profileImageLink(profile.avatar)}
+                  alt="Admin"
+                  sx={{ width: 120, height: 120, boxShadow: 2 }}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    width: 120,
+                    height: 120,
+                    border: "2px dashed #ccc",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <AddPhotoAlternate fontSize="large" />
+                </Box>
+              )}
+            </IconButton>
+          </label>
+        </Box>
         <TextField
           label="Name"
           variant="outlined"

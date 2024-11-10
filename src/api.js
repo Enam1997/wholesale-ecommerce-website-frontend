@@ -22,6 +22,9 @@ export const websiteImageLink = (imageLink) =>
 export const blogImageLink = (imageLink) =>
   `${imageBaseURLLink}/blog-images/${imageLink}`;
 
+export const profileImageLink = (imageLink) =>
+  `${imageBaseURLLink}/profile-images/${imageLink}`;
+
 const axiosInstance = axios.create({
   baseURL: baseURLLink,
   withCredentials: true, // Ensure cookies are sent with requests (for refresh tokens)

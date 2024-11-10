@@ -21,16 +21,26 @@ import axiosInstance from "../../api";
 import { useParams } from "react-router-dom";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { AuthContext } from "../../context/AuthContext";
+import { useWishlist } from "../../context/WishListContext";
 
 const ProductDetails = () => {
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [productData, setProductData] = useState();
   const [allBestSellingProducts, setAllBestSellingProducts] = useState([]);
   const [allRecomendedProducts, setAllRecomendedProducts] = useState([]);
-
   let { id } = useParams();
+  const isProductInWishlist = isInWishlist(productData?.id);
+
+  const handleWishlistButton = () => {
+    if (isProductInWishlist) {
+      removeFromWishlist(productData?.id);
+    } else {
+      addToWishlist(productData);
+    }
+  };
 
   const { name, price, discountPrice, images, productDetails } = singelProduct;
   const discountPercentage = discountPrice
@@ -313,8 +323,15 @@ const ProductDetails = () => {
                       </>
                     )}
 
-                    <Button variant="outlined" color="secondary">
-                      Add to Wishlist
+                    <Button
+                      variant="outlined"
+                      color={isProductInWishlist ? "secondary" : "primary"}
+                      onClick={() => handleWishlistButton()}
+                      sx={{ fontWeight: 700 }}
+                    >
+                      {isProductInWishlist
+                        ? "Remove From Wishlist"
+                        : "Add in Wishlist"}
                     </Button>
                   </Box>
                 </Grid>

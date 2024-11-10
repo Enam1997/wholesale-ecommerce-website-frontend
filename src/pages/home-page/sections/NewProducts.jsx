@@ -51,7 +51,7 @@ const NewProducts = () => {
             {allNewProducts.length != 0 ? (
               <>
                 {allNewProducts.map((product) => (
-                  <Grid item xs={6} sm={6} md={4} lg={2.4} key={product.id}>
+                  <Grid item xs={6} sm={6} md={4} lg={2} key={product.id}>
                     <ProductCardThree product={product} />
                   </Grid>
                 ))}

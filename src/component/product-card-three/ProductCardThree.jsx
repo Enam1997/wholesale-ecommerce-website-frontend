@@ -13,7 +13,12 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { Favorite, FavoriteBorder, ShoppingCart, Close } from "@mui/icons-material";
+import {
+  Favorite,
+  FavoriteBorder,
+  ShoppingCart,
+  Close,
+} from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import { productImageLink } from "../../api";
@@ -116,6 +121,9 @@ const ProductCardThree = ({ product }) => {
               fontWeight: "700",
               height: "3.2em",
               lineHeight: "1.6em",
+              background:
+                "linear-gradient(90deg, #004526 0%, #C40233 50%, #004526 100%)",
+              WebkitBackgroundClip: "text",
               "&:hover": {
                 textDecoration: "underline",
               },
@@ -131,9 +139,16 @@ const ProductCardThree = ({ product }) => {
           )}
 
           <Grid container justifyContent="space-between" alignItems="end">
-            <Typography variant="body1" sx={{ fontWeight: "bold", fontSize: "18px" }}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: "bold", fontSize: "18px" }}
+            >
               {product?.discount ? (
-                <Box display="flex" flexDirection="column" justifyContent="start">
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  justifyContent="start"
+                >
                   <span
                     style={{
                       textDecoration: "line-through",
@@ -144,7 +159,8 @@ const ProductCardThree = ({ product }) => {
                     ${product?.price}
                   </span>
                   <span style={{ fontSize: "16px" }}>
-                    AED {calculateDiscountPrice(product?.price, product?.discount)}
+                    AED{" "}
+                    {calculateDiscountPrice(product?.price, product?.discount)}
                   </span>
                 </Box>
               ) : (
@@ -216,7 +232,11 @@ const ProductCardThree = ({ product }) => {
         onClose={handleSnackbarClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>

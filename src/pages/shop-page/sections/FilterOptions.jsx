@@ -20,6 +20,26 @@ import RecommendedProducts from "./RecommendedProducts";
 import { useFilterContext } from "../../../context/FilterContext";
 import axiosInstance from "../../../api";
 
+const FilterOptionAccrodionSummary = ({ title }) => {
+  return (
+    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+      <Typography
+        sx={{
+          fontWeight: 900,
+          flexGrow: 1,
+          background:
+            "linear-gradient(90deg, #004526 0%, #C40233 50%, #004526 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          // fontWeight: "700 !important",
+        }}
+      >
+        {title}
+      </Typography>
+    </AccordionSummary>
+  );
+};
+
 const FilterOptions = () => {
   const { filters, setFilters, handleFilterChange, clearFilter } =
     useFilterContext();
@@ -154,7 +174,19 @@ const FilterOptions = () => {
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" mb={2}>
-        <Typography variant="h6">Filter by:</Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            flexGrow: 1,
+            background:
+              "linear-gradient(90deg, #004526 0%, #C40233 50%, #004526 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            fontWeight: "700 !important",
+          }}
+        >
+          Filter by:
+        </Typography>
         <Button
           variant="text"
           color="secondary"
@@ -179,9 +211,7 @@ const FilterOptions = () => {
       {/* Fetch Category Implement */}
 
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Category</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="Category" />
         <AccordionDetails>
           {categorySubcategory ? (
             <>
@@ -239,9 +269,7 @@ const FilterOptions = () => {
 
       {/* Price Filter */}
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Price</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="Price" />
         <AccordionDetails>
           <Box display="flex" flexDirection={"column"} gap={2}>
             <FormControl variant="outlined">
@@ -276,9 +304,7 @@ const FilterOptions = () => {
 
       {/* Discount Filter */}
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Discount</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="Discount" />
         <AccordionDetails>
           <FormControl component="fieldset">
             <RadioGroup
@@ -294,21 +320,6 @@ const FilterOptions = () => {
                   label={`Lest Than ${per}%`}
                 />
               ))}
-              {/* <FormControlLabel
-                value="10%"
-                control={<Radio checked={filters.discount === "10%"} />}
-                label="10%"
-              />
-              <FormControlLabel
-                value="20%"
-                control={<Radio checked={filters.discount === "20%"} />}
-                label="20%"
-              />
-              <FormControlLabel
-                value="30%"
-                control={<Radio checked={filters.discount === "30%"} />}
-                label="30%"
-              /> */}
             </RadioGroup>
           </FormControl>
         </AccordionDetails>
@@ -316,9 +327,7 @@ const FilterOptions = () => {
 
       {/* NewArrival Filter */}
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>New Arrival</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="New Arrival" />
         <AccordionDetails>
           <FormControl component="fieldset">
             <RadioGroup
@@ -341,9 +350,7 @@ const FilterOptions = () => {
 
       {/* Occasion Filter */}
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Occasion</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="Occasion" />
         <AccordionDetails>
           {occasionData ? (
             <>
@@ -371,9 +378,7 @@ const FilterOptions = () => {
 
       {/* Material Filter */}
       <Accordion defaultExpanded>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: 900 }}>Material</Typography>
-        </AccordionSummary>
+        <FilterOptionAccrodionSummary title="Material" />
         <AccordionDetails>
           {materialData ? (
             <>

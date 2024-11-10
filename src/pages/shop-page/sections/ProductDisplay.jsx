@@ -73,7 +73,7 @@ const ProductDisplay = () => {
         mb={3}
       >
         {/* Showing Total Results */}
-        <Typography variant="body1">Showing {totalProduct} Results</Typography>
+        <Typography variant="body2">Showing {totalProduct} Results</Typography>
         {/* Sort By Selector */}
         <Box display="flex" alignItems="center">
           <Typography variant="body2" mr={1}>

@@ -7,6 +7,7 @@ import ProductCardTwo from "../../../component/product-card-2/ProductCardTwo";
 import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
 import axiosInstance from "../../../api";
 import ProductCardThreeSkeleton from "../../../component/product-card-three/ProductCardThreeSkelton";
+import SectionTitle from "../../../component/section-title/SectionTitle";
 
 const NewProducts = () => {
   const [loading, setLoading] = useState(true);
@@ -35,9 +36,7 @@ const NewProducts = () => {
   return (
     <div>
       <Box mt={6}>
-        <Typography variant="h4" mb={4} gutterBottom>
-          New Products
-        </Typography>
+        <SectionTitle title={"New Products"} />
         {loading ? (
           <Grid container alignItems="center" spacing={2}>
             {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (

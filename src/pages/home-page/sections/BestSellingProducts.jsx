@@ -3,9 +3,9 @@ import Slider from "react-slick";
 import { Box, Typography } from "@mui/material";
 import { newproduct } from "../../../demo-data/newproduct";
 import ProductCard from "../../../component/product-card/ProductCard";
-import "./bestSellingProducts.css";
 import ProductCardThree from "../../../component/product-card-three/ProductCardThree";
 import axiosInstance from "../../../api";
+import SectionTitle from "../../../component/section-title/SectionTitle";
 
 const BestSellingProducts = () => {
   const [loading, setLoading] = useState(true);
@@ -86,10 +86,8 @@ const BestSellingProducts = () => {
   return (
     <>
       {allBestSellingProducts ? (
-        <Box mt={10} sx={{ padding: "2rem 0" }}>
-          <Typography variant="h4" gutterBottom>
-            Best Selling Products
-          </Typography>
+        <Box mt={6}>
+          <SectionTitle title={" Best Selling Products"} />
           <Slider {...settings}>
             {allBestSellingProducts.map((product, index) => (
               <Box key={index} sx={{ marginRight: "20px !important" }}>

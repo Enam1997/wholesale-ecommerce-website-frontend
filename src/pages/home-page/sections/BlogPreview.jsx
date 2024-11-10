@@ -11,6 +11,7 @@ import {
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BlogCard from "../../../component/blog-card/BlogCard";
 import axiosInstance from "../../../api";
+import SectionTitle from "../../../component/section-title/SectionTitle";
 
 const BlogPreview = () => {
   const [letestBlog, setLetestBlog] = useState([]);
@@ -74,10 +75,8 @@ const BlogPreview = () => {
   ];
 
   return (
-    <Box sx={{ padding: "2rem 0", textAlign: "center" }}>
-      <Typography textAlign="start" variant="h4" gutterBottom>
-        From Our Blog
-      </Typography>
+    <Box sx={{ padding: "2rem 0" }}>
+      <SectionTitle title={"From Our Blog"} />
       {letestBlog ? (
         <>
           <Grid container spacing={2} justifyContent="center">

@@ -7,6 +7,7 @@ import ProductCardThree from "../../../component/product-card-three/ProductCardT
 import ProductCardThreeSkeleton from "../../../component/product-card-three/ProductCardThreeSkelton";
 import axiosInstance from "../../../api";
 import { AuthContext } from "../../../context/AuthContext";
+import SectionTitle from "../../../component/section-title/SectionTitle";
 
 const RecommendedProducts = () => {
   const { user } = useContext(AuthContext);
@@ -36,9 +37,8 @@ const RecommendedProducts = () => {
   return (
     <div>
       <Box mt={6}>
-        <Typography variant="h4" mb={4} gutterBottom>
-          Recommended Products
-        </Typography>
+        <SectionTitle title={"Recommended Products"} />
+
         {loading ? (
           <Grid container alignItems="center" spacing={2}>
             {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (

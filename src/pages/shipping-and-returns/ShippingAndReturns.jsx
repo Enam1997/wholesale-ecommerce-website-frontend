@@ -63,55 +63,6 @@ const ShippingAndReturns = () => {
             </Typography>
             <Divider sx={{ marginY: 3 }} />
 
-            {/* FAQs Section */}
-            <Typography variant="h4" gutterBottom>
-              Frequently Asked Questions
-            </Typography>
-
-            <Box sx={{ marginY: 2 }}>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="h6">
-                    What are your shipping options?
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body1">
-                    We offer standard and expedited shipping options. You can
-                    select your preferred shipping method during checkout.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="h6">How do I return an item?</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body1">
-                    To return an item, please contact our customer support team
-                    and they will provide instructions for sending the item back
-                    to us.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography variant="h6">
-                    When will I receive my refund?
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography variant="body1">
-                    Refunds are processed within 5-7 business days after we
-                    receive your return. The refund will be issued to the
-                    original payment method.
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </Box>
-
             <Typography variant="body2" color="textSecondary">
               Last Updated: {formatDate(shippingReturn?.updatedAt)}
             </Typography>

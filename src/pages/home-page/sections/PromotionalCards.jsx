@@ -70,12 +70,7 @@ const PromotionalCards = () => {
   }, []); // Depend on 'page' so it fetches again when page changes
 
   return (
-    <Box
-      sx={{
-        padding: "2rem 0",
-      }}
-    >
- 
+    <Box mt={6}>
       {allPromotionalCards?.length !== 0 ? (
         <Grid container spacing={3} justifyContent="center">
           {allPromotionalCards.map((promo) => (

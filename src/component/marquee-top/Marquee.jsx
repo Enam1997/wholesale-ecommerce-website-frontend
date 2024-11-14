@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import "./Marquee.css";
 import axiosInstance from "../../api";
 
 const Marquee = () => {
-  const [marqueis, setMarqueis] = useState([]);
-
-  const texts = [
-    "Exclusive Wholesale Fashion Deals – New Arrivals Every Week!",
-    "Buy More, Save More – Unlock Special Discounts on Bulk Orders!",
-    "Limited Time Offer: Up to 30% Off on Selected Styles!",
-    "High-Quality Fashion at Unbeatable Wholesale Prices!",
-    "Fast Shipping on All Orders – Shop the Latest Trends Now!",
-  ];
+  const [marqueis, setMarqueis] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const fetchAllMarqueis = async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get("/website/marque/all");
       setMarqueis(response.data.marquies);
     } catch (err) {
       console.error("Error fetching Marqueis:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,46 +26,45 @@ const Marquee = () => {
   return (
     <Box className="marquee-wrapper" color="white">
       <Box className="marquee-content">
-        {marqueis.length != 0 ? (
+        {loading ? (
+          // Loading skeleton placeholder
           <>
-            {/* Repeat the content twice to create a seamless effect */}
-            {marqueis.map((marq, index) => (
-              <span key={index}>
-                {marq.text}
-                {index < marqueis.length - 1 && (
-                  <span className="separator">#</span>
-                )}
-              </span>
-            ))}
-            {marqueis.map((marq, index) => (
-              <span key={index + marqueis.length}>
-                {marq.text}
-                {index < marqueis.length - 1 && (
-                  <span className="separator">#</span>
-                )}
-              </span>
+            {[...Array(10)].map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="text"
+                width={400}
+                height={30}
+                sx={{
+                  // bgcolor: "#555",
+                  display: "inline-block",
+                  marginRight: "10px",
+                }}
+              />
             ))}
           </>
         ) : (
-          <>
-            {/* Repeat the content twice to create a seamless effect */}
-            {texts.map((text, index) => (
-              <span key={index}>
-                {text}
-                {index < texts.length - 1 && (
-                  <span className="separator">#</span>
-                )}
-              </span>
-            ))}
-            {texts.map((text, index) => (
-              <span key={index + texts.length}>
-                {text}
-                {index < texts.length - 1 && (
-                  <span className="separator">#</span>
-                )}
-              </span>
-            ))}
-          </>
+          marqueis && (
+            <>
+              {/* Repeat the content twice to create a seamless effect */}
+              {marqueis.map((marq, index) => (
+                <span key={index}>
+                  {marq.text}
+                  {index < marqueis.length - 1 && (
+                    <span className="separator">#</span>
+                  )}
+                </span>
+              ))}
+              {marqueis.map((marq, index) => (
+                <span key={index + marqueis.length}>
+                  {marq.text}
+                  {index < marqueis.length - 1 && (
+                    <span className="separator">#</span>
+                  )}
+                </span>
+              ))}
+            </>
+          )
         )}
       </Box>
     </Box>

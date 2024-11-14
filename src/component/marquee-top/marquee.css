@@ -1,7 +1,6 @@
 .marquee-wrapper {
   overflow: hidden;
   white-space: nowrap;
-  /* background-color: #004526;  */
   background-color: #01a651;
   padding: 10px 0;
   position: relative;
@@ -10,19 +9,19 @@
 .marquee-content {
   display: inline-block;
   white-space: nowrap;
-  animation: scroll-text 20s linear infinite; /* Slower speed */
+  animation: scroll-text 20s linear infinite;
 }
 
 @keyframes scroll-text {
   0% {
-    transform: translateX(0); /* Start position */
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%); /* Scroll by half of the content width */
+    transform: translateX(-50%);
   }
 }
 
 .separator {
   margin: 0 10px;
-  color: #c40233; /* Separator color */
+  color: #c40233;
 }

@@ -12,6 +12,8 @@ import {
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import axiosInstance, { websiteImageLink } from "../../../api";
 import SectionTitle from "../../../component/section-title/SectionTitle";
+import SamplePrevArrow from "../../../component/sample-prev-arrow/SamplePrevArrow";
+import SampleNextArrow from "../../../component/sample-next-arrow/SampleNextArrow";
 
 const Testimonials = () => {
   const [allTestimonials, setAllTestimonials] = useState([]);
@@ -35,19 +37,6 @@ const Testimonials = () => {
     fetchAllTestimonials();
   }, []);
 
-  // Custom Arrows
-  const NextArrow = ({ onClick }) => (
-    <IconButton onClick={onClick} sx={arrowStyle("right")}>
-      <ArrowForward fontSize="large" />
-    </IconButton>
-  );
-
-  const PrevArrow = ({ onClick }) => (
-    <IconButton onClick={onClick} sx={arrowStyle("left")}>
-      <ArrowBack fontSize="large" />
-    </IconButton>
-  );
-
   const settings = {
     // dots: true,
     infinite: true,
@@ -55,8 +44,8 @@ const Testimonials = () => {
     autoplay: true,
     slidesToShow: 3,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 600, settings: { slidesToShow: 1 } },
@@ -131,19 +120,6 @@ const Testimonials = () => {
     </Box>
   );
 };
-
-// Styles
-const arrowStyle = (direction) => ({
-  position: "absolute",
-  top: "50%",
-  [direction]: "16px",
-  transform: "translateY(-50%)",
-  zIndex: 2,
-  color: "primary.main",
-  backgroundColor: "rgba(255, 255, 255, 0.8)",
-  boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-  "&:hover": { backgroundColor: "primary.light" },
-});
 
 const cardStyle = {
   borderRadius: 3,

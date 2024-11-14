@@ -20,13 +20,13 @@ const BlogCard = ({ post }) => {
         borderBottom: "3px solid transparent",
         transition: "0.3s",
         "&:hover": {
-          borderBottom: "3px solid #BFF14D",
+          borderBottom: "3px solid #01A651",
           "& img": {
             transform: "scale(1.05)",
           },
-          "& .arrowIcon": {
-            transform: "translateX(5px)",
-          },
+          // "& .arrowIcon": {
+          //   transform: "translateX(5px)",
+          // },
         },
       }}
     >
@@ -89,11 +89,19 @@ const BlogCard = ({ post }) => {
               color: "#A04747",
               display: "flex",
               alignItems: "center",
+              "&:hover": {
+                "& .arrowIcon": {
+                  transform: "translateX(5px)",
+                },
+              },
             }}
           >
             Read More
             <IconButton
-              sx={{ padding: "0", marginLeft: "5px" }}
+              sx={{
+                padding: "0",
+                marginLeft: "5px",
+              }}
               className="arrowIcon"
             >
               <ArrowForwardIosIcon

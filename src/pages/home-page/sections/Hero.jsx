@@ -5,6 +5,8 @@ import { slides } from "../../../demo-data/slides";
 import axiosInstance, { homePageSliderImageLink } from "../../../api";
 import { Link, useNavigate } from "react-router-dom";
 import demoSlideImage from "../../../assets/Cehck.gif";
+import SampleNextArrow from "../../../component/sample-next-arrow/SampleNextArrow";
+import SamplePrevArrow from "../../../component/sample-prev-arrow/SamplePrevArrow";
 
 const Hero = () => {
   const [loading, setLoading] = useState(true);
@@ -32,14 +34,16 @@ const Hero = () => {
   }, []); // Depend on 'page' so it fetches again when page changes
 
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
-    arrows: false,
+    arrows: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
   return (

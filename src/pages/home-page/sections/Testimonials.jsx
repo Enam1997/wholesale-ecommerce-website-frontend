@@ -53,7 +53,7 @@ const Testimonials = () => {
   };
 
   return (
-    <Box sx={{ mt: 6, px: 2 }}>
+    <Box sx={{ mt: 6, py: 4 }}>
       <SectionTitle title="What Our Customers Say" />
       <Slider {...settings}>
         {loading

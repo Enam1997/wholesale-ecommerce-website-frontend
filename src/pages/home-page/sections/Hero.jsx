@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { slides } from "../../../demo-data/slides";
 import axiosInstance, { homePageSliderImageLink } from "../../../api";
 import { Link, useNavigate } from "react-router-dom";
+import demoSlideImage from "../../../assets/Cehck.gif";
 
 const Hero = () => {
   const [loading, setLoading] = useState(true);
@@ -47,41 +48,60 @@ const Hero = () => {
       mt={3}
       sx={{ width: "100%", overflow: "hidden", borderRadius: "12px" }}
     >
-      {allSlides.length != 0 ? (
-        <Slider {...settings}>
-          {allSlides.map((slide, index) => (
-            <Link to={`${slide.targetLink}`} key={index}>
-              <Box
-                key={slide.id}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  height: { xs: 300, sm: 400, lg: 500 }, // Set height based on screen size
-                  backgroundColor: "#f0f0f0", // Fallback background color
-                }}
-              >
-                <Box
-                  component="img"
-                  src={homePageSliderImageLink(slide.image)}
-                  // onClick={() => navigate(`${slide.targetLink}`)}
-                  alt={slide?.alt}
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "fill", // Ensure the image covers the entire box
-                  }}
-                />
-              </Box>
-            </Link>
-          ))}
-        </Slider>
+      {loading ? (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: { xs: 300, sm: 400, lg: 500 }, // Set height based on screen size
+              backgroundColor: "#f0f0f0",
+            }}
+          >
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height="100%"
+              animation="wave"
+            />
+          </Box>
+        </>
       ) : (
-        <Slider {...settings}>
-          {slides.map((slide) => (
+        <>
+          {allSlides.length != 0 ? (
+            <Slider {...settings}>
+              {allSlides.map((slide, index) => (
+                <Link to={`${slide.targetLink}`} key={index}>
+                  <Box
+                    key={slide.id}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      height: { xs: 300, sm: 400, lg: 500 }, // Set height based on screen size
+                      backgroundColor: "#f0f0f0", // Fallback background color
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={homePageSliderImageLink(slide.image)}
+                      // onClick={() => navigate(`${slide.targetLink}`)}
+                      alt={slide?.alt}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "fill", // Ensure the image covers the entire box
+                      }}
+                    />
+                  </Box>
+                </Link>
+              ))}
+            </Slider>
+          ) : (
             <Box
-              key={slide.id}
               sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -93,8 +113,8 @@ const Hero = () => {
             >
               <Box
                 component="img"
-                src={slide.image}
-                alt={slide.alt}
+                src={demoSlideImage}
+                alt={"Banglacottonae"}
                 sx={{
                   width: "100%",
                   height: "100%",
@@ -102,8 +122,8 @@ const Hero = () => {
                 }}
               />
             </Box>
-          ))}
-        </Slider>
+          )}
+        </>
       )}
     </Box>
   );

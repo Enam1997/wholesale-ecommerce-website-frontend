@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Box, Typography } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+} from "@mui/material";
 import { demoCartItems, orderSummary } from "../../demo-data/cartData";
 
 import CartItem from "./CartItem";
@@ -8,6 +16,58 @@ import ProductsSliderOne from "../../component/products-slider-one/ProductsSlide
 import { newproduct } from "../../demo-data/newproduct";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
+import { AddShoppingCart, ShoppingCartOutlined } from "@mui/icons-material";
+import SectionTitle from "../../component/section-title/SectionTitle";
+
+const EmptyCart = () => {
+  return (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="400px"
+      width="100%"
+      sx={{ bgcolor: "#f9f9f9" }}
+    >
+      <Card
+        elevation={2}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: 4,
+          textAlign: "center",
+          borderRadius: 3,
+          maxWidth: 400,
+          bgcolor: "#ffffff",
+        }}
+      >
+        <ShoppingCartOutlined
+          color="disabled"
+          sx={{ fontSize: 80, mb: 2, color: "#c0c0c0" }}
+        />
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            Your Cart is Empty
+          </Typography>
+          <Typography variant="body2" color="textSecondary" mb={3}>
+            Add at least one product to your cart to start shopping!
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<AddShoppingCart />}
+            href="/shop"
+          >
+            Go to Shop
+          </Button>
+        </CardActions>
+      </Card>
+    </Box>
+  );
+};
 
 const CartPage = () => {
   const { cartItems, updateCartQuantity, removeFromCart } = useCart();
@@ -22,7 +82,9 @@ const CartPage = () => {
         const response = await axiosInstance.get(
           `/product/get-10-best-selling-products`
         );
-        setAllBestSellingProducts(response.data.data.bestSellingProductsData);
+        const data = response.data.data.bestSellingProductsData;
+        const mainData = data.map((d) => d.Product);
+        setAllBestSellingProducts(mainData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -34,9 +96,7 @@ const CartPage = () => {
   }, []); // Depend on 'page' so it fetches again when page changes
   return (
     <Box sx={{ padding: "24px" }}>
-      <Typography variant="h4" sx={{ mb: 4 }}>
-        Shopping Cart
-      </Typography>
+      <SectionTitle title={"Shopping Cart"} />
 
       {cartItems?.length !== 0 ? (
         <>
@@ -71,23 +131,14 @@ const CartPage = () => {
           </Grid>
         </>
       ) : (
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          width={"100%"}
-          alignItems={"center"}
-          minHeight={"400px"}
-        >
-          <Typography variant="h5" color="gray">
-            Your Cart Is Empty Please Add miniMum 1 Product
-          </Typography>
-        </Box>
+        <EmptyCart />
       )}
 
       {allBestSellingProducts ? (
         <ProductsSliderOne
           title="Best Selling Products"
           products={allBestSellingProducts}
+          loading={loading}
         />
       ) : (
         ""

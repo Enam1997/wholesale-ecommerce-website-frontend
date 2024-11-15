@@ -1,12 +1,12 @@
 import React from "react";
 import Slider from "react-slick";
-import { Box, Typography } from "@mui/material";
-import ProductCard from "../product-card/ProductCard";
+import { Box, Skeleton } from "@mui/material";
 import SampleNextArrow from "../sample-next-arrow/SampleNextArrow";
 import SamplePrevArrow from "../sample-prev-arrow/SamplePrevArrow";
 import ProductCardThree from "../product-card-three/ProductCardThree";
+import SectionTitle from "../section-title/SectionTitle";
 
-const ProductsSliderOne = ({ title, products }) => {
+const ProductsSliderOne = ({ title, products, loading = false }) => {
   const settings = {
     // dots: true, // Hide dots
     autoplay: true,
@@ -57,17 +57,28 @@ const ProductsSliderOne = ({ title, products }) => {
 
   return (
     <Box sx={{ padding: "2rem 0" }}>
-      <Typography variant="h4" gutterBottom>
-        {title}
-      </Typography>
+      <SectionTitle title={title} />
       <Slider {...settings}>
-        {products.map((product, index) => (
-          <Box key={index} sx={{ margin: "0 10px" }}>
-            {" "}
-            {/* Add margin between slides */}
-            <ProductCardThree product={product} />
-          </Box>
-        ))}
+        {loading
+          ? Array.from(new Array(5)).map((_, index) => (
+              <Box key={index} sx={{ marginRight: "20px !important" }}>
+                <Skeleton
+                  variant="rectangular"
+                  width={210}
+                  height={280}
+                  sx={{ borderRadius: 2 }}
+                />
+                <Skeleton width="60%" sx={{ mt: 1, mx: "auto" }} />
+                <Skeleton width="40%" sx={{ mt: 1, mx: "auto" }} />
+              </Box>
+            ))
+          : products?.map((product, index) => (
+              <Box key={index} sx={{ margin: "0 10px" }}>
+                {" "}
+                {/* Add margin between slides */}
+                <ProductCardThree product={product} />
+              </Box>
+            ))}
       </Slider>
     </Box>
   );

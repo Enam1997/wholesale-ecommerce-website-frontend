@@ -380,8 +380,6 @@ const FilterOptions = () => {
               </FormGroup>
             ))
           )}
-
-          {occasionData ? <>{}</> : ""}
         </AccordionDetails>
       </Accordion>
 

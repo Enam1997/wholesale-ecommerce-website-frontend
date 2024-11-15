@@ -20,6 +20,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 import { useFilterContext } from "../../context/FilterContext";
 import axiosInstance from "../../api";
+import FilterOptionLoadinSkelton from "../filter-option-loading-skelton/FilterOptionLoadinSkelton";
 
 const FilterDrawer = () => {
   const { filters, setFilters, handleFilterChange, clearFilter } =
@@ -239,59 +240,62 @@ const FilterDrawer = () => {
             <Typography variant="subtitle1" fontWeight="bold">
               Category
             </Typography>
-            <FormGroup>
-              {categorySubcategory ? (
-                <>
-                  {categorySubcategory.map((ctgy, index) => (
-                    <FormGroup key={index}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={filters.category.includes(ctgy?.name)}
-                            onChange={(e) =>
-                              // handleCategoryChange(e, [...ctgy?.Subcategories])
-                              handleCategoryChange(
-                                e,
-                                ctgy?.Subcategories.map((sub) => sub.name)
-                              )
-                            }
-                          />
+            {loadingCategorySubCategory ? (
+              <>
+                <FilterOptionLoadinSkelton />
+                <FilterOptionLoadinSkelton />
+                <FilterOptionLoadinSkelton />
+                <FilterOptionLoadinSkelton />
+                <FilterOptionLoadinSkelton />
+              </>
+            ) : (
+              categorySubcategory &&
+              categorySubcategory.map((ctgy, index) => (
+                <FormGroup key={index}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={filters.category.includes(ctgy?.name)}
+                        onChange={(e) =>
+                          // handleCategoryChange(e, [...ctgy?.Subcategories])
+                          handleCategoryChange(
+                            e,
+                            ctgy?.Subcategories.map((sub) => sub.name)
+                          )
                         }
-                        label={ctgy?.name}
-                        name={ctgy?.name}
                       />
-                      {ctgy.Subcategories ? (
-                        <>
-                          <FormGroup sx={{ pl: 2 }}>
-                            {ctgy.Subcategories.map((subCtg, index) => (
-                              <FormControlLabel
-                                key={index}
-                                control={
-                                  <Checkbox
-                                    checked={filters.subcategory.includes(
-                                      subCtg?.name
-                                    )}
-                                    onChange={(e) =>
-                                      handleSubcategoryChange(e, ctgy?.name)
-                                    }
-                                  />
+                    }
+                    label={ctgy?.name}
+                    name={ctgy?.name}
+                  />
+                  {ctgy.Subcategories ? (
+                    <>
+                      <FormGroup sx={{ pl: 2 }}>
+                        {ctgy.Subcategories.map((subCtg, index) => (
+                          <FormControlLabel
+                            key={index}
+                            control={
+                              <Checkbox
+                                checked={filters.subcategory.includes(
+                                  subCtg?.name
+                                )}
+                                onChange={(e) =>
+                                  handleSubcategoryChange(e, ctgy?.name)
                                 }
-                                label={subCtg?.name}
-                                name={subCtg?.name}
                               />
-                            ))}
-                          </FormGroup>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </FormGroup>
-                  ))}
-                </>
-              ) : (
-                ""
-              )}
-            </FormGroup>
+                            }
+                            label={subCtg?.name}
+                            name={subCtg?.name}
+                          />
+                        ))}
+                      </FormGroup>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </FormGroup>
+              ))
+            )}
 
             <Divider sx={{ my: 2 }} />
             {/* Price Filter */}
@@ -377,26 +381,25 @@ const FilterDrawer = () => {
               Occasion
             </Typography>
             <Box>
-              {occasionData ? (
-                <>
-                  {occasionData.map((ocas, index) => (
-                    <FormGroup key={index}>
-                      <FormControlLabel
-                        label={ocas?.name}
-                        name={"occasion"}
-                        control={
-                          <Checkbox
-                            value={ocas.name}
-                            checked={filters.occasion.includes(ocas?.name)}
-                            onChange={handleFilterChange}
-                          />
-                        }
-                      />
-                    </FormGroup>
-                  ))}
-                </>
+              {loadingOccasionData ? (
+                <FilterOptionLoadinSkelton />
               ) : (
-                ""
+                occasionData &&
+                occasionData.map((ocas, index) => (
+                  <FormGroup key={index}>
+                    <FormControlLabel
+                      label={ocas?.name}
+                      name={"occasion"}
+                      control={
+                        <Checkbox
+                          value={ocas.name}
+                          checked={filters.occasion.includes(ocas?.name)}
+                          onChange={handleFilterChange}
+                        />
+                      }
+                    />
+                  </FormGroup>
+                ))
               )}
             </Box>
 
@@ -406,26 +409,25 @@ const FilterDrawer = () => {
               Material
             </Typography>
             <Box>
-              {materialData ? (
-                <>
-                  {materialData.map((mat, index) => (
-                    <FormGroup key={index}>
-                      <FormControlLabel
-                        label={mat?.name}
-                        name={"material"}
-                        control={
-                          <Checkbox
-                            value={mat.name}
-                            checked={filters.material.includes(mat?.name)}
-                            onChange={handleFilterChange}
-                          />
-                        }
-                      />
-                    </FormGroup>
-                  ))}
-                </>
+              {loadingMaterialData ? (
+                <FilterOptionLoadinSkelton />
               ) : (
-                ""
+                materialData &&
+                materialData.map((mat, index) => (
+                  <FormGroup key={index}>
+                    <FormControlLabel
+                      label={mat?.name}
+                      name={"material"}
+                      control={
+                        <Checkbox
+                          value={mat.name}
+                          checked={filters.material.includes(mat?.name)}
+                          onChange={handleFilterChange}
+                        />
+                      }
+                    />
+                  </FormGroup>
+                ))
               )}
             </Box>
             {/* Filter End */}

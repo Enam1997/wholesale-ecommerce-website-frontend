@@ -10,6 +10,7 @@ import {
   Paper,
   IconButton,
   Divider,
+  Button,
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -17,11 +18,13 @@ import DoneIcon from "@mui/icons-material/Done";
 import PendingIcon from "@mui/icons-material/Pending";
 import axiosInstance from "../../api";
 import { AuthContext } from "../../context/AuthContext";
+import { AddShoppingCart, ShoppingBasketOutlined } from "@mui/icons-material";
 
 const AllOrder = ({ userId }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -54,7 +57,51 @@ const AllOrder = ({ userId }) => {
   }
 
   if (!orders.length) {
-    return <Typography variant="h6">No orders here</Typography>;
+    return (
+      <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ height: "50vh" }}
+      >
+        <Grid item xs={12} sm={8} md={6}>
+          <Card
+            elevation={3}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "32px",
+              textAlign: "center",
+              bgcolor: "#f7f9fc",
+              borderRadius: 3,
+            }}
+          >
+            <ShoppingBasketOutlined
+              color="primary"
+              sx={{ fontSize: 80, mb: 2 }}
+            />
+            <Typography variant="h5" gutterBottom>
+              No Orders Yet
+            </Typography>
+            <Typography variant="body1" color="textSecondary" mb={3}>
+              You haven't placed any orders yet. Browse our collections to find
+              something you love!
+            </Typography>
+            <CardActions>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AddShoppingCart />}
+                href="/shop"
+              >
+                Start Shopping
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      </Grid>
+    );
   }
 
   return (

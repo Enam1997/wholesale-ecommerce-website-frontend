@@ -6,6 +6,7 @@ import {
   MenuItem,
   Grid,
   Button,
+  Skeleton,
 } from "@mui/material";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
@@ -25,6 +26,7 @@ const DeliveryInformation = () => {
   });
   const [updatedData, setUpdatedData] = useState({});
   const [showUpdateButton, setShowUpdateButton] = useState(false);
+  const [loading, setLoading] = useState(true); // loading state for skeleton
 
   // Fetch delivery data on component mount
   useEffect(() => {
@@ -34,9 +36,10 @@ const DeliveryInformation = () => {
           `/users/get-delivery-info/${user?.id}`
         );
         setDeliveryData(response.data.data.deliveryInfo);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching delivery data:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchDeliveryData();
@@ -75,100 +78,110 @@ const DeliveryInformation = () => {
         Delivery Information
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            name="name"
-            label="Name"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.name}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            name="streetAdress"
-            label="Street Address"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.streetAdress}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            fullWidth
-            name="apartment"
-            label="Apartment, Suite, etc. (Optional)"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.apartment}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            name="city"
-            fullWidth
-            label="City"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.city}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            name="state"
-            fullWidth
-            label="State/Province/Region"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.state}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            name="zip"
-            fullWidth
-            label="ZIP/Postal Code"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.zip}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            name="country"
-            fullWidth
-            label="Country"
-            variant="outlined"
-            select
-            sx={{ mb: 2 }}
-            value={deliveryData.country}
-            onChange={handleChange}
-          >
-            <MenuItem value="UAE">United Arab Emirates</MenuItem>
-          </TextField>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            name="phone"
-            fullWidth
-            label="Phone Number"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={deliveryData.phone}
-            onChange={handleChange}
-          />
-        </Grid>
+        {loading ? (
+          Array.from(new Array(7)).map((_, index) => (
+            <Grid item xs={12} key={index}>
+              <Skeleton variant="rectangular" height={56} />
+            </Grid>
+          ))
+        ) : (
+          <>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="name"
+                label="Name"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.name}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="streetAdress"
+                label="Street Address"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.streetAdress}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="apartment"
+                label="Apartment, Suite, etc. (Optional)"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.apartment}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="city"
+                fullWidth
+                label="City"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.city}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="state"
+                fullWidth
+                label="State/Province/Region"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.state}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="zip"
+                fullWidth
+                label="ZIP/Postal Code"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.zip}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="country"
+                fullWidth
+                label="Country"
+                variant="outlined"
+                select
+                sx={{ mb: 2 }}
+                value={deliveryData.country}
+                onChange={handleChange}
+              >
+                <MenuItem value="UAE">United Arab Emirates</MenuItem>
+              </TextField>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="phone"
+                fullWidth
+                label="Phone Number"
+                variant="outlined"
+                sx={{ mb: 2 }}
+                value={deliveryData.phone}
+                onChange={handleChange}
+              />
+            </Grid>
+          </>
+        )}
       </Grid>
 
-      {showUpdateButton && (
+      {showUpdateButton && !loading && (
         <Button
           variant="contained"
           color="primary"

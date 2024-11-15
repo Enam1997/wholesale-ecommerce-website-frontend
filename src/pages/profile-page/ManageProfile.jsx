@@ -8,21 +8,21 @@ import {
   Paper,
   Stack,
   IconButton,
+  Skeleton,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
-import axiosInstance, { productImageLink, profileImageLink } from "../../api";
+import axiosInstance, { profileImageLink } from "../../api";
 import { AddPhotoAlternate } from "@mui/icons-material";
+import { AuthContext } from "../../context/AuthContext";
 
-// Custom styles for an eye-catching look
+// Custom styles for a modern look
 const ProfileContainer = styled(Paper)(({ theme }) => ({
   maxWidth: 600,
   margin: "40px auto",
   padding: theme.spacing(4),
   borderRadius: theme.spacing(2),
   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-  background: "linear-gradient(135deg, #f5f7fa, #c3cfe2)",
+  background: "linear-gradient(135deg, #ffffff, #f1f3f5)",
 }));
 
 const ProfileButton = styled(Button)(({ theme }) => ({
@@ -30,27 +30,20 @@ const ProfileButton = styled(Button)(({ theme }) => ({
   padding: theme.spacing(1.5),
   fontWeight: "bold",
   borderRadius: theme.spacing(1),
-  transition: "background 0.3s",
+  transition: "background 0.3s ease",
   "&:hover": {
-    backgroundColor: "#155bb5",
+    backgroundColor: "#1769aa",
   },
 }));
 
 const ManageProfile = () => {
   const { user } = useContext(AuthContext);
 
-  const [profile, setProfile] = useState({
-    name: "",
-    bio: "",
-    email: "",
-    phone: "",
-    createdAt: "",
-    imageUrl: "",
-  });
+  const [profile, setProfile] = useState(null); // Null initially for skeleton loading
   const [updatedData, setUpdatedData] = useState({});
   const [showUpdateButton, setShowUpdateButton] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch profile data
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -58,14 +51,15 @@ const ManageProfile = () => {
           `/users/get-profile-info/${user?.id}`
         );
         setProfile(response.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching profile:", error);
+        setIsLoading(false);
       }
     };
     fetchProfile();
   }, [user?.id]);
 
-  // Handle input change and track updates
   const handleChange = (field, value) => {
     setUpdatedData((prevData) => ({
       ...prevData,
@@ -74,7 +68,6 @@ const ManageProfile = () => {
     setShowUpdateButton(true);
   };
 
-  // Handle update profile
   const handleUpdateProfile = async () => {
     try {
       await axiosInstance.put(
@@ -89,15 +82,10 @@ const ManageProfile = () => {
     }
   };
 
-  // Handle image upload
-  const handleImageChange = async (e) => {
-    event.preventDefault();
+  const handleImageChange = async (event) => {
     const files = Array.from(event.target.files);
-
     const formData = new FormData();
-    files.forEach((image) => {
-      formData.append("profileImage", image);
-    });
+    files.forEach((image) => formData.append("profileImage", image));
 
     try {
       const response = await axiosInstance.put(
@@ -119,18 +107,24 @@ const ManageProfile = () => {
   return (
     <ProfileContainer elevation={4}>
       <Stack alignItems="center" spacing={2} mb={3}>
-        {/* Admin Image Upload */}
         <Box sx={{ mb: 3, textAlign: "center" }}>
           <input
             accept="image/*"
             style={{ display: "none" }}
-            id="admin-image-upload"
+            id="profile-image-upload"
             type="file"
             onChange={handleImageChange}
           />
-          <label htmlFor="admin-image-upload">
+          <label htmlFor="profile-image-upload">
             <IconButton component="span">
-              {profile.avatar ? (
+              {isLoading ? (
+                <Skeleton
+                  variant="circular"
+                  width={120}
+                  height={120}
+                  sx={{ boxShadow: 2 }}
+                />
+              ) : profile?.avatar ? (
                 <Avatar
                   src={profileImageLink(profile.avatar)}
                   alt="Admin"
@@ -155,66 +149,87 @@ const ManageProfile = () => {
             </IconButton>
           </label>
         </Box>
-        <TextField
-          label="Name"
-          variant="outlined"
-          fullWidth
-          value={updatedData.name ?? profile.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          sx={{ background: "white", borderRadius: 1 }}
-        />
+
+        {isLoading ? (
+          <Skeleton variant="rectangular" width="100%" height={56} />
+        ) : (
+          <TextField
+            label="Name"
+            variant="outlined"
+            fullWidth
+            value={updatedData.name ?? profile?.name}
+            onChange={(e) => handleChange("name", e.target.value)}
+            sx={{ background: "white", borderRadius: 1 }}
+          />
+        )}
       </Stack>
 
-      <TextField
-        label="Bio"
-        variant="outlined"
-        fullWidth
-        multiline
-        rows={4}
-        value={updatedData.bio ?? profile.bio}
-        onChange={(e) => handleChange("bio", e.target.value)}
-        sx={{ background: "white", borderRadius: 1, mb: 2 }}
-      />
+      {isLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={120} />
+      ) : (
+        <TextField
+          label="Bio"
+          variant="outlined"
+          fullWidth
+          multiline
+          rows={4}
+          value={updatedData.bio ?? profile?.bio}
+          onChange={(e) => handleChange("bio", e.target.value)}
+          sx={{ background: "white", borderRadius: 1, mb: 2 }}
+        />
+      )}
 
       <Typography variant="body1" fontWeight="bold" gutterBottom>
         Email:
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{
-          mb: 2,
-          color: "#333",
-          background: "#f9f9f9",
-          padding: "8px",
-          borderRadius: 1,
-        }}
-      >
-        {profile.email}
-      </Typography>
+      {isLoading ? (
+        <Skeleton variant="text" width="80%" />
+      ) : (
+        <Typography
+          variant="body2"
+          sx={{
+            mb: 2,
+            color: "#333",
+            background: "#f9f9f9",
+            padding: "8px",
+            borderRadius: 1,
+          }}
+        >
+          {profile?.email}
+        </Typography>
+      )}
 
-      <TextField
-        label="Phone"
-        variant="outlined"
-        fullWidth
-        value={updatedData.phone ?? profile.phone}
-        onChange={(e) => handleChange("phone", e.target.value)}
-        sx={{ background: "white", borderRadius: 1, mb: 2 }}
-      />
+      {isLoading ? (
+        <Skeleton variant="rectangular" width="100%" height={56} />
+      ) : (
+        <TextField
+          label="Phone"
+          variant="outlined"
+          fullWidth
+          value={updatedData.phone ?? profile?.phone}
+          onChange={(e) => handleChange("phone", e.target.value)}
+          sx={{ background: "white", borderRadius: 1, mb: 2 }}
+        />
+      )}
 
       <Typography variant="body1" fontWeight="bold" gutterBottom>
         Profile Created At:
       </Typography>
-      <Typography
-        variant="body2"
-        sx={{
-          color: "#333",
-          background: "#f9f9f9",
-          padding: "8px",
-          borderRadius: 1,
-        }}
-      >
-        {new Date(profile.createdAt).toLocaleDateString()}
-      </Typography>
+      {isLoading ? (
+        <Skeleton variant="text" width="60%" />
+      ) : (
+        <Typography
+          variant="body2"
+          sx={{
+            color: "#333",
+            background: "#f9f9f9",
+            padding: "8px",
+            borderRadius: 1,
+          }}
+        >
+          {new Date(profile?.createdAt).toLocaleDateString()}
+        </Typography>
+      )}
 
       {showUpdateButton && (
         <ProfileButton variant="contained" onClick={handleUpdateProfile}>

@@ -95,31 +95,63 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
           overflowY: "auto",
         }}
       >
-        <List>
+        <List sx={{ p: 2 }}>
           {cartItems.map((item, index) => (
-            <ListItem key={index} alignItems="flex-start" sx={{ mb: 1 }}>
+            <ListItem
+              key={index}
+              alignItems="flex-start"
+              sx={{
+                mb: 2,
+                p: 2,
+                borderRadius: "12px",
+                backgroundColor: "#f9f9f9",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
+                transition: "background 0.3s ease",
+                "&:hover": { backgroundColor: "#e8f5e9" },
+              }}
+            >
               <ListItemAvatar>
                 <Avatar
                   alt={item.name}
                   src={productImageLink(item.featureImage)}
-                  sx={{ width: 60, height: 60, mr: "5px" }}
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    border: "2px solid #01A651",
+                    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.1)",
+                    mr: "10px",
+                  }}
                 />
               </ListItemAvatar>
               <ListItemText
                 primary={
                   <Box
-                    sx={{ display: "flex", justifyContent: "space-between" }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mb: 1,
+                    }}
                   >
-                    <Typography variant="body1">
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: "600", color: "#333" }}
+                    >
                       {item.name.length > 38
                         ? `${item.name.slice(0, 37)}...`
                         : item.name}
                     </Typography>
-                    <Box display={"flex"} alignItems={"center"}>
-                      <Typography variant="body2" sx={{ color: "gray" }}>
+                    <Box display="flex" alignItems="center">
+                      {/* <Typography
+                        variant="body2"
+                        sx={{ color: "#757575", fontSize: "0.875rem" }}
+                      >
                         x{item.quantity}
-                      </Typography>
-                      <IconButton onClick={() => removeFromCart(item.id)}>
+                      </Typography> */}
+                      <IconButton
+                        onClick={() => removeFromCart(item.id)}
+                        sx={{ color: "#C40233", ml: 1 }}
+                      >
                         <Delete />
                       </IconButton>
                     </Box>
@@ -135,35 +167,50 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
                         mt: 1,
                       }}
                     >
-                      <Typography variant="body2">
-                        AED {calculateDiscountPrice(item.price, item.discount)}
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "#4E5D73", fontWeight: "500" }}
+                      >
+                        AED{" "}
+                        {(
+                          calculateDiscountPrice(item.price, item.discount) *
+                          item.quantity
+                        ).toFixed(2)}
                       </Typography>
                       <Box
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          mb: 2,
+                          backgroundColor: "#f1f1f1",
+                          borderRadius: "8px",
+                          px: 1,
+                          py: 0.5,
                         }}
                       >
                         <IconButton
                           onClick={() => handleDecrement(item)}
                           size="small"
+                          sx={{ color: "#757575" }}
                         >
                           <Remove />
                         </IconButton>
-                        <Typography variant="body1" sx={{ mx: 2 }}>
+                        <Typography
+                          variant="body1"
+                          sx={{ mx: 2, fontWeight: "600" }}
+                        >
                           {item.quantity}
                         </Typography>
                         <IconButton
                           onClick={() => handleIncrement(item)}
                           size="small"
+                          sx={{ color: "#757575" }}
                           disabled={item.quantity >= item.stock}
                         >
                           <Add />
                         </IconButton>
                       </Box>
                     </Box>
-                    <Divider sx={{ my: 1 }} />
+                    <Divider sx={{ my: 1, borderColor: "#E0E0E0" }} />
                   </>
                 }
               />

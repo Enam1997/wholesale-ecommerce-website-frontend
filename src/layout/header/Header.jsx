@@ -163,50 +163,6 @@ const Header = (props) => {
                   >
                     My Profile
                   </MenuItem>
-                  {/* <MenuItem
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
-                      fontWeight: 700,
-                    }}
-                    onClick={() => handleMenuClick("/profile")}
-                  >
-                    My Orders
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
-                      fontWeight: 700,
-                    }}
-                    onClick={() => handleMenuClick("/profile")}
-                  >
-                    Delivery Addresses
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
-                      fontWeight: 700,
-                    }}
-                    onClick={() => handleMenuClick("/profile")}
-                  >
-                    Support Ticket
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "#F0FBD5",
-                      },
-                      fontWeight: 700,
-                    }}
-                    onClick={() => handleMenuClick("/profile")}
-                  >
-                    Wishlist
-                  </MenuItem> */}
                   <MenuItem
                     sx={{
                       // "&:hover": {

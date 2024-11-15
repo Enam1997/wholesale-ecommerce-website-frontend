@@ -19,6 +19,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RecommendedProducts from "./RecommendedProducts";
 import { useFilterContext } from "../../../context/FilterContext";
 import axiosInstance from "../../../api";
+import FilterOptionLoadinSkelton from "../../../component/filter-option-loading-skelton/FilterOptionLoadinSkelton";
 
 const FilterOptionAccrodionSummary = ({ title }) => {
   return (
@@ -213,57 +214,64 @@ const FilterOptions = () => {
       <Accordion defaultExpanded>
         <FilterOptionAccrodionSummary title="Category" />
         <AccordionDetails>
-          {categorySubcategory ? (
+          {loadingCategorySubCategory ? (
             <>
-              {categorySubcategory.map((ctgy, index) => (
-                <FormGroup key={index}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={filters.category.includes(ctgy?.name)}
-                        onChange={(e) =>
-                          // handleCategoryChange(e, [...ctgy?.Subcategories])
-                          handleCategoryChange(
-                            e,
-                            ctgy?.Subcategories.map((sub) => sub.name)
-                          )
-                        }
-                      />
-                    }
-                    label={ctgy?.name}
-                    name={ctgy?.name}
-                  />
-                  {ctgy.Subcategories ? (
-                    <>
-                      <FormGroup sx={{ pl: 2 }}>
-                        {ctgy.Subcategories.map((subCtg, index) => (
-                          <FormControlLabel
-                            key={index}
-                            control={
-                              <Checkbox
-                                checked={filters.subcategory.includes(
-                                  subCtg?.name
-                                )}
-                                onChange={(e) =>
-                                  handleSubcategoryChange(e, ctgy?.name)
-                                }
-                              />
-                            }
-                            label={subCtg?.name}
-                            name={subCtg?.name}
-                          />
-                        ))}
-                      </FormGroup>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </FormGroup>
-              ))}
+              <FilterOptionLoadinSkelton />
+              <FilterOptionLoadinSkelton />
+              <FilterOptionLoadinSkelton />
+              <FilterOptionLoadinSkelton />
+              <FilterOptionLoadinSkelton />
             </>
           ) : (
-            ""
+            categorySubcategory &&
+            categorySubcategory.map((ctgy, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={filters.category.includes(ctgy?.name)}
+                      onChange={(e) =>
+                        // handleCategoryChange(e, [...ctgy?.Subcategories])
+                        handleCategoryChange(
+                          e,
+                          ctgy?.Subcategories.map((sub) => sub.name)
+                        )
+                      }
+                    />
+                  }
+                  label={ctgy?.name}
+                  name={ctgy?.name}
+                />
+                {ctgy.Subcategories ? (
+                  <>
+                    <FormGroup sx={{ pl: 2 }}>
+                      {ctgy.Subcategories.map((subCtg, index) => (
+                        <FormControlLabel
+                          key={index}
+                          control={
+                            <Checkbox
+                              checked={filters.subcategory.includes(
+                                subCtg?.name
+                              )}
+                              onChange={(e) =>
+                                handleSubcategoryChange(e, ctgy?.name)
+                              }
+                            />
+                          }
+                          label={subCtg?.name}
+                          name={subCtg?.name}
+                        />
+                      ))}
+                    </FormGroup>
+                  </>
+                ) : (
+                  ""
+                )}
+              </FormGroup>
+            ))
           )}
+
+          {categorySubcategory ? <>{}</> : ""}
         </AccordionDetails>
       </Accordion>
 
@@ -352,27 +360,28 @@ const FilterOptions = () => {
       <Accordion defaultExpanded>
         <FilterOptionAccrodionSummary title="Occasion" />
         <AccordionDetails>
-          {occasionData ? (
-            <>
-              {occasionData.map((ocas, index) => (
-                <FormGroup key={index}>
-                  <FormControlLabel
-                    label={ocas?.name}
-                    name={"occasion"}
-                    control={
-                      <Checkbox
-                        value={ocas.name}
-                        checked={filters.occasion.includes(ocas?.name)}
-                        onChange={handleFilterChange}
-                      />
-                    }
-                  />
-                </FormGroup>
-              ))}
-            </>
+          {loadingOccasionData ? (
+            <FilterOptionLoadinSkelton />
           ) : (
-            ""
+            occasionData &&
+            occasionData.map((ocas, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  label={ocas?.name}
+                  name={"occasion"}
+                  control={
+                    <Checkbox
+                      value={ocas.name}
+                      checked={filters.occasion.includes(ocas?.name)}
+                      onChange={handleFilterChange}
+                    />
+                  }
+                />
+              </FormGroup>
+            ))
           )}
+
+          {occasionData ? <>{}</> : ""}
         </AccordionDetails>
       </Accordion>
 
@@ -380,26 +389,25 @@ const FilterOptions = () => {
       <Accordion defaultExpanded>
         <FilterOptionAccrodionSummary title="Material" />
         <AccordionDetails>
-          {materialData ? (
-            <>
-              {materialData.map((mat, index) => (
-                <FormGroup key={index}>
-                  <FormControlLabel
-                    label={mat?.name}
-                    name={"material"}
-                    control={
-                      <Checkbox
-                        value={mat.name}
-                        checked={filters.material.includes(mat?.name)}
-                        onChange={handleFilterChange}
-                      />
-                    }
-                  />
-                </FormGroup>
-              ))}
-            </>
+          {loadingMaterialData ? (
+            <FilterOptionLoadinSkelton />
           ) : (
-            ""
+            materialData &&
+            materialData.map((mat, index) => (
+              <FormGroup key={index}>
+                <FormControlLabel
+                  label={mat?.name}
+                  name={"material"}
+                  control={
+                    <Checkbox
+                      value={mat.name}
+                      checked={filters.material.includes(mat?.name)}
+                      onChange={handleFilterChange}
+                    />
+                  }
+                />
+              </FormGroup>
+            ))
           )}
         </AccordionDetails>
       </Accordion>

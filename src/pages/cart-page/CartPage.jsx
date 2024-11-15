@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardActions,
-  Button,
-} from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { demoCartItems, orderSummary } from "../../demo-data/cartData";
 
 import CartItem from "./CartItem";
@@ -16,58 +8,9 @@ import ProductsSliderOne from "../../component/products-slider-one/ProductsSlide
 import { newproduct } from "../../demo-data/newproduct";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
-import { AddShoppingCart, ShoppingCartOutlined } from "@mui/icons-material";
-import SectionTitle from "../../component/section-title/SectionTitle";
 
-const EmptyCart = () => {
-  return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="400px"
-      width="100%"
-      sx={{ bgcolor: "#f9f9f9" }}
-    >
-      <Card
-        elevation={2}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: 4,
-          textAlign: "center",
-          borderRadius: 3,
-          maxWidth: 400,
-          bgcolor: "#ffffff",
-        }}
-      >
-        <ShoppingCartOutlined
-          color="disabled"
-          sx={{ fontSize: 80, mb: 2, color: "#c0c0c0" }}
-        />
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Your Cart is Empty
-          </Typography>
-          <Typography variant="body2" color="textSecondary" mb={3}>
-            Add at least one product to your cart to start shopping!
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<AddShoppingCart />}
-            href="/shop"
-          >
-            Go to Shop
-          </Button>
-        </CardActions>
-      </Card>
-    </Box>
-  );
-};
+import SectionTitle from "../../component/section-title/SectionTitle";
+import EmptyCartShowingCard from "../../component/empty-cart-showing-card/EmptyCartShowingCard";
 
 const CartPage = () => {
   const { cartItems, updateCartQuantity, removeFromCart } = useCart();
@@ -131,7 +74,7 @@ const CartPage = () => {
           </Grid>
         </>
       ) : (
-        <EmptyCart />
+        <EmptyCartShowingCard />
       )}
 
       {allBestSellingProducts ? (

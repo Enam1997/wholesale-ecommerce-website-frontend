@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography, Divider } from "@mui/material";
-import { orderItems, orderSummary } from "../../demo-data/checkoutPageData";
 import { calculateTotalOrderPrice } from "../../utils/orderPrice";
 import { useCart } from "../../context/CartContext";
 import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";

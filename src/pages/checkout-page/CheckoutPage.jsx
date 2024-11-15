@@ -28,6 +28,8 @@ import calculateDiscountPrice from "../../utils/calculateProductDiscountPrice";
 import CompleteOrderSummary from "../../component/complete-order-summary-table/CompleteOrderSummary";
 import { calculateTotalOrderPrice } from "../../utils/orderPrice";
 import { Close } from "@mui/icons-material";
+import EmptyCartShowingCard from "../../component/empty-cart-showing-card/EmptyCartShowingCard";
+import SectionTitle from "../../component/section-title/SectionTitle";
 
 const steps = ["User Info", "Delivery Info", "Payment", "Confirmation"];
 
@@ -39,6 +41,7 @@ const CheckoutPage = () => {
   const [orderConfirmData, setOrderConfirmData] = useState({});
   const [orderError, setOrderError] = useState(false);
   const [orderErrorMessage, setOrderErrorMessage] = useState();
+  const [loadingFectData, setLoadingFectData] = useState(false);
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -164,6 +167,7 @@ const CheckoutPage = () => {
             data={formData.userInfo}
             setData={setFormData}
             errors={errors}
+            loading={loadingFectData}
           />
         );
       case 1:
@@ -172,6 +176,7 @@ const CheckoutPage = () => {
             data={formData.deliveryInfo}
             setData={setFormData}
             errors={errors}
+            loading={loadingFectData}
           />
         );
       case 2:
@@ -198,13 +203,13 @@ const CheckoutPage = () => {
         ...prev,
         deliveryInfo: response.data.data.deliveryInfo,
       }));
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching delivery data:", error);
     }
   };
 
   const fetchProfileData = async () => {
+    setLoadingFectData(true);
     try {
       const response = await axiosInstance.get(
         `/users/get-profile-info/${user?.id}`
@@ -215,10 +220,10 @@ const CheckoutPage = () => {
         ...prev,
         userInfo: { name, email, phone },
       }));
-
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching delivery data:", error);
+    } finally {
+      setLoadingFectData(false);
     }
   };
 
@@ -238,9 +243,7 @@ const CheckoutPage = () => {
         <>
           {cartItems?.length !== 0 ? (
             <>
-              <Typography variant="h4" sx={{ mb: 4 }}>
-                Checkout
-              </Typography>
+              <SectionTitle title={"Checkout"} />
               <Collapse in={orderError}>
                 <Alert
                   severity="error"
@@ -322,17 +325,7 @@ const CheckoutPage = () => {
               </Grid>
             </>
           ) : (
-            <Box
-              display={"flex"}
-              justifyContent={"center"}
-              width={"100%"}
-              alignItems={"center"}
-              minHeight={"400px"}
-            >
-              <Typography variant="h5" color="gray">
-                Your Cart Is Empty Please Add miniMum 1 Product
-              </Typography>
-            </Box>
+            <EmptyCartShowingCard />
           )}
         </>
       )}

@@ -53,11 +53,18 @@ const Footer = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: "#333", color: "#fff", padding: "2rem 1rem" }}>
+    <Box
+      sx={{
+        background: "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
+        color: "#fff",
+        padding: "3rem 1rem",
+        overflow: "hidden",
+      }}
+    >
       <Container>
         <Grid container spacing={4} mb={4}>
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#ffd700" }}>
               About Us
             </Typography>
             <Typography variant="body2" paragraph>
@@ -67,132 +74,106 @@ const Footer = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#ffd700" }}>
               Quick Links
             </Typography>
-            <Typography variant="body2">
-              <Link to="/" style={{ textDecoration: "none", color: "#fff" }}>
-                Home
-              </Link>
-              <br />
-              <Link
-                to="/shop"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Shop
-              </Link>
-              <br />
-              <Link
-                to="/blog"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Blog
-              </Link>
-              <br />
-              <Link
-                to="/contact"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Contact Us
-              </Link>
-            </Typography>
+            <Box>
+              {["Home", "Shop", "Blog", "Contact Us"].map((link, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  sx={{
+                    display: "block",
+                    color: "#fff",
+                    textDecoration: "none",
+                    marginBottom: "0.5rem",
+                    "&:hover": { color: "#ffd700" },
+                  }}
+                  component={Link}
+                  to={`/${link.toLowerCase().replace(" ", "-")}`}
+                >
+                  {link}
+                </Typography>
+              ))}
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#ffd700" }}>
               Customer Service
             </Typography>
-            <Typography variant="body2">
-              <Link to="/faq" style={{ textDecoration: "none", color: "#fff" }}>
-                FAQ
-              </Link>
-              <br />
-              <Link
-                to="/shipping-returns"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Shipping & Returns
-              </Link>
-              <br />
-              <Link
-                to="/privacy-policy"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Privacy Policy
-              </Link>
-              <br />
-              <Link
-                to="/terms-conditions"
-                style={{ textDecoration: "none", color: "#fff" }}
-              >
-                Terms & Conditions
-              </Link>
-            </Typography>
-          </Grid>
-          {/* <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
-              Follow Us
-            </Typography>
             <Box>
-              <IconButton component={Link} to="#" sx={{ color: "#fff", mr: 1 }}>
-                <Facebook />
-              </IconButton>
-              <IconButton component={Link} to="#" sx={{ color: "#fff", mr: 1 }}>
-                <Twitter />
-              </IconButton>
-              <IconButton component={Link} to="#" sx={{ color: "#fff", mr: 1 }}>
-                <Instagram />
-              </IconButton>
-              <IconButton component={Link} to="#" sx={{ color: "#fff", mr: 1 }}>
-                <LinkedIn />
-              </IconButton>
+              {[
+                "FAQ",
+                "Shipping & Returns",
+                "Privacy Policy",
+                "Terms & Conditions",
+              ].map((link, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  sx={{
+                    display: "block",
+                    color: "#fff",
+                    textDecoration: "none",
+                    marginBottom: "0.5rem",
+                    "&:hover": { color: "#ffd700" },
+                  }}
+                  component={Link}
+                  to={`/${link
+                    .toLowerCase()
+                    .replace(" & ", "-")
+                    .replace(" ", "-")}`}
+                >
+                  {link}
+                </Typography>
+              ))}
             </Box>
-          </Grid> */}
-
+          </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" gutterBottom sx={{ color: "#e74c3c" }}>
+            <Typography variant="h6" gutterBottom sx={{ color: "#ffd700" }}>
               Follow Us
             </Typography>
             {socialMediaDataLoading ? (
               <Skeleton
                 variant="text"
                 sx={{
-                  bgcolor: "grey.700",
+                  bgcolor: "rgba(255, 255, 255, 0.2)",
                   minHeight: "20px",
                   maxWidth: "100px",
                 }}
               />
             ) : (
-              <>
-                {socialMediaData ? (
-                  <>
-                    <Box>
-                      {socialMediaData.map((social, index) => (
-                        <IconButton
-                          key={index}
-                          href={social.link}
-                          target="_blank"
-                          sx={{
-                            color: "#fff",
-                            "&:hover": {
-                              color: "#ff6b6b",
-                            },
-                            transition: "color 0.3s ease",
-                          }}
-                        >
-                          {allSocialIcons[social?.name]}
-                        </IconButton>
-                      ))}
-                    </Box>
-                  </>
-                ) : (
-                  ""
-                )}
-              </>
+              <Box sx={{ display: "flex", gap: 1 }}>
+                {socialMediaData.map((social, index) => (
+                  <IconButton
+                    key={index}
+                    href={social.link}
+                    target="_blank"
+                    sx={{
+                      color: "#fff",
+                      backgroundColor: "rgba(255, 255, 255, 0.2)",
+                      "&:hover": {
+                        backgroundColor: "#ffd700",
+                        color: "#333",
+                      },
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    {allSocialIcons[social?.name]}
+                  </IconButton>
+                ))}
+              </Box>
             )}
           </Grid>
         </Grid>
-        <Divider sx={{ borderColor: "#444", mb: 2 }} />
-        <Typography variant="body2" align="center" sx={{ color: "#aaa" }}>
+        <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.2)", mb: 2 }} />
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{
+            color: "rgba(255, 255, 255, 0.7)",
+          }}
+        >
           &copy; {new Date().getFullYear()} Your Company Name. All Rights
           Reserved.
         </Typography>

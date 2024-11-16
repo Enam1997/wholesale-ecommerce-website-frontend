@@ -53,7 +53,7 @@ function App() {
                   >
                     <Header />
                   </Box>
-                  <Box marginTop={"100px"}>
+                  <Box marginTop={"80px"}>
                     <Marquee />
                     <Routes>
                       <Route path="/" element={<HomePage />} />

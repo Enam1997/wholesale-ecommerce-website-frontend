@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
   Card,
   CardContent,
@@ -13,82 +12,107 @@ import {
   Box,
   Grid,
   Button,
+  Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const CompleteOrderSummary = ({ order }) => {
   const navigate = useNavigate();
+
   return (
-    <Box>
-      <Box
+    <Box sx={{ padding: 3, backgroundColor: "#f8f8f8", minHeight: "100vh" }}>
+      {/* Congratulations Section */}
+      <Paper
+        elevation={3}
         sx={{
           textAlign: "center",
           py: 4,
-          px: 2,
-          borderRadius: 2,
-          backgroundColor: "primary.main",
+          px: 3,
+          borderRadius: 3,
+          background: "linear-gradient(135deg, #4a9b7f, #0a3431, #71B280)",
           color: "white",
-          boxShadow: 3,
-          maxWidth: 400,
+          maxWidth: 500,
           mx: "auto",
-          mt: 3,
-          mb: 5,
+          mb: 4,
         }}
       >
-        <Typography
-          variant="h4"
-          component="div"
-          gutterBottom
-          sx={{ fontWeight: "bold", letterSpacing: 1 }}
-        >
+        <Typography variant="h4" fontWeight="bold" letterSpacing={1}>
           🎉 Congratulations! 🎉
         </Typography>
-        <Typography variant="h6" component="div">
+        <Typography variant="h6" mt={1}>
           Your Order is Completed
         </Typography>
-        <Typography variant="body2" sx={{ mt: 2 }}>
+        <Typography variant="body1" mt={2}>
           Thank you for shopping with us. We hope to see you again!
         </Typography>
-      </Box>
+      </Paper>
 
+      {/* Order Summary Card */}
       <Card
-        variant="outlined"
-        sx={{ maxWidth: 600, margin: "auto", padding: 2 }}
+        elevation={4}
+        sx={{
+          maxWidth: 800,
+          mx: "auto",
+          mb: 4,
+          borderRadius: 3,
+          overflow: "hidden",
+        }}
       >
-        <CardContent>
-          {/* {console.log("From Order Summary")}
-        {console.log(order)} */}
-          <Typography variant="h5" gutterBottom>
+        <CardContent sx={{ padding: 4 }}>
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            gutterBottom
+            sx={{
+              color: "primary.main",
+              textTransform: "uppercase",
+              letterSpacing: 1,
+            }}
+          >
             Order Summary
           </Typography>
-          <Divider sx={{ marginBottom: 2 }} />
+          <Divider sx={{ my: 2, backgroundColor: "secondary.main" }} />
 
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Order ID:</Typography>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Order ID:
+              </Typography>
               <Typography>{order.id}</Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Order Status:</Typography>
-              <Typography color="textSecondary">{order.orderStatus}</Typography>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Order Status:
+              </Typography>
+              <Typography color="text.secondary">{order.orderStatus}</Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Delivery Status:</Typography>
-              <Typography color="textSecondary">
+            <Grid item xs={12} sm={6}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Delivery Status:
+              </Typography>
+              <Typography color="text.secondary">
                 {order.deliveryStatus}
               </Typography>
             </Grid>
-            <Grid item xs={6}>
-              <Typography variant="subtitle1">Payment Status:</Typography>
-              <Typography color="textSecondary">
+            <Grid item xs={12} sm={6}>
+              <Typography variant="subtitle1" fontWeight="bold">
+                Payment Status:
+              </Typography>
+              <Typography color="text.secondary">
                 {order.paymentStatus}
               </Typography>
             </Grid>
           </Grid>
 
-          <Divider sx={{ marginY: 2 }} />
+          <Divider sx={{ my: 3, backgroundColor: "secondary.main" }} />
 
-          <Typography variant="h6" gutterBottom>
+          {/* Receiver Information */}
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ color: "primary.main" }}
+          >
             Receiver Information
           </Typography>
           <Box mb={2}>
@@ -97,7 +121,13 @@ const CompleteOrderSummary = ({ order }) => {
             <Typography>Phone: {order?.reciverInfo?.phone}</Typography>
           </Box>
 
-          <Typography variant="h6" gutterBottom>
+          {/* Delivery Address */}
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ color: "primary.main" }}
+          >
             Delivery Address
           </Typography>
           <Box mb={2}>
@@ -109,9 +139,15 @@ const CompleteOrderSummary = ({ order }) => {
             <Typography>{order.address.country}</Typography>
           </Box>
 
-          <Divider sx={{ marginY: 2 }} />
+          <Divider sx={{ my: 3, backgroundColor: "secondary.main" }} />
 
-          <Typography variant="h6" gutterBottom>
+          {/* Order Details */}
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ color: "primary.main" }}
+          >
             Order Details
           </Typography>
           <TableContainer>
@@ -147,24 +183,51 @@ const CompleteOrderSummary = ({ order }) => {
         </CardContent>
       </Card>
 
-      <Box>
+      {/* Buttons */}
+      <Box
+        sx={{
+          maxWidth: 500,
+          mx: "auto",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: 2,
+        }}
+      >
         <Button
           variant="contained"
-          color="primary"
           fullWidth
-          sx={{ fontWeight: 900, marginTop: "10px" }}
           onClick={() => navigate("/shop")}
+          sx={{
+            fontWeight: "bold",
+            borderRadius: 50,
+            py: 1.5,
+            background:
+              "linear-gradient(135deg, #4a9b7f, #0a3431, #71B280)",
+            color: "white",
+            "&:hover": {
+              background:
+                "linear-gradient(135deg, #0a3431, #4a9b7f, #71B280)",
+            },
+          }}
         >
-          Got to Shop
+          Go to Shop
         </Button>
         <Button
           variant="contained"
-          color="primary"
           fullWidth
-          sx={{ fontWeight: 900, marginTop: "10px" }}
           onClick={() => navigate("/")}
+          sx={{
+            fontWeight: "bold",
+            borderRadius: 50,
+            py: 1.5,
+            backgroundColor: "secondary.main",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "#A0022A",
+            },
+          }}
         >
-          Got to Home
+          Go to Home
         </Button>
       </Box>
     </Box>

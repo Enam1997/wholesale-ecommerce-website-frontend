@@ -24,7 +24,6 @@ const AllOrder = ({ userId }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
-  
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -34,6 +33,7 @@ const AllOrder = ({ userId }) => {
           `/order/get-customer-all-order/${user?.id}`
         );
         setOrders(response.data.data.orders);
+        console.log(response.data.data.orders);
       } catch (error) {
         console.error("Error fetching orders:", error);
       } finally {
@@ -177,11 +177,14 @@ const AllOrder = ({ userId }) => {
                 Receiver Information:
               </Typography>
               <Typography variant="body2">
-                {order.reciverInfo.name} ({order.reciverInfo.phone})
+                {/* {order.reciverInfo.name} ({order.reciverInfo.phone}) */}
+                {JSON.parse(order.reciverInfo).name} (
+                {JSON.parse(order.reciverInfo).phone})
               </Typography>
               <Typography variant="body2">
-                {order.address.streetAdress}, {order.address.city},{" "}
-                {order.address.state}
+                {JSON.parse(order.address).streetAdress},{" "}
+                {JSON.parse(order.address).city},{" "}
+                {JSON.parse(order.address).state}
               </Typography>
             </CardContent>
 

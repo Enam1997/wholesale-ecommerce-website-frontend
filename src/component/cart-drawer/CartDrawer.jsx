@@ -65,8 +65,9 @@ const CartDrawer = ({ open, onClose, demoCartItems }) => {
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: { sm: "100%", md: "350px" },
+          width: { sm: "100%", md: "400px" },
           display: "flex",
+          backgroundColor: "#F4F1ED",
           flexDirection: "column",
           justifyContent: "space-between",
         },

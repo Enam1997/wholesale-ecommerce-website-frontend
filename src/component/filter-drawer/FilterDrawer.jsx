@@ -212,6 +212,7 @@ const FilterDrawer = () => {
           style: {
             height: "100vh",
             width: "100%",
+            backgroundColor: "#F4F1ED",
           },
         }}
       >

@@ -90,7 +90,11 @@ const Footer = () => {
                     "&:hover": { color: "#ffd700" },
                   }}
                   component={Link}
-                  to={`/${link.toLowerCase().replace(" ", "-")}`}
+                  to={
+                    link == "Home"
+                      ? "/"
+                      : `/${link.toLowerCase().replace(" ", "-")}`
+                  }
                 >
                   {link}
                 </Typography>

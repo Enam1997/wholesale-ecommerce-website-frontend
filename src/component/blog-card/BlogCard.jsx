@@ -86,8 +86,12 @@ const BlogCard = ({ post }) => {
             target="_blank"
             underline="none"
             sx={{
-              color: "#A04747",
+              // color: "#A04747",
+              background: "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
               display: "flex",
+              fontWeight: "600",
               alignItems: "center",
               "&:hover": {
                 "& .arrowIcon": {

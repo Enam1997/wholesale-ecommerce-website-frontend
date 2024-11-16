@@ -6,7 +6,7 @@ import { useWishlist } from "../../context/WishListContext";
 const Wishlist = () => {
   const { wishlistItems } = useWishlist();
   return (
-    <Box sx={{ padding: "2rem 0" }}>
+    <Box sx={{ padding: "2rem 0.5rem" }}>
       <Grid container spacing={2}>
         {wishlistItems.length != 0 ? (
           <>
@@ -17,7 +17,7 @@ const Wishlist = () => {
             ))}
           </>
         ) : (
-          <Box display="flex" justifyContent="center" width='100%'>
+          <Box display="flex" justifyContent="center" width="100%">
             No Product In Wishlist
           </Box>
         )}

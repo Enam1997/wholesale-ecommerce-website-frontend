@@ -73,7 +73,7 @@ const Header = (props) => {
       zIndex={1100}
       sx={{
         backgroundColor: "#fff",
-        background: "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
+        background: "linear-gradient(135deg, #8da69d,#0a3431, #71B280)",
         boxShadow: "none",
         maxWidth: "1500px",
         width: "100%", // Allow full width until maxWidth is reached

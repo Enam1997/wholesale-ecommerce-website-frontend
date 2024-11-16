@@ -72,17 +72,20 @@ const Header = (props) => {
       position="fixed"
       zIndex={1100}
       sx={{
-        backgroundColor: "#fff",
-        background: "linear-gradient(135deg, #8da69d,#0a3431, #71B280)",
+        // backgroundColor: "#fff",
+        background:
+          "linear-gradient(135deg, #8da69d,#0a3431, #71B280, #0a3431)",
         boxShadow: "none",
         maxWidth: "1500px",
         width: "100%", // Allow full width until maxWidth is reached
         margin: "0 auto", // Center horizontally
         left: "0",
         right: "0",
+        height: "70px",
         // borderRadius:"50px",
-        borderBottomLeftRadius: "30px",
-        borderBottomRightRadius: "30px",
+        borderBottomLeftRadius: "10px",
+        borderBottomRightRadius: "10px",
+        justifyContent: "center",
       }}
     >
       <Toolbar>

@@ -8,7 +8,7 @@ import SampleNextArrow from "../../../component/sample-next-arrow/SampleNextArro
 import SamplePrevArrow from "../../../component/sample-prev-arrow/SamplePrevArrow";
 import { productImageLink } from "../../../api";
 
-const CustomSlider = ({ images }) => {
+const CustomSlider = ({ images, loading }) => {
   const settings = {
     customPaging: function (i) {
       return (
@@ -54,10 +54,8 @@ const CustomSlider = ({ images }) => {
       ) : (
         <>
           <Slider {...settings}>
-            {console.log(images)}
             {images.map((image, index) => (
               <Box key={index}>
-                {console.log(productImageLink(image.url))}
                 <img
                   src={productImageLink(image.url)}
                   alt={`Product ${index + 1}`}

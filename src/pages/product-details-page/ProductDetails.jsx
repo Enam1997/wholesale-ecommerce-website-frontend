@@ -14,8 +14,6 @@ import {
 import { Add, Remove, ExpandMore } from "@mui/icons-material";
 import CustomSlider from "./sections/CustomSlider";
 import ProductsSliderOne from "../../component/products-slider-one/ProductsSliderOne";
-import { newproduct } from "../../demo-data/newproduct";
-import { singelProduct } from "../../demo-data/singelproduct";
 import { useCart } from "../../context/CartContext";
 import axiosInstance from "../../api";
 import { useParams } from "react-router-dom";
@@ -30,7 +28,11 @@ const ProductDetails = () => {
   const [error, setError] = useState(null);
   const [productData, setProductData] = useState();
   const [allBestSellingProducts, setAllBestSellingProducts] = useState([]);
+  const [loadingBestSellingProducts, setLoadingBestSellingProducts] =
+    useState(true);
   const [allRecomendedProducts, setAllRecomendedProducts] = useState([]);
+  const [loadingRecomendedProducts, setLoadingRecomendedProducts] =
+    useState(true);
   let { id } = useParams();
   const isProductInWishlist = isInWishlist(productData?.id);
 
@@ -41,11 +43,6 @@ const ProductDetails = () => {
       addToWishlist(productData);
     }
   };
-
-  const { name, price, discountPrice, images, productDetails } = singelProduct;
-  const discountPercentage = discountPrice
-    ? Math.round(((price - discountPrice) / price) * 100)
-    : null;
 
   const [quantity, setQuantity] = useState(1);
   const { addToCart, removeFromCart, updateCartQuantity, isInCart, cartItems } =
@@ -105,19 +102,20 @@ const ProductDetails = () => {
   // Fetch Best Selling Product
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
+      setLoadingBestSellingProducts(true);
       try {
         const response = await axiosInstance.get(
           `/product/get-10-best-selling-products`
         );
 
         let data = response.data.data.bestSellingProductsData;
-        setAllBestSellingProducts(data);
+        const mainData = data.map((d) => d.Product);
+        setAllBestSellingProducts(mainData);
       } catch (err) {
         console.log(err.message);
         setError(err.message);
       } finally {
-        setLoading(false);
+        setLoadingBestSellingProducts(false);
       }
     };
 
@@ -126,7 +124,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
+      setLoadingRecomendedProducts(true);
       try {
         const response = await axiosInstance.get(
           `/product/get-10-recomended-products/${user ? user?.id : "notLogin"}`
@@ -136,7 +134,7 @@ const ProductDetails = () => {
         console.log(err.message);
         setError(err.message);
       } finally {
-        setLoading(false);
+        setLoadingRecomendedProducts(false);
       }
     };
 
@@ -376,13 +374,16 @@ const ProductDetails = () => {
         <ProductsSliderOne
           title="Similar Products"
           products={allBestSellingProducts}
+          loading={loadingBestSellingProducts}
         />
         <ProductsSliderOne
           title="How About These"
           products={allRecomendedProducts}
+          loading={loadingRecomendedProducts}
         />
         <ProductsSliderOne
           title="Best Selling Products"
+          loading={loadingBestSellingProducts}
           products={allBestSellingProducts}
         />
       </Box>

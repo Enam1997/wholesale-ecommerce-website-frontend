@@ -57,12 +57,16 @@ const ProfilePage = () => {
                 orientation={isMobile ? "horizontal" : "vertical"}
                 sx={{
                   "& .MuiTab-root:hover": {
-                    backgroundColor: "#01A651",
+                    // backgroundColor: "#01A651",
                     color: "white !important",
+                    background:
+                      "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
                   },
                   "& .Mui-selected": {
-                    backgroundColor: "#01A651",
+                    // backgroundColor: "#01A651",
                     color: "white !important",
+                    background:
+                      "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
                   },
                   "& .MuiTabs-indicator": {
                     backgroundColor: "#BFF14D", // Change the tab indicator color to green

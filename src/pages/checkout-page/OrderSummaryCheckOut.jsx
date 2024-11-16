@@ -88,6 +88,7 @@ const OrderSummaryCheckOut = ({ items }) => {
           borderRadius: "8px",
           fontWeight: "600",
           boxShadow: "0px 4px 8px rgba(1, 166, 81, 0.2)",
+          
         }}
       >
         Proceed to Checkout

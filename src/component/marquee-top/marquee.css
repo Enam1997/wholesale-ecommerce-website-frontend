@@ -1,7 +1,8 @@
 .marquee-wrapper {
   overflow: hidden;
   white-space: nowrap;
-  background-color: #01a651;
+  /* background-color: #01a651; */
+  background: linear-gradient(135deg, #4a9b7f,#0a3431, #71B280);
   padding: 10px 0;
   position: relative;
 }

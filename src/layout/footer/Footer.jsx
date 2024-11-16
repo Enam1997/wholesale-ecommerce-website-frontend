@@ -78,7 +78,7 @@ const Footer = () => {
               Quick Links
             </Typography>
             <Box>
-              {["Home", "Shop", "Blog", "Contact Us"].map((link, index) => (
+              {["Home", "Shop", "Blog", "contuct"].map((link, index) => (
                 <Typography
                   key={index}
                   variant="body2"

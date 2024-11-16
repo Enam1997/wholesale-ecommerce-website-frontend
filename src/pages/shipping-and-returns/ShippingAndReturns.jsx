@@ -11,6 +11,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import axiosInstance from "../../api";
 import { formatDate } from "../../utils/formetDateTimeToEnUs";
+import SectionTitle from "../../component/section-title/SectionTitle";
 
 const ShippingAndReturns = () => {
   const [shippingReturn, setShippingReturn] = useState({
@@ -28,10 +29,11 @@ const ShippingAndReturns = () => {
       try {
         const response = await axiosInstance.get(`/website/sr/data/srdetails`);
         setShippingReturn(response.data); // Assuming API returns an object like { address, phone, mobile, details }
-        setFirstLoading(false);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching Shipping Return data:", error);
+      } finally {
+        setFirstLoading(false);
       }
     };
     fetchData();
@@ -45,9 +47,7 @@ const ShippingAndReturns = () => {
         ) : (
           <>
             {/* Shipping Policy Section */}
-            <Typography variant="h4" gutterBottom>
-              Shipping Policy
-            </Typography>
+            <SectionTitle title={"Shipping Policy"} />
             <Typography variant="body1" paragraph>
               {shippingReturn.shippingPolycy}
             </Typography>
@@ -55,9 +55,7 @@ const ShippingAndReturns = () => {
             <Divider sx={{ marginY: 3 }} />
 
             {/* Returns Policy Section */}
-            <Typography variant="h4" gutterBottom>
-              Returns Policy
-            </Typography>
+            <SectionTitle title={"Returns Policy"} />
             <Typography variant="body1" paragraph>
               {shippingReturn.returnPolycy}
             </Typography>

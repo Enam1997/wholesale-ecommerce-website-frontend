@@ -73,12 +73,16 @@ const Header = (props) => {
       zIndex={1100}
       sx={{
         backgroundColor: "#fff",
+        background: "linear-gradient(135deg, #4a9b7f,#0a3431, #71B280)",
         boxShadow: "none",
         maxWidth: "1500px",
         width: "100%", // Allow full width until maxWidth is reached
         margin: "0 auto", // Center horizontally
         left: "0",
         right: "0",
+        // borderRadius:"50px",
+        borderBottomLeftRadius:"50px",
+        borderBottomRightRadius:"50px"
       }}
     >
       <Toolbar>
@@ -121,12 +125,15 @@ const Header = (props) => {
           </Hidden>
 
           <Hidden mdDown>
-            <IconButton onClick={() => navigate("/wishlist")}>
+            <IconButton
+              onClick={() => navigate("/wishlist")}
+              sx={{ color: "white" }}
+            >
               <Favorite />
             </IconButton>
           </Hidden>
 
-          <IconButton onClick={handleCartOpen}>
+          <IconButton onClick={handleCartOpen} sx={{ color: "white" }}>
             <Badge color="primary" badgeContent={cartItems?.length}>
               <ShoppingCart />
             </Badge>
@@ -134,7 +141,7 @@ const Header = (props) => {
 
           {/*Logged in user account menu Account Menu */}
           <Hidden mdDown>
-            <IconButton onClick={handleMenuOpen}>
+            <IconButton onClick={handleMenuOpen} sx={{ color: "white" }}>
               {accessToken ? <AccountCircle /> : <Login />}
             </IconButton>
             <Menu

@@ -97,7 +97,7 @@ function App() {
                         element={<BlogDetails />}
                       />
                       <Route path="/wishlist" element={<Wishlist />} />
-                      <Route path="/contact" element={<Contuct />} />
+                      <Route path="/contuct" element={<Contuct />} />
                       <Route path="/faq" element={<FaqPage />} />
                     </Routes>
                   </Box>

@@ -34,10 +34,9 @@ const Categories = () => {
 
   const onCateGoryChange = (category) => {
     console.log(category);
-
+    setFilters((prev) => ({ ...prev, category: category }));
     navigate(`/shop?category=${category}`);
   };
-
   return (
     <Box mt={2} sx={{}}>
       <SectionTitle title={"Shop By Category"} />

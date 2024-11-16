@@ -4,6 +4,7 @@ import allCategoryiamge from "../../../assets/category1.jpg";
 import { useNavigate } from "react-router-dom";
 import axiosInstance, { categoryImageLink } from "../../../api";
 import { useFilterContext } from "../../../context/FilterContext";
+import SectionTitle from "../../../component/section-title/SectionTitle";
 
 const Categories = () => {
   const { filters, setFilters } = useFilterContext();
@@ -38,7 +39,8 @@ const Categories = () => {
   };
 
   return (
-    <Box mt={6} sx={{ padding: "1rem 0" }}>
+    <Box mt={2} sx={{}}>
+      <SectionTitle title={"Shop By Category"} />
       {loading ? (
         <Grid container spacing={2}>
           {[...Array(4)].map((_, index) => (

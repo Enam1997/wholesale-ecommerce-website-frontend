@@ -81,8 +81,8 @@ const Header = (props) => {
         left: "0",
         right: "0",
         // borderRadius:"50px",
-        borderBottomLeftRadius:"50px",
-        borderBottomRightRadius:"50px"
+        borderBottomLeftRadius: "30px",
+        borderBottomRightRadius: "30px",
       }}
     >
       <Toolbar>

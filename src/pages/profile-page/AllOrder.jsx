@@ -11,6 +11,7 @@ import {
   IconButton,
   Divider,
   Button,
+  Box,
 } from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -110,91 +111,128 @@ const AllOrder = ({ userId }) => {
         <Grid item xs={12} sm={6} md={4} key={order.id}>
           <Card
             component={Paper}
-            elevation={4}
-            sx={{ borderRadius: 3, overflow: "hidden" }}
+            elevation={8}
+            sx={{
+              borderRadius: "16px", // Smooth and modern rounded corners
+              overflow: "hidden",
+              backgroundColor: "#ffffff", // Clean white background
+              boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)", // Subtle shadow for a premium look
+            }}
           >
-            <CardContent sx={{ bgcolor: "#f9fafc", padding: "20px" }}>
-              <Typography variant="h6" color="primary" gutterBottom>
-                Order #{order.id}
-              </Typography>
-              <Typography variant="body2" color="textSecondary">
-                Placed on: {new Date(order.createdAt).toLocaleDateString()}
-              </Typography>
+            <CardContent sx={{ padding: "24px" }}>
+              {/* Order Header */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 2,
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: 700, color: "primary.main" }}
+                >
+                  Order #{order.id}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: "#888",
+                    fontWeight: 600,
+                    padding: "4px 8px",
+                    borderRadius: "8px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  {new Date(order.createdAt).toLocaleDateString()}
+                </Typography>
+              </Box>
 
-              <Divider sx={{ my: 1.5 }} />
-
-              <Grid container alignItems="center" spacing={1}>
-                <Grid item>
-                  <AttachMoneyIcon color="success" />
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">
+              {/* Price Details */}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 1.5,
+                  mb: 2,
+                }}
+              >
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <AttachMoneyIcon sx={{ color: "primary.main" }} />
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: 600, color: "#333" }}
+                  >
                     Total Price: ${order.totalPrice.toFixed(2)}
                   </Typography>
-                </Grid>
-              </Grid>
-
-              <Grid container alignItems="center" spacing={1} sx={{ mt: 1 }}>
-                <Grid item>
-                  <LocalShippingIcon color="action" />
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">
+                </Box>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <LocalShippingIcon sx={{ color: "secondary.main" }} />
+                  <Typography
+                    variant="body1"
+                    sx={{ fontWeight: 600, color: "#333" }}
+                  >
                     Shipping Price:{" "}
                     {order.shipingPrice
                       ? `$${order.shipingPrice.toFixed(2)}`
                       : "N/A"}
                   </Typography>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
 
-              <Divider sx={{ my: 1.5 }} />
-
-              <Typography variant="subtitle2" color="textSecondary">
-                Delivery Status:
-              </Typography>
-              <Typography
-                variant="body1"
-                color={
-                  order.deliveryStatus === "Delivered"
-                    ? "success.main"
-                    : "textPrimary"
-                }
-              >
-                {order.deliveryStatus}{" "}
-                {order.deliveryStatus === "Delivered" ? (
-                  <DoneIcon color="success" />
-                ) : (
-                  <PendingIcon color="warning" />
-                )}
-              </Typography>
-
-              <Typography
-                variant="subtitle2"
-                color="textSecondary"
-                sx={{ mt: 2 }}
-              >
-                Receiver Information:
-              </Typography>
-              <Typography variant="body2">
-                {/* {order.reciverInfo.name} ({order.reciverInfo.phone}) */}
-                {JSON.parse(order.reciverInfo).name} (
-                {JSON.parse(order.reciverInfo).phone})
-              </Typography>
-              <Typography variant="body2">
-                {JSON.parse(order.address).streetAdress},{" "}
-                {JSON.parse(order.address).city},{" "}
-                {JSON.parse(order.address).state}
-              </Typography>
-            </CardContent>
-
-            {/* <CardActions sx={{ bgcolor: "#e0f7fa", padding: "16px" }}>
-              <IconButton color="primary" aria-label="Order Details">
-                <Typography variant="button" color="primary">
-                  View Details
+              {/* Delivery Status */}
+              <Box sx={{ mb: 2 }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "#666", fontWeight: 600 }}
+                >
+                  Delivery Status:
                 </Typography>
-              </IconButton>
-            </CardActions> */}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: 600,
+                    color:
+                      order.deliveryStatus === "Delivered"
+                        ? "primary.main"
+                        : "warning.main",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.5,
+                  }}
+                >
+                  {order.deliveryStatus}{" "}
+                  {order.deliveryStatus === "Delivered" ? (
+                    <DoneIcon sx={{ fontSize: "18px" }} />
+                  ) : (
+                    <PendingIcon sx={{ fontSize: "18px" }} />
+                  )}
+                </Typography>
+              </Box>
+
+              {/* Receiver Information */}
+              <Box>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ color: "#666", fontWeight: 600, mb: 1 }}
+                >
+                  Receiver Information:
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#333" }}>
+                  {JSON.parse(order.reciverInfo).name} (
+                  {JSON.parse(order.reciverInfo).phone})
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "#333", mt: 0.5, lineHeight: 1.6 }}
+                >
+                  {JSON.parse(order.address).streetAdress},{" "}
+                  {JSON.parse(order.address).city},{" "}
+                  {JSON.parse(order.address).state}
+                </Typography>
+              </Box>
+            </CardContent>
           </Card>
         </Grid>
       ))}

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import axiosInstance from "../../api";
 import { formatDate } from "../../utils/formetDateTimeToEnUs";
+import SectionTitle from "../../component/section-title/SectionTitle";
 
 const PrivacyPolicy = () => {
   const [privacyData, setPrivacyData] = useState({
@@ -45,10 +46,7 @@ const PrivacyPolicy = () => {
         "Loading"
       ) : (
         <>
-          <Typography variant="h4" gutterBottom>
-            Privacy Policy
-          </Typography>
-
+          <SectionTitle title={"Privacy Policy"} />
           <Divider sx={{ marginBottom: "2rem" }} />
 
           <Typography variant="h6" gutterBottom>

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import axiosInstance from "../../api";
 import { formatDate } from "../../utils/formetDateTimeToEnUs";
+import SectionTitle from "../../component/section-title/SectionTitle";
 
 const TermsAndConditions = () => {
   const [temsCondition, setTemsCondition] = useState({
@@ -46,12 +47,8 @@ const TermsAndConditions = () => {
         ""
       ) : (
         <>
-          <Typography variant="h4" gutterBottom>
-            Terms & Conditions
-          </Typography>
-
+          <SectionTitle title={"Terms & Conditions"} />
           <Divider sx={{ marginBottom: "2rem" }} />
-
           <Typography variant="h6" gutterBottom>
             Acceptance of Terms
           </Typography>

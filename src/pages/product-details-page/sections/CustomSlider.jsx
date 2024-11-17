@@ -1,6 +1,6 @@
 import React from "react";
 import Slider from "react-slick";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./customSlider.css";
@@ -8,7 +8,7 @@ import SampleNextArrow from "../../../component/sample-next-arrow/SampleNextArro
 import SamplePrevArrow from "../../../component/sample-prev-arrow/SamplePrevArrow";
 import { productImageLink } from "../../../api";
 
-const CustomSlider = ({ images, loading }) => {
+const CustomSlider = ({ images, loading = true }) => {
   const settings = {
     customPaging: function (i) {
       return (
@@ -49,7 +49,39 @@ const CustomSlider = ({ images, loading }) => {
       }}
       className="custom-slider"
     >
-      {images.length == 0 ? (
+      {loading ? (
+        <Box>
+          <Skeleton
+            variant="rectangular"
+            width="100%"
+            height={500}
+            style={{ borderRadius: "10px" }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: "0",
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              padding: "10px 0",
+            }}
+          >
+            {[...Array(5)].map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                width={60}
+                height={60}
+                style={{
+                  borderRadius: "8px",
+                  margin: "0 5px",
+                }}
+              />
+            ))}
+          </Box>
+        </Box>
+      ) : images.length == 0 ? (
         <Typography>No Images Available</Typography>
       ) : (
         <>
@@ -91,6 +123,8 @@ const CustomSlider = ({ images, loading }) => {
           </Box>
         </>
       )}
+
+      {}
     </Box>
   );
 };

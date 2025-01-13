@@ -149,8 +149,8 @@ const ProductDetails = () => {
         );
 
         let data = response.data.data.bestSellingProductsData;
-        const mainData = data.map((d) => d.Product);
-        setAllBestSellingProducts(mainData);
+        // const mainData = data.map((d) => d.Product);
+        setAllBestSellingProducts(data);
       } catch (err) {
         console.log(err.message);
         setError(err.message);

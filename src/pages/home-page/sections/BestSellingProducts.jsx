@@ -16,9 +16,12 @@ const BestSellingProducts = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get(`/product/get-10-best-selling-products`);
+        const response = await axiosInstance.get(
+          `/product/get-10-best-selling-products`
+        );
         let data = response.data.data.bestSellingProductsData;
         setAllBestSellingProducts(data);
+        console.log(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -60,18 +63,25 @@ const BestSellingProducts = () => {
         {loading
           ? Array.from(new Array(5)).map((_, index) => (
               <Box key={index} sx={{ marginRight: "20px !important" }}>
-                <Skeleton variant="rectangular" width={210} height={280} sx={{ borderRadius: 2 }} />
+                <Skeleton
+                  variant="rectangular"
+                  width={210}
+                  height={280}
+                  sx={{ borderRadius: 2 }}
+                />
                 <Skeleton width="60%" sx={{ mt: 1, mx: "auto" }} />
                 <Skeleton width="40%" sx={{ mt: 1, mx: "auto" }} />
               </Box>
             ))
           : allBestSellingProducts.map((product, index) => (
               <Box key={index} sx={{ marginRight: "20px !important" }}>
-                <ProductCardThree product={product?.Product} />
+                <ProductCardThree product={product} />
               </Box>
             ))}
       </Slider>
-      {error && <Typography color="error">Failed to load products: {error}</Typography>}
+      {error && (
+        <Typography color="error">Failed to load products: {error}</Typography>
+      )}
     </Box>
   );
 };

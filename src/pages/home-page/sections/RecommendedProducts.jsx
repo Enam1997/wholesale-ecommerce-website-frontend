@@ -23,6 +23,7 @@ const RecommendedProducts = () => {
           `/product/get-10-recomended-products/${user ? user?.id : "notLogin"}`
         );
         setAllRecomendedProducts(response.data.data.recommendedProducts);
+        
       } catch (err) {
         console.log(err.message);
         setError(err.message);
@@ -52,7 +53,7 @@ const RecommendedProducts = () => {
             {allRecomendedProducts.length != 0 ? (
               <>
                 {allRecomendedProducts.map((product) => (
-                  <Grid item xs={6} sm={6} md={4} lg={2} key={product.id}>
+                  <Grid item xs={6} sm={6} md={4} lg={2} key={product?.id}>
                     <ProductCardThree product={product} />
                   </Grid>
                 ))}

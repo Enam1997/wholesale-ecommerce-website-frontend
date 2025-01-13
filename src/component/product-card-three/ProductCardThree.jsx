@@ -33,7 +33,7 @@ const ProductCardThree = ({ product }) => {
 
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const navigate = useNavigate();
-  const isProductInWishlist = isInWishlist(product.id);
+  const isProductInWishlist = isInWishlist(product?.id);
 
   const handleOpenModal = () => {
     setOpenModal(true);

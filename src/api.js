@@ -1,8 +1,8 @@
 // src/api.js
 import axios from "axios";
 
-export const baseURLLink = "https://api.banglacottonae.com/api/v1";
-export const imageBaseURLLink = "https://api.banglacottonae.com/uploads";
+export const baseURLLink = "https://api.banglacotton.com/api/v1";
+export const imageBaseURLLink = "https://api.banglacotton.com/uploads";
 
 // export const baseURLLink = "http://localhost:5000/api/v1";
 // export const imageBaseURLLink = "http://localhost:5000/uploads";
